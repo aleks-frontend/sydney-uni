@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html data-sign="OS?">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import "https://outfit-assets-production.s3.amazonaws.com/fonts/apercu-pro/stylesheet.css";
+      html{
+        font-size: 16pt;
+        word-break: break-all;
+      }
+      h1{
+        font-size: 1em;
+        font-weight: bold;
+      }
+      
+      h2{
+        font-size: 0.68em;
+      }
+      
+      .content p, .content ul{
+        font-size: 0.365rem;
+        max-width: 41%;
+      }
+      
+      .content ul{
+        list-style-type: disc;
+      }
+      
+      .background-image{
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+      }
+      
+      .repositionableImage{
+        position: relative;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: -1;
+      }
+      html {
+        font-family: 'Apercu Pro', helvetica, arial, sans-serif;
+        font-size: 11pt;
+        color: #000;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+		
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }
+      
+      .container{
+        padding-bottom: 1.3em;
+        padding-left: 1.3em;
+        padding-right: 1.3em;
+        display: flex;
+    	align-items: flex-end;
+      }
+      
+      #ochreBoxSvg{
+        width: 100%;
+        position: relative;
+        top: 0;
+        left: 0;
+        z-index: 2;
+      }
+      
+      .ochreBox .content{
+        margin-bottom: 0.8em;
+        position: relative;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        max-height: 4rem;
+      }
+      
+      .heading{
+        margin-bottom: 0.1em;
+      }
+      
+      .ochreBoxFooter{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        
+      }
+      
+      .ochreBoxFooter .url{
+        font-size: 0.4em;
+        text-align: right;
+        width: 12em;
+        flex-grow: 1;
+        font-weight: 700;
+      }
+      
+      .ochreBoxFooter .logo{
+        width: 3.7em;
+      }
+      
+      .ochreBoxFooter .logo img{
+        width: 100%;
+        height: 100%;
+      }
+      
+      .content, .ochreBoxFooter{
+		margin-left: 10px;
+      }
+      
+      {{{account.snippets.ochreBoxCSS}}}
+      
+      
+      :root{
+        --pmWidth: 0.07rem;
+        --pmHeight: 0.75rem;
+        
+        --pm1Start: 1rem;
+        --pm1End: calc(var(--pmWidth) + var(--pm1Start));
+        /*--pm1Height: var(--pmHeight);*/--pm1Height: 0;
+        
+        --pm2Start: calc(0.6rem + var(--pmWidth));
+        --pm2End: calc(var(--pm2Start) - var(--pmWidth));
+        --pm2Height: calc(100% - var(--pmHeight));
+        
+        --pm3Start: 2rem;
+        --pm3End: calc(var(--pm3Start) + var(--pmWidth));
+        /*--pm3Height: calc(100% - var(--pmHeight));*/--pm3Height: 100%;
+        
+        --pm4Start: 0.6rem;
+        --pm4End: calc(var(--pm4Start) + var(--pmWidth));
+        --pm4Height: var(--pmHeight);
+      }
+      
+      .ochreBox{
+        padding: 0 0.85em;
+    	padding-top: 0.8rem;
+        background-color: #f04e23;
+        clip-path: polygon(
+          0% var(--pm4Start),var(--pmHeight) var(--pm4Start),var(--pmHeight) var(--pm4End),0% var(--pm4End),0% 100%,
+          var(--pm3Start) 100%,var(--pm3Start) var(--pm3Height), var(--pm3End) var(--pm3Height),var(--pm3End) 100%,100% 100%,
+          100% var(--pm2Start),var(--pm2Height) var(--pm2Start),var(--pm2Height) var(--pm2End),100% var(--pm2End),100% 0%,
+          var(--pm1End) 0%,var(--pm1End) var(--pm1Height), var(--pm1Start) var(--pm1Height), var(--pm1Start) 0%,0% 0%
+        );
+        -webkit-clip-path:polygon(
+          0% var(--pm4Start),var(--pmHeight) var(--pm4Start),var(--pmHeight) var(--pm4End),0% var(--pm4End),0% 100%,
+          var(--pm3Start) 100%,var(--pm3Start) var(--pm3Height), var(--pm3End) var(--pm3Height),var(--pm3End) 100%,100% 100%,
+          100% var(--pm2Start),var(--pm2Height) var(--pm2Start),var(--pm2Height) var(--pm2End),100% var(--pm2End),100% 0%,
+          var(--pm1End) 0%,var(--pm1End) var(--pm1Height), var(--pm1Start) var(--pm1Height), var(--pm1Start) 0%,0% 0%
+        );
+      }
+      
+      .cricos-code {
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+        -webkit-transform-origin: left top 0;
+        transform-origin: left bottom 0;
+        text-align: center;
+        font-family: 'Apercu Mono', 'Apercu Pro Mono', monospace;
+        bottom: 1.3rem;
+        font-size: 0.16rem;
+        right: -1.25rem;
+        color: #fff;
+        box-sizing: border-box;
+        position: absolute;
+      }
+      
+	  .ochreBox{
+        width: 100%;
+        display: flex;
+    	flex-direction: column;
+      }
+      
+      .theme-greyscale .ochreBox{
+        background-color: white;
+      }
+      
+      .theme-greyscale div{
+        -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  		filter: grayscale(100%);
+      }
+      
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}} {{colour}}" data-crop="{{show-crop}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+          <div class="background-image"><div class="repositionableImage">{{{backgroundImage-repo}}}</div></div>
+          <div class="ochreBox">
+            <div class="content" data-max-height="css">
+              {{{freeText-poster}}}
+            </div>
+            <div class="ochreBoxFooter">
+              <div class="logo"><img src="{{{account.logos.primary}}}"/></div>
+              <div class="url"><p>{{{url-nfo}}}</p></div>
+            </div>
+          </div>
+          <div class="cricos-code">17/IO CRICOS 00026A</div>
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script src="https://outfit-assets-production.s3.amazonaws.com/scripts/templateStarter/templateStarter-v1.0.js"></script>
+
+  </body>
+</html>

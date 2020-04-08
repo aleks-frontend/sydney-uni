@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html data-sign="OSZ" async>
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    {{{account.snippets.typography}}}
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Circular/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/apercu-pro/stylesheet.css');
+
+      /** Input Order 
+
+      {{show-crop}}
+      {{{SU_layout--pfct}}}
+      {{{SU_theme--pfct}}}
+      {{{SU_background-image--pfct}}}
+      {{{SU_process-text--pfct}}}
+      {{{SU_headline--pfct}}}
+      {{{SU_subheading--pfct}}}
+      {{{SU_copy--pfct}}}
+      {{{SU_cta--pfct}}}
+
+      **/
+
+      :root {
+        --primary: {{account.colors.primary}};
+        --black: {{{account.colors.master-black}}};
+        --white: #fff;
+        --fullColour: 0%;
+        --greyscale: 100%;
+      }
+
+      .themeColour--fullColour {
+        --dynamic-bg-colour: var(--primary);
+        --dynamic-marks-colour: var(--white);
+        --dynamic-greyscale: var(--fullColour);
+      }
+
+      .themeColour--greyscale {
+        --dynamic-bg-colour: var(--white);
+        --dynamic-marks-colour: var(--black);
+        --dynamic-greyscale: var(--greyscale);
+      }
+
+      html {
+        font-family: 'Source Sans Pro', sans-serif;
+        color: var(--black);
+        word-break: break-word;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+        height: 100%;
+        z-index: 0;
+        -webkit-filter: grayscale(var(--dynamic-greyscale)); /* Safari 6.0 - 9.0 */
+        filter: grayscale(var(--dynamic-greyscale));
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+        z-index: 0;
+      }    
+
+      .section {
+        position: absolute !important;
+        bottom: 0;
+        left: 0;
+        background-color: var(--dynamic-bg-colour);
+        z-index: 5;
+      }
+
+      .layout--a0 .section { max-height: 15.44rem; }     
+      .layout--a1 .section { max-height: 15.39rem; }  
+      .layout--a2 .section { max-height: 15.31rem; }   
+      .layout--a3 .section { max-height: 15.2rem; }
+      .layout--a4 .section { max-height: 14.85rem; }   
+      .layout--490x990 .section { max-height: 16.88rem; }      
+
+      .column__container { display: flex; }
+
+      .layout--a0 .column__container  {
+        min-height: 1.3rem;
+        padding: 0.35rem 2.2rem 0rem 1.12rem;
+      }
+
+      .layout--a1 .column__container  {
+        min-height: 1.5rem;
+        padding: 0.35rem 2.1rem 0 1.12rem;
+      }
+
+      .layout--a2 .column__container  {
+        min-height: 1.55rem;
+        padding: 0.35rem 2.2rem 0 1.13rem;
+      }
+
+      .layout--a3 .column__container  {
+        min-height: 1.5rem;
+        padding: 0.35rem 2.2rem 0 1.18rem;
+      }
+
+      .layout--a4 .column__container  {
+        min-height: 1.6rem;
+        padding: 0.35rem 2.2rem 0 1.23rem;
+      }
+
+      .layout--490x990 .column__container  {
+        min-height: 1.5rem;
+        padding: 0.18rem 1.3rem 0 0.87rem;
+      }
+
+      .layout--a0 .column__left {
+        margin-right: 0.5rem;
+        margin-top: 0.12rem;
+        width: 5.73rem;
+      }
+
+      .layout--a1 .column__left {
+        margin-right: 0.55rem;
+        margin-top: 0.12rem;
+        width: 5.7rem;
+      }
+
+      .layout--a2 .column__left {
+        margin-right: 0.5rem;
+        margin-top: 0.12rem;
+        width: 5.7rem;
+      }
+
+      .layout--a3 .column__left {
+        margin-right: 0.5rem;
+        margin-top: 0.12rem;
+        width: 5.6rem;
+      }
+
+      .layout--a4 .column__left {
+        margin-right: 0.5rem;
+        margin-top: 0.12rem;
+        width: 5.5rem;
+      }
+
+      .layout--490x990 .column__left  {
+        width: 4.4rem;
+        margin-right: 0.53rem;
+      }
+
+      .layout--490x990 .column__right {
+        margin-top: 0.02rem;
+        width: 4.1rem;
+      }
+
+      .layout--a0 .column__right { width: 5.05rem; }
+      .layout--a1 .column__right { width: 5.1rem; }
+      .layout--a2 .column__right { width: 5rem; }
+      .layout--a3 .column__right { width: 4.9rem; }
+
+      .layout--a4 .column__right {
+        margin-top: 0.02rem;
+        width: 4.9rem;
+      }
+
+      .heading {
+        line-height: 1.2em;
+        font-weight: var(--semibold-weight);
+      }
+
+      .heading p {
+        font-weight: var(--semibold-weight);
+      }
+
+      .layout--a0 .heading {
+        margin-bottom: 0.98rem;
+        font-size: 0.682rem;
+      }
+
+      .layout--a1 .heading {
+        margin-bottom: 0.95rem;
+        font-size: 0.683rem;
+      }
+
+      .layout--a2 .heading {
+        margin-bottom: 0.98rem;
+        font-size: 0.68rem;
+      }
+
+      .layout--a3 .heading {
+        margin-bottom: 0.95rem;
+        font-size: 0.671rem;
+      }
+
+      .layout--a4 .heading {
+        margin-bottom: 0.95rem;
+        font-size: 0.658rem;
+      }
+
+      .layout--490x990 .heading {
+        margin-bottom: 0.5rem;
+        font-size: 0.359rem;
+      }
+
+      .heading:last-child { margin-bottom: 0; }
+
+      .subheading { font-weight: var(--regular-weight); }
+
+      .layout--a0 .subheading {
+        font-size: 0.51rem;
+        line-height: 1.12em;
+      }
+
+      .layout--a1 .subheading {
+        font-size: 0.512rem;
+        line-height: 1.12em;
+      }
+
+      .layout--a2 .subheading {
+        font-size: 0.51rem;
+        line-height: 1.1em;
+      }
+
+      .layout--a3 .subheading {
+        font-size: 0.502rem;
+        line-height: 1.12em;
+      }
+
+      .layout--a4 .subheading {
+        font-size: 0.493rem;
+        line-height: 1.12em;
+      }
+
+      .layout--490x990 .subheading {
+        font-size: 0.342rem;
+        line-height: 1.1em
+      }
+
+      .copy { font-weight: var(--regular-weight); }
+
+      .copy p {
+        margin-bottom: 0.35rem;
+        line-height: 1.3em;
+      }
+
+      .layout--a0 .copy p { font-size: 0.296rem; }
+      .layout--a1 .copy p { font-size: 0.294rem; }
+      .layout--a2 .copy p { font-size: 0.292rem; }
+
+      .layout--a3 .copy p {
+        margin-bottom: 0.37rem;
+        font-size: 0.288rem;
+        line-height: 1.3em;
+      }
+
+      .layout--a4 .copy p { font-size: 0.285rem; }
+
+      .layout--490x990 .copy p {
+        margin-bottom: 0.3rem;
+        font-size: 0.222rem;
+      }
+
+      .copy h1,
+      .copy h2,
+      .copy h3 {
+        margin-bottom: 0.7em;
+        font-weight: var(--semibold-weight);
+        line-height: 1.2em;
+      }
+
+      .layout--a0 .copy h1,
+      .layout--a2 .copy h1 {
+        font-size: 0.51rem;
+      }
+
+      .layout--a0 .copy h2,
+      .layout--a2 .copy h2{
+        font-size: 0.48rem;
+      }
+
+      .layout--a0 .copy h3,
+      .layout--a2 .copy h3{
+        font-size: 0.45rem;
+      }
+
+      .layout--a1 .copy h1 { font-size: 0.512rem; }
+      .layout--a1 .copy h2 { font-size: 0.482em; }
+      .layout--a1 .copy h3 { font-size: 0.442rem; }
+
+      .layout--a3 .copy h1 { font-size: 0.493rem; }
+      .layout--a3 .copy h2 { font-size: 0.443rem; }
+      .layout--a3 .copy h3 { font-size: 0.403rem; }
+
+      .layout--a4 .copy h1 { font-size: 0.493rem; }
+      .layout--a4 .copy h2 { font-size: 0.443rem; }
+      .layout--a4 .copy h3 { font-size: 0.403rem; }
+
+      .layout--490x990 .copy h1 { font-size: 0.342rem; }
+      .layout--490x990 .copy h2 { font-size: 0.322rem; }
+      .layout--490x990 .copy h3 { font-size: 0.302rem; }
+
+      .copy ul { list-style-type: disc; }
+
+      .copy ul,
+      .copy ol {
+        margin-bottom: 0.4em;
+      }
+
+      .layout--a0 .copy ul,
+      .layout--a0 .copy ol {
+        padding-left: 0.25rem;
+      }
+
+      .layout--a1 .copy ul,
+      .layout--a1 .copy ol {
+        padding-left: 0.24rem;
+      }
+
+      .layout--a2 .copy ul,
+      .layout--a2 .copy ol {
+        padding-left: 0.25rem;
+      }
+
+      .layout--a3 .copy ul,
+      .layout--a3.copy ol {
+        padding-left: 0.3rem;
+      }
+
+      .layout--a4 .copy ul,
+      .layout--a4 .copy ol {
+        padding-left: 0.3rem;
+      }
+
+      .layout--490x990 .copy ul,
+      .layout--490x990 .copy ol {
+        padding-left: 0.2rem;
+      }
+
+      .copy li {
+        margin-bottom: 0.15em;
+        line-height: 1.2em;
+      }
+
+      .layout--a0 .copy li { font-size: 0.296rem; }
+      .layout--a1 .copy li { font-size: 0.294rem; }
+      .layout--a2 .copy li { font-size: 0.292rem; }
+      .layout--a3 .copy li { font-size: 0.285rem; }
+      .layout--a4 .copy li { font-size: 0.285rem; }
+      .layout--490x990 .copy li { font-size: 0.222rem; }
+
+      .copy p:last-child, 
+      .copy h1:last-child,
+      .copy h2:last-child,
+      .copy h3:last-child,
+      .copy ul:last-child,
+      .copy ol:last-child,
+      .copy li:last-child {
+        margin-bottom: 0rem;
+      }
+
+      .section__bottom {
+        display: flex;
+        align-items: flex-end;
+      }
+
+      .layout--a0 .section__bottom { padding: 1.08rem 2.2rem 1.4rem 1.4rem; }
+      .layout--a1 .section__bottom { padding: 1.05rem 2.3rem 1.42rem 1.41rem; }
+      .layout--a2 .section__bottom { padding: 1.05rem 2.3rem 1.43rem 1.43rem; }
+      .layout--a3 .section__bottom { padding: 1.07rem 2.3rem 1.46rem 1.45rem; }
+      .layout--a4 .section__bottom { padding: 1.05rem 2.3rem 1.48rem 1.5rem; }
+      .layout--490x990 .section__bottom { padding: 0.7rem 1.9rem 0.91rem 1.08rem; }
+
+      .logo__container {
+        flex-shrink: 0;
+        font-size: 0;
+      }
+
+      .layout--a0 .logo__container { width: 5.96rem; }
+      .layout--a1 .logo__container { width: 5.94rem; }
+      .layout--a2 .logo__container { width: 5.9rem; }
+      .layout--a3 .logo__container { width: 5.82rem; }
+      .layout--a4 .logo__container { width: 5.72rem; }
+
+      .layout--490x990 .logo__container {
+        padding-bottom: 0.31rem;
+        width: 4.72rem;
+      }
+
+      .layout--a0 .logo { width: 3.19rem; }
+      .layout--a1 .logo { width: 3.176rem; }
+      .layout--a2 .logo { width: 3.15rem; }
+      .layout--a3 .logo { width: 3.12rem; }
+      .layout--a4 .logo { width: 3.07rem; }
+      .layout--490x990 .logo { width: 2.45rem; }
+
+      .cta {
+        max-height: 1.5rem;
+        font-family: var(--font-1);
+        font-weight: var(--semibold-weight);
+        line-height: 1.1em;
+      }
+
+      .layout--a0 .cta,
+      .layout--a1 .cta {
+        max-height: 1.45rem;
+      }
+
+      .layout--a2 .cta,
+      .layout--a3 .cta,
+      .layout--a4 .cta {
+        max-height: 1.5rem;
+      }
+
+      .layout--490x990 .cta {
+        max-height: 1.3rem;
+      }
+
+      .cta h3,
+      .cta h4,
+      .cta h6 {
+        line-height: 1.1em;
+      }
+
+      .layout--a0 .cta h3 { font-size: 0.324rem; }
+      .layout--a0 .cta h4 { font-size: 0.2924rem; }
+      .layout--a0 .cta h6 { font-size: 0.2624rem; }
+      .layout--a1 .cta h3 { font-size: 0.321rem; }
+      .layout--a1 .cta h4 { font-size: 0.281rem; }
+      .layout--a1 .cta h6 { font-size: 0.241rem; }
+      .layout--a2 .cta h3 { font-size: 0.315rem; }
+      .layout--a2 .cta h4 { font-size: 0.285rem; }
+      .layout--a2 .cta h6 { font-size: 0.245rem; }
+      .layout--a3 .cta h3 { font-size: 0.314rem; }
+      .layout--a3 .cta h4 { font-size: 0.284rem; }
+      .layout--a3 .cta h6 { font-size: 0.244rem; }
+      .layout--a4 .cta h3 { font-size: 0.31rem; }
+      .layout--a4 .cta h4 { font-size: 0.28rem; }
+      .layout--a4 .cta h6 { font-size: 0.24rem; }
+      .layout--490x990 .cta { font-size: 0.31rem; }
+      .layout--490x990 .cta h3 { font-size: 0.246rem; }
+      .layout--490x990 .cta h4 { font-size: 0.28rem; }
+      .layout--490x990 .cta h6 { font-size: 0.24rem; }
+
+      .cricos__container {
+        position: absolute;
+        width: 40vw;
+        z-index: 10;
+      }
+
+      .layout--a0 .cricos__container {
+        right: 0.51rem;
+        top: 0.49rem;
+      }
+
+      .layout--a1 .cricos__container {
+        right: 0.49rem;
+        top: 0.49rem;
+      }
+
+      .layout--a2 .cricos__container {
+        right: 0.54rem;
+        top: 0.53rem;
+      }
+
+      .layout--a3 .cricos__container {
+        right: 0.59rem;
+        top: 0.57rem;
+      }
+
+      .layout--a4 .cricos__container {
+        right: 0.634rem;
+        top: 0.62rem;
+      }
+
+      .layout--490x990 .cricos__container {
+        right: 0.634rem;
+        top: 0.63rem;
+      }
+
+      .cricos {
+        line-height: 1.2em;
+        text-align: right;
+        font-family: var(--font-2);
+      }
+
+      .layout--a0 .cricos { font-size: 0.147rem; }
+      .layout--a1 .cricos { font-size: 0.147rem; }
+      .layout--a2 .cricos { font-size: 0.145rem; }
+      .layout--a3 .cricos { font-size: 0.143rem; }
+
+      .layout--a4 .cricos { font-size: 0.14rem; }
+      .layout--490x990 .cricos { font-size: 0.113rem; }
+
+      .processText__container {
+        position: absolute;
+        transform: rotate(-90deg);
+        transform-origin: left bottom;
+        width: 25vw;
+        z-index: 15;
+      }
+
+      .layout--a0 .processText__container {
+        bottom: 6.81%;
+        left: 95.5%;
+      }
+
+      .layout--a1 .processText__container {
+        bottom: 6.91%;
+        left: 95.6%;
+      }
+
+      .layout--a2 .processText__container {
+        bottom: 7.05%;
+        left: 95.3%;
+      }
+
+      .layout--a3 .processText__container {
+        bottom: 7.21%;
+        left: 94.9%;
+      }
+
+      .layout--a4 .processText__container {
+        bottom: 7.41%;
+        left: 94.7%;
+      }
+
+      .layout--490x990 .processText__container {
+        bottom: 6.41%;
+        left: 93.3%;
+      }
+
+      .processText {
+        line-height: 1.2em;
+        font-family: var(--font-2);
+      }
+
+      .layout--a0 .processText { font-size: 0.142rem; }
+      .layout--a1 .processText { font-size: 0.141rem; }
+      .layout--a2 .processText { font-size: 0.14rem; }
+      .layout--a3 .processText { font-size: 0.138rem; }
+      .layout--a4 .processText { font-size: 0.136rem;}
+      .layout--490x990 .processText { font-size: 0.107rem; }
+
+      .process-marks-container {
+        position: relative;
+        width: 100%;
+        height: 0.07em;
+      }
+
+      .layout--a0 .process-marks-container { margin-top: 0.45em; }
+      .layout--a1 .process-marks-container { margin-top: 0.45em; }
+      .layout--a2 .process-marks-container { margin-top: 0.43em; }
+      .layout--a3 .process-marks-container { margin-top: 0.44em; }
+      .layout--a4 .process-marks-container { margin-top: 0.42em; }
+      .layout--490x990 .process-marks-container { margin-top: 0.35em; }
+
+      .process-mark-left,
+      .process-mark-right {
+        height: 100%;
+        background-color: var(--dynamic-marks-colour);
+      }
+
+      .layout--a0 .process-mark-left,
+      .layout--a0 .process-mark-right {
+        width: 3.9% !important;
+      }
+
+      .layout--a1 .process-mark-left,
+      .layout--a1 .process-mark-right {
+        width: 4% !important;
+      }
+
+      .layout--a2 .process-mark-left,
+      .layout--a2 .process-mark-right {
+        width: 4.2% !important;
+      }
+
+      .layout--a3 .process-mark-left,
+      .layout--a3 .process-mark-right {
+        width: 4.4% !important;
+      }
+
+      .layout--a4 .process-mark-left,
+      .layout--a4 .process-mark-right {
+        width: 4.8% !important;
+      }
+
+      .layout--490x990 .process-mark-left,
+      .layout--490x990 .process-mark-right {
+        width: 5.3% !important;
+      }
+
+      .process-mark-left { float: left; }
+      .process-mark-right { float: right; }
+
+      /*      .is-export-mode.layout--a0 .section { max-height: 16.15rem; }  */
+      .is-export-mode.layout--a1 .section { max-height: 15.39rem; } 
+      .is-export-mode.layout--a2 .section { max-height: 15.31rem; }  
+      .is-export-mode.layout--a3 .section { max-height: 15.2rem; }
+      .is-export-mode.layout--a4 .section { max-height: 15.59rem; }     
+      .is-export-mode.layout--490x990 .section { max-height: 16.88rem; }   
+
+
+
+      /* Helper classes */
+      .u-hide { display: none; }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0; 
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        filter: greyscale(100%);
+      }
+
+      em {
+        -moz-font-feature-settings: "salt" 2;
+        -webkit-font-feature-settings: "salt" 2;
+        font-feature-settings: "salt" 2;
+      }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" data-crop="{{show-crop}}" class="layout--{{{SU_layout--pfct}}}{{^SU_layout--pfct}}a4{{/SU_layout--pfct}}
+                                                                   themeColour--{{{SU_theme--pfct}}}{{^SU_theme--pfct}}fullColour{{/SU_theme--pfct}}">
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+          <div class="section" data-max-height="css">
+            <div class="section__top">
+              <div class="process-marks-container">
+                <div class="process-mark-left"></div> <!--process-marks-left-->
+                <div class="process-mark-right"></div> <!--process-marks-right-->
+              </div> <!--process-marks-container-->
+              <div class="column__container">
+                <div class="column column__left">
+                  {{#SU_headline--pfct}}
+                  <div class="heading">{{{SU_headline--pfct}}}</div> <!--heading-->
+                  {{/SU_headline--pfct}}
+                  {{#SU_subheading--pfct}}
+                  <div class="subheading">{{{SU_subheading--pfct}}}</div> <!--subheading-->
+                  {{/SU_subheading--pfct}}
+                </div> <!--column__left-->
+                <div class="column column__right">
+                  {{#SU_copy--pfct}}
+                  <div class="copy">{{{SU_copy--pfct}}}</div> <!--copy-->
+                  {{/SU_copy--pfct}}
+                </div> <!--column__right-->
+              </div> <!--column__container-->
+            </div> <!--section__top-->
+            <div class="section__bottom">
+              <div class="logo__container">
+                <img class="logo" src="{{{account.logos.primary}}}"> <!--logo-->
+              </div> <!--logo__container-->
+              {{#SU_cta--pfct}}
+              <div class="cta u-heading-patch" data-max-height="css">{{{SU_cta--pfct}}}</div> <!--cta-->
+              {{/SU_cta--pfct}}
+            </div> <!--section__bottom-->
+          </div> <!--section-->
+          <div class="cricos__container">
+            <div class="cricos"><h4>{{{account.snippets.cricos}}} OF_{{#metadata}}{{export_id}}{{/metadata}}{{^metadata}}XXXXXX{{/metadata}}</h4></div> <!--cricos-->
+          </div> <!--cricos__container-->
+          {{#SU_process-text--pfct}}
+          <div class="processText__container">
+            <div class="processText" data-max-line="2"><h4>{{{SU_process-text--pfct}}}</h4></div> <!--processText-->
+          </div> <!--processText__container-->
+          {{/SU_process-text--pfct}}
+          <div class="backgroundImage"><div class="reposition-fix">{{{SU_background-image--pfct}}}</div></div> <!--backgroundImage-->
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/hide-empty-titles.js"></script>
+    <script src="js/custom-rich-text.js"></script>
+    <script src="js/dynamic-inject.js"></script>
+    <script src="js/text-fit-min.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+
+      console.clear();
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+          hideEmptyTitles();
+        });
+      });
+
+      const injectObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          injectDynamicContent();
+        });
+      });      
+
+      const injectSources = document.querySelectorAll('[data-target-id]');
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      if ( injectSources.length > 0 ) {
+        injectSources.forEach(src => {
+          injectObserver.observe(src, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });            
+        });
+      }    
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+        injectDynamicContent();
+        hideEmptyTitles();
+      });
+
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+
+    </script>
+    <script type="text/javascript">
+      // Add many fallbacks for Print Ready
+      document.addEventListener('DOMContentLoaded', function(event) {
+        document.dispatchEvent(new Event('printready'));
+      });
+
+      setTimeout(function() {
+        document.dispatchEvent(new Event('printready'));
+      }, 500);
+
+      document.dispatchEvent(new Event('printready'));
+    </script>
+
+  </body>
+</html>

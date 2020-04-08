@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html class="{{{ chevron-visibility }}}">
+  <head>
+    <title>Print Generic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://outfit-assets-production.s3.amazonaws.com/fonts/apercu-pro/stylesheet.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    <style>
+      * { 
+        -webkit-font-smoothing: antialiased; 
+        color: black;
+      }
+      token-value {
+        color: inherit;
+      }
+      .overflow {
+        border: 1px dashed red;
+        position: relative; }
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 5px;
+        right: 5px;
+        height: 15px;
+        width: 15px;
+        border: 1px solid red;
+        color: red;
+        padding: 2px 2px 2px 3px;
+        box-sizing: border-box;
+        font-size: 13px;
+        text-align: center;
+        line-height: 8px;
+        background-color: white;
+        text-align: center; }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 25px;
+        right: 5px;
+        background-color: black;
+        color: white;
+        border-radius: 2px;
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.1em;
+        text-align: right;
+        width: 15em;
+      }
+      body { font-family: 'Apercu Pro', sans-serif; }
+      h1, h2, h3, h4, h5, h6 { font-weight: bold; }
+      h1 { font-size: 0.8em; }
+      h2 { font-size: 0.6em; }
+      p { font-size: 0.2em; }
+      .bleed { position: relative; }
+
+      .flex-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: absolute;
+        top: 1em;
+        left: 1em;
+        bottom: 1em;
+        right: 1em;
+      }
+      
+      /*-------------------*\
+      	HEADER STYLES
+      \*-------------------*/
+      .main-header {
+        padding: 0 0 0.3rem;
+      }
+      .facultyLockup {
+        width: 2.7em;
+        float: left;
+      }
+      .logo { 
+        display: block;
+        max-width: 100%;
+      }
+      .faculty { 
+        margin-top: -0.2rem; 
+        margin-left: 1.05em; 
+        width: 1.75em; 
+        color: black;
+      }
+      .faculty p { 
+        font-size: 0.22em; 
+        font-weight: bold; 
+      }
+      .headline { 
+        margin: 0.4em 0 0;
+        width: 70%;
+        float: right;
+      } 
+      .addition .headline {
+        width: 100%;
+      }
+      .addition .footer {
+        padding: 1em 0 0;
+        margin: -1em 0 0;
+      }
+      .headline h1 { color: {{{account.colors.primary}}}; text-align: right; }
+      .content {
+        padding: 0 0 0.5rem;
+      }
+      .ochre-box { position: relative; width: 100%; height: 3.6em; background-color: {{{account.colors.primary}}}; 
+      background-size: cover; background-repeat: no-repeat; background-position: center; }
+      .right-image { position: absolute; top: 0; right: 0; width: 35%; height: 3.6em; background-color: {{{account.colors.primary}}};
+      background-size: cover; background-repeat: no-repeat; background-position: center; }
+      .inner { position: absolute; top: 0; bottom: 0; left: 0; width: 65%; padding: 0.6em; }
+      .header { position: relative; } .header h1 { font-weight: 500; }
+      .front-page-text { width: 100%; margin: 0; height: 100%; }
+      .text { width: 100%; height: 100%; } 
+      .text h2 { 
+        color: black; 
+        padding: 0.6em 0; 
+        font-size: 0.35em; 
+      }
+      .text h3 { color: {{{account.colors.primary}}}; margin: 0 0 0.3em 0; font-size: 0.25em; } 
+      .text p { 
+        margin: 0.8em 0 0.8em 0; 
+      }
+      .text ul,
+      .text ol {
+        padding: 0 0 0 20px;
+        margin: 0 0 0.8em;
+        font-size: 0.2em;
+      }
+      .text li {
+
+      }
+      .text ul li:before {
+        content: "—";
+        font-weight: bolder;
+        display: inline-block;
+        margin-left: -1.3em;
+        width: 1.3em;
+      }
+      .text a {
+        color: inherit;
+        text-decoration: none;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      .image { margin: 0.3em 0 0 0; } 
+      .image img { width: 100%; }
+      .two-columns { -webkit-column-count: 2; -moz-column-count: 2; column-count: 2;
+      -webkit-column-gap: 15px; -moz-column-gap: 15px; column-gap: 15px; -webkit-column-fill: 2; -moz-column-fill: auto; column-fill: auto; }
+      .cricos { margin: 0.8em 0 0 0; font-size: 0.1em; }
+      .shape { 
+        width: 100%;
+       }
+      .shape.none {
+        display: none;
+        height: 0px;
+      }
+      .caption { color: #828282; margin: 0.8em 0; font-size: 0.15em; }
+      .page.addition .logo { 
+        position: absolute; 
+        top: auto; 
+        bottom: 0; 
+        left: auto; 
+        right: 1em; 
+        width: 2.7em; 
+        display: flex; 
+        align-items: flex-end; 
+        padding: 0 0 0.9em;
+      } 
+
+      .page.addition .col-container, .col-container { display: flex; justify-content: space-between; width: 100%; height: 100%; }
+      .page.addition .col-1, .page.addition .col-2, .col-1, .col-2 { width: 343.75px; height: 100%; }
+      .col-1__wrapper,
+      .col-2__wrapper {
+        height: 100%;
+      }
+      .page.addition .highlight { background-color: #f1f1f1; padding: 0.3em; margin: 0 0 0.3em 0; }
+      .page.addition .highlight p { margin: 0; }
+      .page.addition .table-highlight { color: white; background-color: black; }
+      .page.addition .image { color: #828282; font-size: 0.15em; }
+      .page.addition .caption { color: #828282; margin: 0.8em 0; font-size: 0.15em; }
+      .page.addition .timetable { margin: 0 0 0.3em 0; }
+      .page.addition .timetable table { width: 100%; font-size: 0.25em; }
+      .page.addition .timetable tr td { border-bottom: 2px solid black; padding: 0.45em 0.8em; }
+      
+      #Shape-1 { fill: {{{account.colors.primary}}}; opacity: 0.4 }
+      #Shape-2 { fill: {{{account.colors.primary}}}; opacity: 0.6; }
+      #Shape-3 { fill: {{{account.colors.primary}}}; opacity: 0.8; }
+      #Shape-4 { fill: {{{account.colors.primary}}}; } 
+      
+      .shape-text { display: flex; position: absolute; bottom: 0.83em; left: 1em; height: 0.6em; z-index: 1; }
+      .shape-text ul { display: flex; }
+      .shape-text-item { display: flex; align-items: center; width: 10em; color: black; margin: 0 0 0 4.8em; font-size: 0.2em; }
+      .shape-text-item:first-of-type { margin: 0; }
+
+    </style>
+  </head>
+  <body style="background: white">
+    
+    <div class="page">
+      <div class="bleed">
+        <div class="flex-container">
+          <div class="main-header">
+            <div class="facultyLockup">
+              <img class="logo" src="{{{account.logos.primary}}}">
+            	{{#team.logo-lockup-line-one}}
+                <div class="faculty">
+                    <p>—<br>{{{team.logo-lockup-line-one}}}<br>{{{team.logo-lockup-line-two}}}<br>{{{team.logo-lockup-line-three}}}<br>{{{team.logo-lockup-line-four}}}</p>
+            	</div>				  
+                {{/team.logo-lockup-line-one}}
+            </div>
+            <div class="headline">
+              <div style="max-height: 1.6em;">
+                <div class="check-overflow">
+                  <h1 style="font-size: 0.{{{title-top-font-size}}}em;">{{{ title-top }}}</h1>
+                </div>
+              </div>
+            </div>
+          </div><!--header-->
+
+          <div id="p1Content" class="content">
+            {{#box-header-image}}
+            <div class="ochre-box">
+              <div class="right-image" style="background-image: url({{{ box-header-image }}});"></div>
+              <div class="inner"><div class="header"><div style="max-height: 2.5em;"><div class="check-overflow">
+                <h1 style="font-size: 0.{{{box-headline-font-size}}}em;">{{{ box-headline }}}</h1></div></div></div></div></div>
+            {{/box-header-image}}
+            {{^box-header-image}}
+            <div class="ochre-box">
+              <div class="inner" style="right: 0; width: auto;"><div class="header"><div style="max-height: 2.5em;"><div class="check-overflow">
+                <h1 style="font-size: 0.{{{box-headline-font-size}}}em;">{{{ box-headline }}}</h1></div></div></div></div></div>
+            {{/box-header-image}}
+
+            <div class="text">
+              <h2>{{{ highlight-copy }}}</h2>
+              <div class="two-columns col-container">
+                <div>
+                  <div class="col-1">
+                    <div class="col-1__wrapper">
+                      <div class="check-overflow">
+                        <div class="front-page-text">
+                          {{#collection.front-page-left-column}}{{#block.front-page-copy}}{{#copy}}<div class="text">{{{ copy }}}</div>{{/copy}}{{/block.front-page-copy}}
+                          {{#block.front-page-image}}
+                          {{#image}}<div class="image"><img src="{{{image}}}"></div>{{/image}}
+                          {{#image-caption}}<div class="text"><p class="caption">{{{image-caption}}}</p></div>{{/image-caption}}
+                          {{/block.front-page-image}}{{/collection.front-page-left-column}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="col-2">
+                    <div class="col-2__wrapper">
+                      <div class="check-overflow">
+                        <div class="front-page-text">
+                          {{#collection.front-page-right-column}}{{#block.front-page-copy}}{{#copy}}<div class="text">{{{ copy }}}</div>{{/copy}}{{/block.front-page-copy}}
+                          {{#block.front-page-image}}
+                          {{#image}}<div class="image"><img src="{{{image}}}"></div>{{/image}}
+                          {{#image-caption}}<div class="text"><p class="caption">{{{image-caption}}}</p></div>{{/image-caption}}
+                          {{/block.front-page-image}}{{/collection.front-page-right-column}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="shape-text" style="display: {{{ chevron-visibility }}};">
+              <ul>
+                <div class="shape-text-item" style="max-height: 2.6em;"><div class="check-overflow"><li>{{{ shape-text-one }}}</li></div></div>
+                <div class="shape-text-item" style="max-height: 2.6em;"><div class="check-overflow"><li>{{{ shape-text-two }}}</li></div></div>
+                <div class="shape-text-item" style="max-height: 2.6em;"><div class="check-overflow"><li>{{{ shape-text-three }}}</li></div></div>
+                <div class="shape-text-item" style="max-height: 2.6em;"><div class="check-overflow"><li>{{{ shape-text-four }}}</li></div></div>
+              </ul>
+            </div>
+
+          </div>
+           <div class="shape {{{chevron-visibility}}}">
+          <svg width="100%" height="100%" viewBox="0 0 474 69" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <defs></defs>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Shape">
+                <path d="M132,34.5 L99.5481857,69 L0,69 L32.4518143,34.5 L0,0 L99.5481857,0 L132,34.5 Z" id="Shape-1"></path>
+                <path d="M246,34.5 L213.548186,69 L114,69 L146.451814,34.5 L114,0 L213.548186,0 L246,34.5 Z" id="Shape-2"></path>
+                <path d="M360,34.5 L327.548186,69 L228,69 L260.451814,34.5 L228,0 L327.548186,0 L360,34.5 Z" id="Shape-3"></path>
+                <path d="M474,34.5 L441.548186,69 L342,69 L374.451814,34.5 L342,0 L441.548186,0 L474,34.5 Z" id="Shape-4"></path>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div class="footer"><p class="cricos">{{{ cricos }}}</p></div>
+        </div><!--flex-container-->
+      
+      </div>
+    </div>
+    
+    {{#collection.pages}}
+    <div class="page addition">
+      <div class="bleed">
+        <div class="flex-container">
+          <div class="content">
+
+            <div class="text">
+              <div class="front-page-text">
+
+                <h2>{{{ highlight-copy }}}</h2>
+
+                <div class="col-container">
+                  <div class="col-1">
+                      <div class="check-overflow">
+                        {{#collection.column-one}}
+                        {{#block.copy}}{{#copy}}<div class="text">{{{ copy }}}</div>{{/copy}}{{/block.copy}}
+                        {{#block.copy-highlight}}{{#copy}}<div class="text highlight">{{{ copy }}}</div>{{/copy}}{{/block.copy-highlight}}
+                        {{#block.image}}
+                        {{#image}}<div class="image"><img src="{{{image}}}"></div>{{/image}}
+                        {{#image-caption}}<div class="text"><p class="caption">{{{image-caption}}}</p></div>{{/image-caption}}
+                        {{/block.image}}
+                        {{#block.table}}
+                        <div class="timetable">
+                          <table>
+                            {{#spreadsheet.table}}
+                            <tr class="{{{ table-highlight }}}">
+                              <td>{{{ col-1 }}}</td>
+                              <td>{{{ col-2 }}}</td>
+                              <td>{{{ col-3 }}}</td>
+                            </tr>
+                            {{/spreadsheet.table}}
+                          </table>
+                        </div>
+                        {{/block.table}}
+                        {{/collection.column-one}}
+                      </div>
+                    </div>
+
+                  <div class="col-2">
+                      <div class="check-overflow">
+                        {{#collection.column-two}}
+                        {{#block.copy}}{{#copy}}<div class="text">{{{ copy }}}</div>{{/copy}}{{/block.copy}}
+                        {{#block.copy-highlight}}{{#copy}}<div class="text highlight">{{{ copy }}}</div>{{/copy}}{{/block.copy-highlight}}
+                        {{#block.image}}
+                        {{#image}}<div class="image"><img src="{{{image}}}"></div>{{/image}}
+                        {{#image-caption}}<div class="text"><p class="caption">{{{image-caption}}}</p></div>{{/image-caption}}
+                        {{/block.image}}
+                        {{#block.table}}
+                        <div class="timetable">
+                          <table>
+                            {{#spreadsheet.table}}
+                            <tr class="{{{ table-highlight }}}">
+                              <td>{{{ col-1 }}}</td>
+                              <td style="text-align: right;">{{{ col-2 }}}</td>
+                            </tr>
+                            {{/spreadsheet.table}}
+                          </table>
+                        </div>
+                        {{/block.table}}
+                        {{/collection.column-two}}
+                      </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+          <div class="footer"><p class="cricos"></p></div>
+        </div>
+      </div>
+    </div>
+    {{/collection.pages}}
+
+    <script>
+      window.showCrop = {{show-crop}};
+    </script>
+    <script src="main.js"></script>
+    <script src="prefixfree.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script>
+            
+      function loop() {
+        checkHeight(document.getElementsByClassName('check-overflow'));
+        
+      } setInterval(loop, 500);
+
+      function checkHeight(element) {
+        for (i = 0 ; i < element.length ; i++ ) {
+          var currentElement = element[i];
+          var height         = currentElement.offsetHeight;
+          var parent         = currentElement.parentNode;
+          var parentHeight   = parent.offsetHeight;
+
+          if (height > parentHeight) {
+            parent.classList.add('overflow');
+          } else {
+            parent.classList.remove('overflow');
+          }
+
+          if ((currentElement).parentNode.classList.contains('overflow')) {
+            document.body.classList.add('overflow-true');
+          } else {
+            document.body.classList.remove('overflow-true'); 
+          }
+        }
+      }
+     
+      
+     var cricos = document.getElementsByClassName('cricos');
+     for ( i = 0 ; i < cricos.length ; i++ ) {
+       cricos[i].innerHTML = '{{{ cricos }}}'
+     };
+      
+    </script>
+    <!-- Script Injects Header onto all Additional Pages if the Repeat Header Input is set to True -->
+    <script>
+      	var repeatHeading = {{{ repeat-heading }}};
+      	if(repeatHeading) {
+          // Grab the Heading that we need to repeat
+          var heading = document.querySelector(".headline");
+          // Grab all the Additional Pages Containers that we need to inject into
+          var additionalPages = document.querySelectorAll(".page.addition .flex-container");
+          // Loop Through pages and do the injection
+          for(var i = 0; i < additionalPages.length; i++) {
+            var injectableClone = heading.cloneNode(true);
+            additionalPages.item(i).prepend(injectableClone);
+          } 
+        }
+    </script>
+    <!-- Script to dynamically set the height of the content -->
+    <script>
+      // Page 1 Height
+      var p1content = document.getElementById("p1Content");
+      var p1Header = document.querySelector(".main-header")
+      var p1headerHeight = window.getComputedStyle(p1Header,null).getPropertyValue("height");
+      var p1Footer = document.querySelector(".shape")
+      var p1footerHeight = window.getComputedStyle(p1Footer,null).getPropertyValue("height");
+      var p1OchreBox = document.querySelector(".ochre-box");
+      var p1OchreBoxHeight = window.getComputedStyle(p1OchreBox,null).getPropertyValue("height");
+      var p1Text = document.querySelector("#p1Content .text");
+      var p1TextHead = document.querySelector("#p1Content .text h2");
+      var p1TextheadHeight = window.getComputedStyle(p1TextHead,null).getPropertyValue("height");
+      var p1ColContainer = document.querySelector("#p1Content .col-container");
+      // Set Content Height
+      p1content.setAttribute("style","height: calc(100% - " + p1headerHeight + " - " + p1footerHeight + ")");
+      p1Text.setAttribute("style", "height: calc(100% - " + p1OchreBoxHeight + ")");
+      p1ColContainer.setAttribute("style" , "height: calc(100% - " + p1TextheadHeight + ")");
+      
+      // Set Heights of subsequent pages
+      var additionalContent = document.querySelectorAll(".addition .content");
+      var additionalFooter = document.querySelector(".addition .footer");
+      var additionalFooterHeight;
+      if(additionalFooter != undefined) {
+        additionalFooterHeight = additionalFooter.clientHeight + "px";
+      }
+      var additionalHeading = document.querySelectorAll(".addition .text h2");
+      var additionalColContainers = document.querySelectorAll(".addition .col-container");
+      
+      for(var i = 0; i < additionalContent.length; i++){
+        // Set the content height
+        additionalContent.item(i).setAttribute("style","height: calc( 100% - " + additionalFooterHeight + ")");
+        // Grab heading Height
+        var heading = additionalHeading.item(i);
+        var headingHeight = window.getComputedStyle(heading,null).getPropertyValue("height");
+        // Set the text height
+        additionalColContainers.item(i).setAttribute("style", "height: calc(100% - " + headingHeight + ")");
+      }
+    </script>
+  </body>
+</html>

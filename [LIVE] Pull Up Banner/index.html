@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html data-sign="OSR">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Circular/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/apercu-pro/stylesheet.css');
+      
+
+      /*
+      {{show-crop}}
+      {{ placeholder-opacity }}
+      {{ placeholder-image-1 }}
+      {{ placeholder-toggle-new }}
+      {{ placeholder-validation }}
+      {{UOS_layout-size--npub}}
+      {{{SY_headline--pub}}}
+      {{{SY_heading-slider--pub}}}
+
+      {{{SY_background-image--pub}}}
+      */
+
+      :root {
+        --white: #fff;
+        --black: #000;
+        --orange: {{{account.colors.primary}}};
+      }
+
+      html {
+        font-family: 'Circular';
+        font-size: 11pt;
+        color: #000;
+        word-break: break-word;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }      
+
+      /* Helper classes */
+      .u-hide { display: none; }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      .fit {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .section {
+
+      }
+
+      .section--primary {
+        flex: 1;
+        position: relative;
+        background-color: {{{account.colors.primary}}};
+      }
+
+      .layoutSize--print-ready .section--primary {
+        padding: 414pt 427pt 69pt 385pt;
+        clip-path:  clip-path: polygon(0 0, 100% 0%, 100% 200pt, 2215pt 200pt, 2215pt 222pt, 100% 222pt, 100% 100%, 0 100%, 0 222pt, 225pt 222pt, 225pt 200pt, 0 200pt);
+        -webkit-clip-path: polygon(0 0, 100% 0%, 100% 200pt, 2215pt 200pt, 2215pt 222pt, 100% 222pt, 100% 100%, 0 100%, 0 222pt, 225pt 222pt, 225pt 200pt, 0 200pt);
+      }
+
+      .layoutSize--pdf-print-ready .section--primary {
+        padding: 505pt 427pt 69pt 466pt;
+        clip-path:  clip-path: polygon(0 0, 100% 0%, 100% 200pt, 2820pt 200pt, 2820pt 222pt, 100% 222pt, 100% 100%, 0 100%, 0 222pt, 225pt 222pt, 225pt 200pt, 0 200pt);
+        -webkit-clip-path: polygon(0 0, 100% 0%, 100% 200pt, 2820pt 200pt, 2820pt 222pt, 100% 222pt, 100% 100%, 0 100%, 0 222pt, 225pt 222pt, 225pt 200pt, 0 200pt);
+      }
+
+      .section--secondary {
+        position: relative;
+      }
+
+      .layoutSize--print-ready .section--secondary {
+        height: 54%;
+      }
+
+      .layoutSize--pdf-print-ready .section--secondary {
+        height: 49%;
+      }
+
+      .logo {
+        margin-bottom: 352pt;
+        width: 1000pt;
+      }
+
+      .layoutSize--print-ready .content {
+        max-height: 21em;        
+      }
+      
+      .layoutSize--pdf-print-ready .content {
+        max-height: 17em;              
+      }
+      
+      .content {
+        font-size: 155pt;
+      }
+
+      .layoutSize--print-ready .heading {
+        margin-bottom: 1.1em;
+        max-height: 7em;
+      }
+
+      .layoutSize--pdf-print-ready .heading {
+        margin-bottom: 0.8em;
+        max-height: 7em;
+      }
+
+      .content h3, .cta h3 {
+        font-size: 1em;
+        line-height: 1.14em;
+      }
+
+      .content h4, .cta h4 {
+        font-size: 0.9em;
+        line-height: 1.14em;
+      }
+
+      .content h5, .cta h5 {
+        font-size: 0.8em;
+        line-height: 1.14em;
+      }
+
+      .content h6, .cta h6 {
+        font-size: 0.7em;
+        line-height: 1.14em;
+      }
+
+      .cta {
+        position: relative;
+        font-size: 155pt;
+        line-height: 1.2em;
+        font-weight: bold;
+      }
+
+      .layoutSize--print-ready .cta {
+        margin-bottom: 0.5em;
+      }
+
+      .layoutSize--pdf-print-ready .cta {
+        margin-bottom: 0.2em;
+      }
+
+      .cta-line {
+          width: 115pt;
+          height: 19pt;
+          content: '';
+          background-color: var(--black);
+          margin: 0.5em 0 0.5em 0;
+      }
+
+      .social__container {
+        margin-bottom: 352pt;
+      }
+
+      .social {
+        display: flex;
+        align-items: center;
+        padding-right: 150pt;
+      }
+
+      .layoutSize--print-ready .social {
+        margin-bottom: 48pt;
+      }
+
+      .layoutSize--pdf-print-ready .social {
+        margin-bottom: 13pt;
+      }
+
+      .social:last-child {
+        margin-bottom: 0;
+      }
+
+      .social__icon {
+        margin-right: 30pt;
+        width: 91pt;
+        height: 91pt;
+        object-fit: contain;
+      }
+
+      .social__value {
+        line-height: 1.1em;
+        color: var(--black);
+      }
+
+      .layoutSize--print-ready .social__value {
+        font-size: 89pt;
+      }
+
+      .layoutSize--pdf-print-ready .social__value {
+        font-size: 104pt;
+        line-height: 1.2em;
+      }
+
+      .processText {
+        position: absolute;
+        left: 100%;
+        bottom: 5%;
+        width: 55%;
+        transform-origin: left bottom;
+        transform: rotate(-90deg) translateY(-129%);
+        font-family: 'Apercu Mono';
+        font-size: 51pt;
+        line-height: 1.2em;
+      }
+      
+      .processText .tinymce_style--light {
+        color: var(--white);
+      }
+      
+      .processText .tinymce_style--dark {
+        color: var(--black);
+      }
+
+      .cricos {
+        position: absolute;
+        left: 100%;
+        bottom: 12%;
+        width: 55%;
+        transform-origin: left bottom;
+        transform: rotate(-90deg) translateY(-129%);
+        font-family: 'Apercu Mono';
+        font-size: 51pt;
+        line-height: 1.2em;
+        color: var(--white);
+      }
+      
+      @media (max-width: 900mm) {
+        .processText {
+          width: 100%;
+        }
+      }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" data-crop="{{show-crop}}" class="layoutSize--{{UOS_layout-size--npub}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+
+
+          <div class="section section--primary">
+            <img src="{{{account.logos.primary}}}" class="logo"><!--logo-->
+            <div class="content" data-max-height="css">
+              
+                <div class="heading__inner" style="font-size:{{{SY_heading-slider--pub}}}%">
+                  {{{SY_headline--pub}}}
+                </div><!--heading__inner-->
+              
+                {{#SY_url-cta--pub}} 
+                  <div class="cta-line"></div>
+                  <div class="cta">{{{SY_url-cta--pub}}}</div><!--cta-->
+                {{/SY_url-cta--pub}}
+                
+              <!--<div class="subheading"></div> subheading-->
+
+              <div class="social__container">
+                {{#collection.socials--pub}}
+                {{#block.youtube--pub}}
+                <div class="social">
+                  <img src="https://files.outfit.io/media_library_items/122369/youtube-mono.png" class="social__icon"><!--social__icon-->
+                  <div class="social__value" data-max-line="1">{{{SY_youtube--pub}}}</div><!--social__value-->
+                </div><!--social-->
+                {{/block.youtube--pub}}
+
+                {{#block.facebook--pub}}
+                <div class="social">
+                  <img src="https://files.outfit.io/media_library_items/122367/facebook-mono.png" class="social__icon"><!--social__icon-->
+                  <div class="social__value" data-max-line="1">{{{SY_facebook--pub}}}</div><!--social__value-->
+                </div><!--social-->     
+                {{/block.facebook--pub}}
+
+                {{#block.twitter--pub}}
+                <div class="social">
+                  <img src="https://files.outfit.io/media_library_items/122370/Twitter_Logo_black.png" class="social__icon"><!--social__icon-->
+                  <div class="social__value" data-max-line="1">{{{SY_twitter--pub}}}</div><!--social__text-->
+                </div><!--social-->  
+                {{/block.twitter--pub}}
+
+                {{#block.instagram--pub}}
+                <div class="social">
+                  <img src="https://files.outfit.io/media_library_items/122371/instagram-mono.png" class="social__icon"><!--social__icon-->
+                  <div class="social__value" data-max-line="1">{{{SY_instagram--pub}}}</div><!--social__text-->
+                </div><!--social-->  
+                {{/block.instagram--pub}}
+
+                {{#block.linkedin--pub}}
+                <div class="social">
+                  <img src="https://files.outfit.io/media_library_items/122426/In-Black-128px-R.png" class="social__icon"><!--social__icon-->
+                  <div class="social__value" data-max-line="1">{{{SY_linkedin--pub}}}</div><!--social__text-->
+                </div><!--social-->
+                {{/block.linkedin--pub}}
+                {{/collection.socials--pub}}
+
+              </div><!--social__container-->
+            </div><!--content-->
+            {{#account.snippets.cricos}}
+            <span class="cricos">{{{account.snippets.cricos}}}</span>
+            {{/account.snippets.cricos}}
+          </div><!--section--primary-->
+          <div class="section section--secondary">
+            <div class="backgroundImage">
+              <div class="reposition-fix">{{{SY_background-image--pub}}}</div><!--reposition-fix-->
+            </div><!--backgroundImage-->
+          </div><!--section--secondary-->
+          <div class="processText" data-max-line="1">
+            {{{SY_process-text--pub}}}            
+          </div><!--processText-->
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/hide-empty-titles.js"></script>
+    <script src="js/dynamic-inject.js"></script>
+    <script src="js/text-fit-min.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+      {{ #placeholder-toggle-new }}document.body.classList.add("u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}"); {{ /placeholder-toggle-new }}
+      {{ #placeholder-validation }}document.body.classList.add("placeholder__validation--{{placeholder-validation}}"){{ /placeholder-validation }}
+    </script>
+    <script>
+
+      console.clear();
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+          hideEmptyTitles();
+        });
+      });
+
+      const injectObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          injectDynamicContent();
+        });
+      });      
+
+      const injectSources = document.querySelectorAll('[data-target-id]');
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      if ( injectSources.length > 0 ) {
+        injectSources.forEach(src => {
+          injectObserver.observe(src, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });            
+        });
+      }    
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+        injectDynamicContent();
+        hideEmptyTitles();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+
+    </script>
+
+
+  </body>
+</html>

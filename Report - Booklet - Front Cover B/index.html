@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html data-sign="OSB" async>
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import "https://outfit-assets-production.s3.amazonaws.com/fonts/apercu-pro/stylesheet.css";
+
+      :root {
+        --primary: {{account.colors.primary}};
+        --black: #000;
+        --white: #fff;
+      }
+
+      html {
+        font-family: 'Apercu Pro';
+        font-size: 0.2569rem;
+        color: var(--black);
+      }
+
+      h1, h2 {
+        font-size: 0.2803rem;
+        line-height: 1.35em;
+      }
+
+      h1 {
+        font-weight: bolder;
+        color: var(--primary);
+      }
+
+      p {
+        font-size: 0.2219rem;
+        line-height: 1.4em;
+      }
+
+      .body--doubleColumn p + h1,
+      .body--doubleColumn p + h2,
+      .body--twoHeroImages p + h1,
+      .body--twoHeroImages p + h2 {
+        margin-top: 0.3503rem;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }
+
+      .fit { display: flex;}
+      .fit--coverBack { 
+        align-items: flex-end;
+        padding: 0.55rem 0.9347rem 1.15rem 1.1912rem;
+      }
+
+      .fit--singleColumn,
+      .fit--doubleColumn,
+      .fit--twoHeroImages,
+      .fit--imagesWithinColumns,
+      .fit--singleHeroImage,
+      .fit--columnTable,
+      .fit--fullWidthTable {
+        flex-direction: column;
+        padding: 0.2336rem 1.1912rem 1.0043rem 1.1912rem;
+      }
+
+      .fit--singleHeroImage { padding-right: 4.2042rem; }
+      .fit--doubleColumn { padding-bottom: 1.4014rem; }
+
+      .fit--columns {
+        padding: 0.28rem 0.98rem 1.29rem 1.24rem;
+        flex-direction: column;
+      }
+
+      .body { flex: 1; }
+      .body--frontCover { padding: 2.1722rem 1.0510rem 0.2336rem 1.5182rem; }
+
+      .body--doubleColumn,
+      .body--twoHeroImages {
+        column-count: 2;
+        -moz-column-count: 2;
+        -webkit-column-count: 2;
+        column-gap: 0.7941rem;
+        -webkit-column-gap: 0.7941rem; 
+        -moz-column-gap: 0.7941rem; 
+        column-fill: auto;
+        -moz-column-fill: balance;
+        -webkit-column-fill: auto;
+        padding-right: 0.5839rem;
+      }
+
+      .body--imagesWithinColumns,
+      .body--columnTable {
+        display: flex;
+        flex-direction: row;        
+      } 
+
+      .body--imagesWithinColumns {
+        padding-right: 1.0043rem;
+        padding-bottom: 1.4948rem;
+      }
+
+      .body--columnTable {
+        padding-bottom: 1.1678rem;
+        padding-right: 1.0043rem;
+      }
+
+      .body--singleColumn {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .body--column {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 0 0.23rem;
+      }
+
+      .body--threeColumns {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .hide-contents-page {
+        display: none;
+      }
+
+      .show-contents-page {
+        display: block;
+      }
+
+      .body--contents { padding: 0.2102rem 1.1912rem 0.4671rem; }
+
+      .body--fullWidthTable {
+        display: flex;
+        flex-direction: column;
+        padding-right: 1.8218rem;
+      }
+
+      .hero {
+        position: relative;
+        flex: 0 0 42.2%;
+        overflow: hidden;
+      }
+
+      .hero--singleColumn {
+        margin-right: 2.0087rem;
+        flex: 0 0 25.3%;
+      }
+
+      .hero--columns {
+        margin-right: 2.20rem;
+      }
+
+      .hero__container  {
+        margin-right: 2.0087rem;
+        margin-bottom: 0.9202rem;
+        flex: 0 0 25.3%;
+      }
+
+      .hero--doubleColumn {
+        margin-right: 2.0087rem;
+        margin-bottom: 0.9576rem;
+        flex: 0 0 25.8%;
+      }
+
+      .hero--singleColumn { margin-bottom: 1.1024rem; }
+
+      .hero__container {
+        display: flex;
+        margin-right: 0;
+        margin-left: -0.7941rem;
+        padding-right: 0.5839rem;
+      }
+
+      .hero--twoHeroImages {
+        margin-left: 0.7941rem;
+        flex: 1;
+      }
+
+      .hero--imagesWithinColumns { flex: 0 0 28.2%; }
+      .content + .hero--imagesWithinColumns { margin-top: 0.9343rem; }
+
+      .hero--singleHeroImage {
+        margin-bottom: 0.1168rem;
+        flex: 0 0 25.5%;
+      } 
+
+      .logo {
+        width: 3rem;
+        position: relative;
+      }
+
+      .logo-back {
+        width: 3.2rem;
+        position: relative;
+        background: url({{{account.logos.primary}}}) center no-repeat;
+        background-size: contain;
+        height: 1.05rem;
+        margin-bottom: 0.35rem;
+      }
+
+      .title {
+        margin-bottom: 0.5138rem;
+        padding-left: 0.6773rem;
+        font-size: 0.5582rem;
+        line-height: 1.22em;
+        font-weight: bolder;
+      }
+
+      .subtitle {
+        padding-left: 0.6773rem;
+        font-size: 0.4671rem;
+        line-height: 1.2em;
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: 100%;
+        align-items: flex-end;
+      }
+
+      .contact__container {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .contact {
+        flex: 1;
+        width: 3.7371rem;
+        font-size: 0.2336rem;
+        line-height: 1.3em;
+      }
+
+      .cricos {
+        margin-top: 1.2rem;
+        font-size: 0.1518rem;
+        font-weight: bold;
+      }
+
+      .header {
+        padding-top: 1.8452rem;
+        padding-bottom: 0.8rem;
+      }
+
+      /* .header--singleHeroImage { height: 3.8772rem; } */
+
+      .topHeading {
+        margin-bottom: 0.1869rem;
+        font-size: 0.4671rem;
+        font-weight: bolder;
+        color: var(--primary);
+      }
+
+      .topHeading--columnTable,
+      .topHeading--fullWidthTable {
+        margin-bottom: 0;
+      }
+
+      .topHeading--contents  { margin-bottom: 0.0234rem; }
+      .topSubheading { font-size: 0.4671rem; }
+
+      .topSubheading--columnTable,
+      .topSubHeading--fullWidthTable,
+      .topSubheading--contents {
+        font-size: 0.3503rem;
+      }
+
+      .column {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+
+      .column:first-child { margin-right: 1.2613rem; }
+      .body--contents .column--columnTable { margin-right: 6.0494rem; }
+
+      .content {
+        position: relative;
+        flex: 1; 
+      }
+
+      .hero--imagesWithinColumns + .content { margin-top: 1.4248rem; }
+
+      .row {
+        height: 5.0450rem;
+        padding-bottom: 0.1168rem;
+      }
+
+      .row--withPadding { padding-bottom: 0.1074rem; }
+      .hero + .row { padding-top: 1.0744rem; }
+
+      .table {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.2219rem;
+      }
+
+      .table:first-child { flex: 1; }
+      .table--contents:first-child { flex: unset; }
+
+      .table__row {
+        display: flex;
+        min-height: 0.4487rem;
+        padding: 0.0888rem 0.1168rem 0.0817rem 0.0701rem;
+        line-height: 1.3em;
+        background: #fdd8c3;
+      }
+
+      .contents_table__row {
+        display: flex;
+        min-height: 0.4487rem;
+        padding: 0.0888rem 0.1168rem 0.0817rem 0.0701rem;
+        line-height: 1.3em;
+        background: var(--white);
+        border-bottom: 0.0234rem solid var(--primary);
+      }
+
+      .body--contents .table__row {
+        background: var(--white);
+        border-bottom: 0.0234rem solid var(--primary);
+      }
+
+      .text + .image__container  {
+        margin-top: 0.23rem;
+      }
+
+      .image__container {
+        height: 100%;
+      }
+
+      .image__container + .image__container {
+        margin-top: 0.23rem;
+      }
+
+      .image__container + .text {
+        margin-top: 0.23rem;
+      }
+
+      .image__container--oneColumn {
+        height: 4.68rem;
+      }
+
+      .image__container--twoColumns {
+        height: 5.92rem;
+      }
+
+      .image__container--threeColumns {
+        height: 3.87rem;
+      }
+
+      .image {
+        position: relative;
+        width: 100%;
+      }
+
+      .image--alt {
+        height: 100%;
+      }
+
+      .image__caption {
+        font-size: 0.19rem;
+        margin-top: 0.09rem;
+        line-height: 1.2em;
+      }
+
+      .table__row:nth-child(2n) { background: #fdeade; }
+
+      .table__header,
+      .body--contents .table__header,
+      .body--contents .table__row--y,
+      .body--contents .table__row--Y {
+        background: var(--primary);
+        color: var(--white);
+        border-bottom: none;
+      }
+
+      .table__label {
+        margin-right: 0.3503rem;
+        flex: 1;
+      }
+
+      .note {
+        margin-top: 1.2379rem;
+        padding: 0.2102rem 0.2569rem 0.3270rem 0.2803rem;
+        font-size: 0.2803rem;
+        line-height: 1.35em;
+        background: #818181;
+        color: var(--white);
+      }
+
+      .note--hide { display: none; }
+
+      .report { width: 100%; }
+
+      .report__container { flex: 1; }
+
+      .report__heading {
+        font-size: 0.2896rem;
+        vertical-align: top;
+        background: #818181;
+        color: var(--white); 
+      }
+
+      .report__mainHeading { width: 49.2%; }
+
+      tr { height: 0.4391rem; }
+
+      td {
+        padding-top: 0.0631rem;
+        padding-left: 0.0934rem;
+        font-size: 0.2219rem;
+      }
+
+      .report__heading  td { font-size: 0.2873rem; }
+
+      .report__cell { padding-right: 0.0771rem; }
+      .report__cell--left { padding-left: 0.8081rem; }
+      .report__cellHeading { font-weight: bold; }
+
+      .report__sum { height: 1.2379rem; }
+
+      .signOff {
+        display: none;
+        margin-bottom: 1.2846rem;
+        padding: 0.0934rem;
+        font-size: 0.2219rem;
+        border: 1pt solid var(--black);
+      }
+
+      .signOff--show { display: block; }
+
+      .signOff__text {
+        line-height: 1.4em;
+        font-style: italic;
+      }
+
+      .signOff__image {
+        margin-top: 0.1635rem;
+        max-width: 2.4291rem;
+        max-height: 1.5882rem;
+      }
+
+      .signOff__item { margin-top: 0.0304rem; }
+
+      .signOff__item:first-child { margin-top: 4pt; }
+
+      .pageNumber {
+        position: absolute;
+        bottom: 0.5430rem;
+        left: 1.1912rem;
+        font-size: 0.1798rem;
+      }
+
+      .pageNumber--right {
+        left: auto;
+        right: 1.1912rem;
+      }
+
+      .u-background-color { background: var(--primary); }
+      .u-noHero.u-noHero2.hero__container { display: none; }
+      .u-hero-background { background: var(--primary); }
+      .u-text-align-right { text-align: right; }
+      .u-text-align-center { text-align: center; }
+      .u-report-sum-border { position: relative; }
+
+      .report__line {
+        position: absolute;
+        height: 0.0163rem;
+        width: 95%;
+        background: var(--black);
+      }
+
+      .report__line--top { top: 0.3971rem; }
+      .report__line--bottom { bottom: 0.3737rem; }
+
+      .u-cell-padding-right { padding-right: 0.1168rem; }
+
+      /* Testing cols */
+      .u-cols {
+        column-count: 2;
+        column-gap: 0.2336rem;
+      }
+
+      /* front cover - ochre box */
+
+      .fc-header {
+        color: var(--black);
+        letter-spacing: -0.02em;
+        line-height: 1.2em;
+        font-weight: 600;
+      }
+
+      .fc-subheader {
+        color: var(--black);
+        font-weight: 400 !important;
+        line-height: 1.2em;
+      }
+
+      .url-fc {
+        font-size: 1em;
+        line-height: 1.3em;
+        font-weight: bold !important;
+      }
+
+      .align-bottom {
+        position: absolute;
+        right: 2.5em;
+        bottom: 0.8em;
+        width: 5.4rem;
+        text-align: right;
+      }
+
+      .content__inner {
+        background-color: #E64626;
+        -ms-flex-item-align: end;
+        align-self: flex-end;
+        bottom: 0;
+        box-sizing: border-box;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -ms-grid-row-align: center;
+        align-items: center;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        box-sizing: border-box;
+        position: absolute;
+        opacity: 1;
+        right: 1.35rem;
+        bottom: 1.25rem;
+        left: 1.35rem;
+        font-size: 0.4em;
+      }
+
+      .content__text {
+        background-color: #E64626;
+        padding: 0.25rem 1.1rem;
+        margin-top: 0;
+        box-sizing: border-box;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+      }
+
+      .cricos-code {
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+        -webkit-transform-origin: left top 0;
+        transform-origin: left bottom 0;
+        text-align: center;
+        font-family: 'Apercu Mono', 'Apercu Pro Mono', monospace;
+        bottom: 0;
+        font-size: 0.16rem;
+        right: -2.46rem;
+        color: #fff;
+        box-sizing: border-box;
+        position: absolute;
+      }
+      .subhead {
+        font-family: 'Apercu Mono', 'Apercu Pro Mono', monospace;
+        font-size: 0.23rem;
+        padding: 0 0.7rem;
+        margin-top: -0.2rem;
+        width: 100%;
+        z-index: 10000;
+      }
+
+      .process-marks-container {
+        margin-top: 0.6em;
+        width: 100%;
+        height: 0.1em;
+        position: relative;
+      }
+
+      .process-mark-left {
+        float: left;
+        height: 100%;
+        width: 6% !important;
+      }
+
+      .process-mark-right {
+        float: right;
+        height: 100%;
+        width: 6% !important;
+      }
+
+      .process-marks-container {
+        width: 100%;
+        height: 1.5em;
+        position: absolute;
+        margin-top: -1.7em;
+        background-color: #E64626;
+      }
+
+      .process-mark-left {
+        width: 87% !important;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        float: initial;
+        margin-top: 0.2em;
+        background-color: #E64626;
+      }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      .js-commercial-print-status { display: none; }
+
+      .errorPopup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 68%;
+        padding: 4%;
+        font-size: 0.4rem;
+        color: red;
+        background: #fff;
+        border: 5px solid red;
+        text-align: center;
+        z-index: 999;
+      }
+
+      ol li,
+      ul li {
+        position: relative;
+        font-size: 0.2219rem;
+        line-height: 1.4em;
+      }
+
+      ol, ul { margin-left: 0.25rem; }
+
+      ul li:before {
+        content: '.';
+        position: absolute;
+        top: -0.13rem;
+        left: -0.23rem;
+        font-size: 0.5rem;
+      }
+
+      a {
+        text-decoration: none;
+        color: var(--primary);
+      }
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}" data-crop="{{show-crop}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-2 }}"></div>
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-3 }}"></div>
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-4 }}"></div>
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-5 }}"></div>
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-6 }}"></div>
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-7 }}"></div>
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-8 }}"></div>
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-9 }}"></div>
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-10 }}"></div>
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-11 }}"></div>
+    </div><!-- end placeholderMaster -->
+    <div class="js-commercial-print-status">{{SU_commercial-print-status}}</div>
+    <div class="errorPopup">For commercial printing you will need to have a multiple of 4 pages (including the Front and Back cover).<br /> Please update the total page count or update the Commercial Printing toggle</div>
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+
+          <div class="backgroundImage">
+            <div class="reposition-fix"> {{{ custom-background-image }}} </div> <!-- reposition-fix -->
+          </div><!--background-->
+          <!--<div class="placeholder"></div>-->
+
+          <div class="content">
+
+            <div class="content__inner">
+
+              <div class="process-marks-container">
+                <div class="process-mark-left"></div>
+                <div class="process-mark-right"></div>
+              </div>
+
+              <div class="content__text">
+                <div class="cricos-code">17/IO CRICOS 00026A</div>
+
+                <div class="text-content mt-1" style="margin-bottom: 0.8rem;">
+                  <h1 class="fc-header" style="font-size: {{ SU-AP__header-fontSlider }}em;">{{{headline}}}</h1>
+
+                  <div class="secondary-details">
+                    <h5 class="fc-subheader" style="font-size: {{ SU-AP__subHeader-fontSlider }}em;">{{{secondary-details}}}</h5>
+                  </div>
+                </div><!--text-content-->
+
+                <div class="text-content-right-flex-top">
+
+                </div><!--text-content-->
+
+                <div class="flex-two-col"> <!--flex-two-col-->
+                  <div class="text-content">
+                    <div class="logo"><img src="{{{account.logos.primary}}}"></div><!--logo-->
+                  </div><!--text-content-->
+                  <div class="text-content-right">
+                    <div class="align-bottom" style="margin-bottom: 0.4rem;">
+                      <div class="url-fc textFit">{{{URL-CTA}}}</div>
+                    </div>
+                  </div>
+                </div><!--flex-two-col-->
+
+              </div><!--content__text-->
+
+              <div class="process-marks-container-bottom">
+                <div class="process-mark-left"></div>
+                <div class="process-mark-right"></div>
+              </div>
+
+            </div><!-- content__inner -->
+
+          </div><!--content-->
+
+        </div> <!--fit -->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    {{#collection.SU_pages--ar}}
+    {{#block.SU_contents--ar}}
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--contents">
+          <div class="body body--contents">
+            <div class="header">
+              <div class="topHeading topHeading--contents" data-max-line="2">
+                {{{ SU_contents-title--ar }}}
+              </div> <!-- topHeading -->
+              <div class="topSubheading topSubheading--contents" data-max-line="2">
+                {{{ SU_contents-subtitle--ar }}}
+              </div> <!-- topSubheading -->
+            </div> <!-- header -->
+            <div class="column column--columnTable">
+              <div class="table">
+                {{#spreadsheet.SU_contents-table--ar}}
+                <div class="contents_table__row table__row--{{{SU_is_table-heading--ar}}}"> 
+                  <div class="table__label"> {{{SU_table-content--ar}}} </div> <!-- table__label -->
+                  <div class="table__value"> {{{SU_page-number--ar}}} </div> <!-- table__value -->
+                </div> <!-- table__row -->
+                {{/spreadsheet.SU_contents-table--ar}}
+              </div> <!-- table -->
+            </div> <!-- column -->
+          </div> <!-- body -->
+          <div class="pageNumber"> </div> <!-- pageNumber -->
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    {{/block.SU_contents--ar}}
+    {{#block.SU_single-column-page--ar}}
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--singleColumn">
+          <div class="header">
+            {{#SU_heading--ar}}
+            <div class="topHeading" data-max-line="2">
+              {{{ SU_heading--ar }}}
+            </div> <!-- topHeading -->
+            {{/SU_heading--ar}}
+            {{#SU_subheading--ar}}
+            <div class="topSubheading" data-max-line="2">
+              {{{ SU_subheading--ar }}}
+            </div> <!-- topSubheading -->
+            {{/SU_subheading--ar}}
+          </div> <!-- header -->
+          {{#SU_image--ar}}
+          <div class="hero hero--singleColumn"> 
+            {{{ SU_image--ar }}}
+          </div> <!-- hero -->
+          {{/SU_image--ar}}
+          <div class="body body--singleColumn"> 
+            <div data-max-height="dynamic">
+              {{{ SU_content--ar }}}
+            </div> <!-- dynamic -->
+          </div> <!-- body -->
+          <div class="pageNumber"></div>
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    {{/block.SU_single-column-page--ar}}
+    {{#block.SU_double-column-page--ar}}
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--doubleColumn">
+          <div class="header">
+            {{#SU_heading--ar}}
+            <div class="topHeading" data-max-line="2">
+              {{{ SU_heading--ar }}}
+            </div> <!-- topHeading -->
+            {{/SU_heading--ar}}
+            {{#SU_subheading--ar}}
+            <div class="topSubheading" data-max-line="2">
+              {{{ SU_subheading--ar }}}
+            </div> <!-- topSubheading -->
+            {{/SU_subheading--ar}}
+          </div> <!-- header -->
+          {{#SU_image--ar}}
+          <div class="hero hero--doubleColumn"> 
+            {{{ SU_image--ar }}}
+          </div> <!-- hero -->
+          {{/SU_image--ar}}
+          <div class="body"> 
+            <div data-max-height="dynamic"> 
+              <div class="u-cols">
+                {{{ SU_content--ar }}}
+              </div><!-- end u-cols -->
+            </div> <!-- dynamic -->
+          </div> <!-- body -->
+          <div class="pageNumber"></div>
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    {{/block.SU_double-column-page--ar}}
+    {{#block.SU_two-hero-images--ar}}
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--twoHeroImages">
+          <div class="header">
+
+            {{#SU_heading--ar}}
+            <div class="topHeading" data-max-line="2">
+              {{{ SU_heading--ar }}}
+            </div> <!-- topHeading -->
+            {{/SU_heading--ar}}
+            {{#SU_subheading--ar}}
+            <div class="topSubheading" data-max-line="2">
+              {{{ SU_subheading--ar }}}
+            </div> <!-- topSubheading -->
+            {{/SU_subheading--ar}}            
+
+          </div> <!-- header -->
+          <div class="hero__container {{^SU_image--ar}}u-noHero{{/SU_image--ar}} {{^SU_image-2--ar}}u-noHero2{{/SU_image-2--ar}}"> 
+            {{#SU_image--ar}}
+            <div class="hero hero--twoHeroImages">
+              {{{ SU_image--ar }}}
+            </div> <!-- hero -->
+            {{/SU_image--ar}}
+            {{#SU_image-2--ar}}
+            <div class="hero hero--twoHeroImages">
+              {{{ SU_image-2--ar }}}
+            </div> <!-- hero -->
+            {{/SU_image-2--ar}}
+          </div> <!-- hero -->
+          <div class="body"> 
+            <div data-max-height="dynamic">
+              <div class="u-cols">
+                {{{ SU_content--ar }}}
+              </div><!-- end u-cols -->
+            </div> <!-- dynamic -->
+          </div> <!-- body -->
+          <div class="pageNumber"></div>          
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    {{/block.SU_two-hero-images--ar}}
+    {{#block.SU_images-within-columns--ar}}
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--imagesWithinColumns">
+          <div class="header">
+
+            {{#SU_heading--ar}}
+            <div class="topHeading" data-max-line="2">
+              {{{ SU_heading--ar }}}
+            </div> <!-- topHeading -->
+            {{/SU_heading--ar}}
+            {{#SU_subheading--ar}}
+            <div class="topSubheading" data-max-line="2">
+              {{{ SU_subheading--ar }}}
+            </div> <!-- topSubheading -->
+            {{/SU_subheading--ar}}    
+
+          </div> <!-- header -->
+          <div class="body body--imagesWithinColumns">
+            <div class="column">
+              <div class="content content--imageWithinColumns">
+                <div data-max-height="dynamic"> 
+                  {{{ SU_content--ar }}}
+                </div> <!-- dynamic -->
+              </div> <!-- content -->
+              {{#SU_image--ar}}
+              <div class="hero hero--imagesWithinColumns">
+                {{{ SU_image--ar }}}
+              </div> <!-- hero -->
+              {{/SU_image--ar}}
+            </div> <!-- column -->
+            <div class="column">
+              {{#SU_image-2--ar}}
+              <div class="hero hero--imagesWithinColumns">
+                {{{ SU_image-2--ar }}}
+              </div> <!-- hero -->
+              {{/SU_image-2--ar}}
+              <div class="content content--imageWithinColumns">
+                <div data-max-height="dynamic"> 
+                  {{{ SU_content-2--ar }}}
+                </div> <!-- dynamic -->
+              </div> <!-- content -->
+            </div> <!-- column -->
+          </div> <!-- body -->     
+          <div class="pageNumber"></div>          
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    {{/block.SU_images-within-columns--ar}}
+    {{#block.SU_single-hero-image-in-the-center--ar}}
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--singleHeroImage">
+          <div class="header header--singleHeroImage">
+
+            {{#SU_heading--ar}}
+            <div class="topHeading" data-max-line="2">
+              {{{ SU_heading--ar }}}
+            </div> <!-- topHeading -->
+            {{/SU_heading--ar}}
+            {{#SU_subheading--ar}}
+            <div class="topSubheading" data-max-line="2">
+              {{{ SU_subheading--ar }}}
+            </div> <!-- topSubheading -->
+            {{/SU_subheading--ar}}            
+
+          </div> <!-- headaer -->
+          <div class="row row--withPadding">
+            <div data-max-height="dynamic">
+              <div class="u-cols">
+                {{{ SU_content--ar }}}
+              </div><!-- end u-cols -->
+            </div> <!-- dynamic -->
+          </div> <!-- row -->
+          <div class="hero hero--singleHeroImage {{^SU_image--ar}}u-hero-background{{/SU_image--ar}} js-subtrahend">
+            {{{ SU_image--ar }}}
+          </div> <!-- hero -->
+          <div class="row">
+            <div data-max-height="dynamic">
+              <div class="u-cols">
+                {{{ SU_content-2--ar }}}
+              </div><!-- end u-cols -->
+            </div> <!-- dynamic -->
+          </div> <!-- row -->
+          <div class="pageNumber"></div>          
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    {{/block.SU_single-hero-image-in-the-center--ar}}
+    {{#block.SU_column-table--ar}}
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--columnTable">
+          <div class="header">
+            {{#SU_heading--ar}}
+            <div class="topHeading topHeading--columnTable" data-max-line="2">
+              {{{ SU_heading--ar }}}
+            </div> <!-- topHeading -->
+            {{/SU_heading--ar}}
+            {{#SU_subheading--ar}}
+            <div class="topSubheading topSubheading--columnTable" data-max-line="2">
+              {{{ SU_subheading--ar }}}
+            </div> <!-- topSubheading -->
+            {{/SU_subheading--ar}}
+          </div> <!-- header -->
+          <div class="body body--columnTable">
+            <div class="column column--columnTable">
+              <div class="table">
+                <div data-max-height="dynamic">
+                  {{#SU_heading-2--ar}}
+                  <div class="table__row table__header">
+                    {{{ SU_heading-2--ar }}}
+                  </div> <!-- table__header -->
+                  {{/SU_heading-2--ar}}
+                  {{#spreadsheet.SU_table-left--ar}}
+                  <div class="table__row">
+                    <div class="table__label">
+                      {{{SU_label--ar}}}
+                    </div> <!-- table__label -->
+                    {{#SU_value--ar}}
+                    <div class="table__value">
+                      {{{SU_value--ar}}}
+                    </div> <!-- table__value -->
+                    {{/SU_value--ar}}
+                  </div> <!-- table__row -->
+                  {{/spreadsheet.SU_table-left--ar}}
+                </div> <!-- data-max-height -->
+              </div> <!-- table -->
+
+              {{ #SU_text--ar }}
+              <div class="note" data-max-height="200">
+                {{{SU_text--ar}}}
+              </div> <!-- text -->
+              {{ /SU_text--ar }}
+
+            </div> <!-- column -->
+            <div class="column column--columnTable">
+              <div class="table">
+                <div data-max-height="dynamic">
+                  {{#SU_heading-3--ar}}
+                  <div class="table__row table__header">
+                    {{{ SU_heading-3--ar }}}
+                  </div> <!-- table__header -->
+                  {{/SU_heading-3--ar}}
+                  {{#spreadsheet.SU_table-right--ar}}
+                  <div class="table__row">
+                    <div class="table__label">
+                      {{{SU_label--ar}}}
+                    </div> <!-- table__label -->
+                    {{#SU_value--ar}}
+                    <div class="table__value">
+                      {{{SU_value--ar}}}
+                    </div> <!-- table__value -->
+                    {{/SU_value--ar}}
+                  </div> <!-- table__row -->
+                  {{/spreadsheet.SU_table-right--ar}}
+                </div> <!-- data-max-height -->
+              </div> <!-- table -->
+            </div> <!-- column -->
+          </div> <!-- body -->
+          <div class="pageNumber"></div>          
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    {{/block.SU_column-table--ar}}
+    {{#block.SU_full-width-table--ar}}
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--fullWidthTable">
+          <div class="header js-subtrahend">
+            {{#SU_heading--ar}}
+            <div class="topHeading topHeading--fullWidthTable" data-max-line="2">
+              {{{ SU_heading--ar }}}
+            </div> <!-- topHeading -->
+            {{/SU_heading--ar}}
+            {{#SU_subheading--ar}}
+            <div class="topSubheading topSubHeading--fullWidthTable" data-max-line="2">
+              {{{ SU_subheading--ar }}}
+            </div> <!-- topSubheading -->
+            {{/SU_subheading--ar}}
+          </div> <!-- header -->
+          <div class="body body--fullWidthTable">
+            <div class="report__container">
+              <div data-max-height="dynamic">
+                <table class="report">
+                  <tr class="report__heading">
+                    <td class="report__mainHeading"> <div data-max-line="3"> {{{ SU_table-column-header--ar }}} </div> </td>
+                    <td> <div data-max-line="3"> {{{ SU_table-column-header-2--ar }}} </div> </td>
+                    <td class="u-text-align-center"> <div data-max-line="3"> {{{ SU_table-column-header-3--ar }}} </div> </td>
+                    <td class="u-text-align-center"> <div data-max-line="3"> {{{ SU_table-column-header-4--ar }}} </div> </td>
+                  </tr>
+                  {{#collection.SU_reports--ar }}
+                  {{#block.SU_report--ar }}
+                  <tr> 
+                    <td class="report__cellHeading"> {{{SU_row-heading-1--ar}}} </td>
+                    <td> </td>
+                    <td class="u-text-align-right" data-col="1"> {{{SU_row-heading-value-1--ar}}} </td>
+                    <td class="u-text-align-right" data-col="2"> {{{SU_row-heading-value-2--ar}}} </td>
+                  </tr> 
+                  {{#spreadsheet.SU_report--ar1}}
+                  <tr>
+                    <td class="report__cell report__cell--left"> {{{SU_source-of-income--ar}}} </td>
+                    <td> {{{SU_notes--ar}}} </td>
+                    <td class="report__cell u-cell-padding-right u-text-align-right" data-col="1"> {{{SU_amount-of-income--ar}}} </td>
+                    <td class="report__cell u-text-align-right" data-col="2"> {{{SU_amount-of-income-2--ar}}} </td>
+                  </tr>
+                  {{/spreadsheet.SU_report--ar1}}
+                  <tr class="report__sum">
+                    <td class="report__cellHeading"> {{{ SU_total-label--ar }}} </td>
+                    <td></td>
+                    <td class="u-cell-padding-right u-report-sum-border u-text-align-right js-col-total" data-col="1">
+                      <div class="report__line report__line--top"></div>
+                      <div class="js-report-target" data-target="left"> </div>
+                      <div class="report__line report__line--bottom"></div>
+                    </td>
+                    <td class="u-cell-padding-right u-report-sum-border u-text-align-right js-col-total" data-col="2">
+                      <div class="report__line report__line--top"></div>
+                      <div class="js-report-target" data-target="right"> </div>
+                      <div class="report__line report__line--bottom"></div>
+                    </td>
+                  </tr>
+                  {{/block.SU_report--ar }}
+                  {{/collection.SU_reports--ar }}
+                </table> 
+              </div> <!-- data-max-height -->
+            </div> <!-- report__container -->
+            <div class="signOff 
+                        signOff--{{#SU_sign--ar}}show{{/SU_sign--ar}}
+                        signOff--{{#SU_name--ar}}show{{/SU_name--ar}}
+                        signOff--{{#SU_position--ar}}show{{/SU_position--ar}}
+                        signOff--{{#SU_institution--ar}}show{{/SU_institution--ar}}
+                        signOff--{{#SU_date--ar}}show{{/SU_date--ar}}">
+              <div class="signOff__text">
+                {{ SU_signOfftext--ar }}
+              </div> <!-- signOff__text -->
+              <img src="{{SU_sign--ar}}" class="signOff__image" />
+              {{#SU_name--ar}}
+              <div class="signOff__item" data-max-line="1">
+                {{{SU_name--ar}}}
+              </div> <!-- signOff__item -->
+              {{/SU_name--ar}}
+              {{#SU_position--ar}}
+              <div class="signOff__item" data-max-line="1">
+                {{{SU_position--ar}}}
+              </div> <!-- signOff__item -->
+              {{/SU_position--ar}}
+              {{#SU_institution--ar}}
+              <div class="signOff__item" data-max-line="1">
+                {{{SU_institution--ar}}}
+              </div> <!-- signOff__item -->
+              {{/SU_institution--ar}}
+              {{#SU_date--ar}}
+              <div class="signOff__item" data-max-line="1">
+                {{{SU_date--ar}}}
+              </div> <!-- signOff__item -->
+              {{/SU_date--ar}}
+            </div> <!-- signOff --> 
+          </div> <!-- body -->
+          <div class="pageNumber"></div>
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    {{/block.SU_full-width-table--ar}}
+
+
+    {{#block.SU_one-column-page-ar}}
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--columns">
+          <div class="header">
+            {{#SU_page-heading--ar}}
+            <div class="topHeading" data-max-line="2">
+              {{{SU_page-heading--ar}}}
+            </div><!--topHeading-->
+            {{/SU_page-heading--ar}}
+            {{#SU_page-subheading--ar}}
+            <div class="topSubheading" data-max-line="2">
+              {{{SU_page-subheading--ar}}}
+            </div><!--topSubheading-->
+            {{/SU_page-subheading--ar}}
+          </div><!--header-->
+          {{#SU_hero-image--ar}}
+          <div class="hero hero--singleColumn hero--columns"><div class="reposition-fix">{{{SU_hero-image--ar}}}</div></div><!--hero-->
+          {{/SU_hero-image--ar}}
+          <div class="body body--singleColumn">
+            <div data-max-height="dynamic">
+              {{#collection.SU_content--ar}}
+              {{#block.SU_text--ar}}
+              <div class="text">{{{SU_text--ar}}}</div><!--content-->
+              {{/block.SU_text--ar}}
+              {{#block.SU_image-with-caption--ar}}
+              {{#SU_image--ar}}
+              <div class="image__container {{^SU_image-height--ar}}image__container--oneColumn{{/SU_image-height--ar}}" style="max-height:calc(14.51rem*({{{SU_image-height--ar}}}/100));">
+                <div class="image image--alt"><div class="reposition-fix">{{{SU_image--ar}}}</div></div><!--image-->
+              </div><!--image__container-->
+              {{#SU_caption--ar}}
+              <div class="image__caption" data-max-line="3">{{{SU_caption--ar}}}</div><!--image__container-->
+              {{/SU_caption--ar}}
+              {{/SU_image--ar}}
+              {{/block.SU_image-with-caption--ar}}
+              {{/collection.SU_content--ar}}
+            </div><!--dynamic-->
+          </div><!--body-->
+          <div class="pageNumber"></div>
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    {{/block.SU_one-column-page-ar}}
+
+
+    {{#block.SU_two-columns-page--ar}}
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--columns">
+
+          <div class="header">
+            {{#SU_page-heading--ar}}
+            <div class="topHeading" data-max-line="2">
+              {{{SU_page-heading--ar}}}
+            </div><!--topHeading-->
+            {{/SU_page-heading--ar}}
+            {{#SU_page-subheading--ar}}
+            <div class="topSubheading" data-max-line="2">
+              {{{SU_page-subheading--ar}}}
+            </div><!--topSubheading-->
+            {{/SU_page-subheading--ar}}
+          </div><!--header-->
+          {{#SU_hero-image--ar}}
+          <div class="hero hero--singleColumn hero--columns"><div class="reposition-fix">{{{SU_hero-image--ar}}}</div></div><!--hero-->
+          {{/SU_hero-image--ar}}
+          <div class="body body--column"> 
+            <div class="column--alt" data-max-height="dynamic">
+              {{#collection.SU_left-column--ar}}
+              {{#block.SU_text--ar}}
+              <div class="text">{{{SU_text--ar}}}</div><!--content-->
+              {{/block.SU_text--ar}}
+              {{#block.SU_image-with-caption--ar}}
+              {{#SU_image--ar}}
+              <div class="image__container {{^SU_image-height--ar}}image__container--twoColumns{{/SU_image-height--ar}}" style="max-height:calc(14.51rem*({{{SU_image-height--ar}}}/100));">
+                <div class="image image--alt"><div class="reposition-fix">{{{SU_image--ar}}}</div></div><!--image-->
+              </div><!--image__container-->
+              {{#SU_caption--ar}}
+              <div class="image__caption" data-max-line="3">{{{SU_caption--ar}}}</div><!--image__container-->
+              {{/SU_caption--ar}}
+              {{/SU_image--ar}}
+              {{/block.SU_image-with-caption--ar}}
+              {{/collection.SU_left-column--ar}}
+            </div><!--column-->
+            <div class="column--alt" data-max-height="dynamic">
+              {{#collection.SU_right-column--ar}}
+              {{#block.SU_text--ar}}
+              <div class="text">{{{SU_text--ar}}}</div><!--content-->
+              {{/block.SU_text--ar}}
+              {{#block.SU_image-with-caption--ar}}
+              {{#SU_image--ar}}
+              <div class="image__container {{^SU_image-height--ar}}image__container--twoColumns{{/SU_image-height--ar}}" style="max-height:calc(14.51rem*({{{SU_image-height--ar}}}/100));">
+                <div class="image image--alt"><div class="reposition-fix">{{{SU_image--ar}}}</div></div><!--image-->
+              </div><!--image__container-->
+              {{#SU_caption--ar}}
+              <div class="image__caption" data-max-line="3">{{{SU_caption--ar}}}</div><!--image__container-->
+              {{/SU_caption--ar}}
+              {{/SU_image--ar}}
+              {{/block.SU_image-with-caption--ar}}
+              {{/collection.SU_right-column--ar}}
+            </div><!--column-->
+          </div><!--body-->
+          <div class="pageNumber"></div>
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    {{/block.SU_two-columns-page--ar}}
+
+
+
+
+
+    {{#block.SU_three-columns-page--ar}}
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--columns">
+
+          <div class="header">
+            {{#SU_page-heading--ar}}
+            <div class="topHeading" data-max-line="2">
+              {{{SU_page-heading--ar}}}
+            </div><!--topHeading-->
+            {{/SU_page-heading--ar}}
+            {{#SU_page-subheading--ar}}
+            <div class="topSubheading" data-max-line="2">
+              {{{SU_page-subheading--ar}}}
+            </div><!--topSubheading-->
+            {{/SU_page-subheading--ar}}
+          </div><!--header-->
+          {{#SU_hero-image--ar}}
+          <div class="hero hero--singleColumn hero--columns"><div class="reposition-fix">{{{SU_hero-image--ar}}}</div></div><!--hero-->
+          {{/SU_hero-image--ar}}
+          <div class="body body--column body--threeColumns"> 
+            <div class="column--alt" data-max-height="dynamic">
+              {{#collection.SU_left-column--ar}}
+              {{#block.SU_text--ar}}
+              <div class="text">{{{SU_text--ar}}}</div><!--content-->
+              {{/block.SU_text--ar}}
+              {{#block.SU_image-with-caption--ar}}
+              {{#SU_image--ar}}
+              <div class="image__container {{^SU_image-height--ar}}image__container--threeColumns{{/SU_image-height--ar}}" style="max-height:calc(14.51rem*({{{SU_image-height--ar}}}/100));">
+                <div class="image image--alt"><div class="reposition-fix">{{{SU_image--ar}}}</div></div><!--image-->
+              </div><!--image__container-->
+              {{#SU_caption--ar}}
+              <div class="image__caption" data-max-line="3">{{{SU_caption--ar}}}</div><!--image__container-->
+              {{/SU_caption--ar}}
+              {{/SU_image--ar}}
+              {{/block.SU_image-with-caption--ar}}
+              {{/collection.SU_left-column--ar}}
+            </div><!--column-->
+            <div class="column--alt" data-max-height="dynamic">
+              {{#collection.SU_middle-column--ar}}
+              {{#block.SU_text--ar}}
+              <div class="text">{{{SU_text--ar}}}</div><!--content-->
+              {{/block.SU_text--ar}}
+              {{#block.SU_image-with-caption--ar}}
+              {{#SU_image--ar}}
+              <div class="image__container {{^SU_image-height--ar}}image__container--threeColumns{{/SU_image-height--ar}}" style="max-height:calc(14.51rem*({{{SU_image-height--ar}}}/100));">
+                <div class="image image--alt"><div class="reposition-fix">{{{SU_image--ar}}}</div></div><!--image-->
+              </div><!--image__container-->
+              {{#SU_caption--ar}}
+              <div class="image__caption" data-max-line="3">{{{SU_caption--ar}}}</div><!--image__container-->
+              {{/SU_caption--ar}}
+              {{/SU_image--ar}}
+              {{/block.SU_image-with-caption--ar}}
+              {{/collection.SU_middle-column--ar}}
+            </div><!--column-->
+            <div class="column--alt" data-max-height="dynamic">
+              {{#collection.SU_right-column--ar}}
+              {{#block.SU_text--ar}}
+              <div class="text">{{{SU_text--ar}}}</div><!--content-->
+              {{/block.SU_text--ar}}
+              {{#block.SU_image-with-caption--ar}}
+              {{#SU_image--ar}}
+              <div class="image__container {{^SU_image-height--ar}}image__container--threeColumns{{/SU_image-height--ar}}" style="max-height:calc(14.51rem*({{{SU_image-height--ar}}}/100));">
+                <div class="image image--alt"><div class="reposition-fix">{{{SU_image--ar}}}</div></div><!--image-->
+              </div><!--image__container-->
+              {{#SU_caption--ar}}
+              <div class="image__caption" data-max-line="3">{{{SU_caption--ar}}}</div><!--image__container-->
+              {{/SU_caption--ar}}
+              {{/SU_image--ar}}
+              {{/block.SU_image-with-caption--ar}}
+              {{/collection.SU_right-column--ar}}
+            </div><!--column-->
+          </div><!--body-->
+          <div class="pageNumber"></div>
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+    {{/block.SU_three-columns-page--ar}}
+
+
+    {{/collection.SU_pages--ar}}
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit fit--coverBack u-background-color">
+
+          <div class="footer"> 
+            <div class="contact__container" data-max-height="dynamic">
+              <div class="contact">
+                {{#SU_contact-details--arb}}
+                For more information <br>
+                {{/SU_contact-details--arb}}
+                {{{SU_contact-details--arb}}}
+              </div><!--contact-->
+              {{#SU_cricos--ar}}
+              <div class="cricos">CRICOS: {{{ SU_cricos--ar }}}</div><!--contact__item-->
+              {{/SU_cricos--ar}}
+            </div> <!--contact__container-->
+            <div class="logo-back"></div> <!-- logo -->
+          </div> <!-- footer -->
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+        });
+      });
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+        errorPopupControl();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+      function injectContents() {
+        const pages = [...document.querySelectorAll('[data-page-heading]')];
+        const contentContainer = document.querySelector('.js-contents-container-target');
+        let groups = [];
+
+        addPageNums();
+
+        pages.forEach((page, i) => {
+          const pageNum = page.dataset.pageNumber;
+          const pageGroup = page.dataset.pageGroup;
+
+          // Checking if the page is missing heading or it's data-page-contents is set to false
+          if ( page.dataset.pageHeading == '' || page.dataset.pageContents == 'false' ) return;
+
+          // Checking if this is the first iteration or table for the current page's group doesn't already exist
+          if ( i == 0 || !groups.includes(pageGroup) ) {
+            const table = document.createElement('div');
+            table.classList.add('table');
+            table.setAttribute('id', 'group-' + pageGroup.replace(/\s+/g, '-').toLowerCase());
+
+            const header = document.createElement('div');
+            header.classList.add('table__row', 'table__header');
+            header.innerText = pageGroup;
+            table.appendChild(header);
+            contentContainer.appendChild(table);
+          }
+
+          const row = document.createElement('div');
+          row.classList.add('table__row');
+
+          const label = document.createElement('div');
+          label.classList.add('table__label');
+          label.innerText = page.dataset.pageHeading;
+          row.appendChild(label);
+
+          const value = document.createElement('div');
+          value.classList.add('table__value');
+          value.innerText = pageNum;
+          row.appendChild(value);
+
+          document.querySelector(`#group-${pageGroup.replace(/\s+/g, '-').toLowerCase()}`).appendChild(row);
+
+          if ( !groups.includes(pageGroup) ) groups.push(pageGroup);
+        });
+      }
+
+      function addPageNums() {
+        const pages = document.querySelectorAll('.page');
+        pages.forEach((page, index) => {
+          const pageNumDiv = page.querySelector('.pageNumber');
+
+          if ( pageNumDiv == null ) return;
+
+          if ( (index + 1) % 2 ) pageNumDiv.classList.add('pageNumber--right');
+
+          page.dataset.pageNumber = index;
+          pageNumDiv.innerHTML = index;
+        });
+      }
+
+      addPageNums();
+
+      //injectContents();
+
+      function columnTotal(colIndex) {
+        const cols = document.querySelectorAll(`[data-col="${colIndex}"]`);
+        let total = 0;
+        let operation = 1;
+        cols.forEach(col => {
+          if ( !col.classList.contains('js-col-total') ) {
+            // Checking if the number is wrapped within paranthasses - use it as substractor in that case
+            if ( col.innerText.includes('(') ) operation = -1;
+            total += parseFloat(getNumber(col.innerText)) * operation;
+          } else {
+            col.querySelector('.js-report-target').innerText = formatNumber(total);
+            total = 0;
+          }
+        });
+      }
+
+      function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      }
+
+      function getNumber(num) {
+        let formated = num.replace(/[^0-9.]/g, '');
+        (formated == '') ? formated = 0 : formated;
+
+        return formated;
+      }
+
+      function errorPopupControl() {
+        const popup = document.querySelector('.errorPopup');
+        const pagesCount = document.querySelectorAll('.page').length;
+        const status = document.querySelector('.js-commercial-print-status').innerText;
+
+        if ( status !== 'commercial-print' ) return;
+
+        if ( pagesCount % 4 ) popup.style.display = 'block';
+      }
+
+      columnTotal(1);
+      columnTotal(2);
+
+      // Add many fallbacks for Print Ready
+      document.addEventListener('DOMContentLoaded', function(event) {
+        document.dispatchEvent(new Event('printready'));
+      });
+
+      setTimeout(function() {
+        document.dispatchEvent(new Event('printready'));
+      }, 3000);
+
+      document.dispatchEvent(new Event('printready'));
+    </script>
+  </body>
+</html>

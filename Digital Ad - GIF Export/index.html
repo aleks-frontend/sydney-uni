@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html data-sign="OSL" gif-screencast>
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+
+      @import "https://outfit-assets-production.s3.amazonaws.com/fonts/apercu-pro/stylesheet.css";
+
+      :root {
+        --primary: {{account.colors.primary}};
+        --white: #fff;
+        --black: #000;
+      }     
+
+      html {
+        font-family: 'Apercu Pro';
+        font-size: 11pt;
+        color: var(--black);
+      }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      a {
+        text-decoration: none;
+        color: var(--black);
+      }
+
+      .container {
+        display: flex;
+        background: var(--primary);
+      }
+
+      .variation-300-600 .container {
+        flex-direction: column;
+      }
+
+      .variation-160-600 .container {
+        flex-direction: column;
+      }
+
+      .variation-300-250 .container {
+        flex-direction: column;
+      }
+
+      .section {
+        position: relative;
+      }
+
+      .section--primary {
+        flex: 1;
+        position: relative;
+        padding: 19pt 24pt 15pt;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }     
+
+      .variation-300-250 .section--primary {
+        padding-top: 20pt;
+        height: 100px; /* Hack for not allowing this section push second section outside of the page */
+      }
+
+      .variation-300-600 .section--primary {
+        padding: 0;
+      }
+
+      .variation-160-600 .section--primary {
+        padding: 0;
+      }
+
+      .variation-300-50 .section--primary {
+        padding: 11.8pt 0 11.8pt 18pt;
+      }
+
+      .variation-320-50 .section--primary {
+        padding: 11.8pt 0 11.8pt 14pt;
+      }
+
+      .variation-320-100 .section--primary {
+        padding: 26.2pt 0 16pt 14pt;
+      }
+
+      .section--secondary {
+        flex-basis: 156pt;
+        display: flex;
+        align-items: center;
+        padding-left: 15pt;
+      }
+
+      .variation-300-250 .section--secondary {
+        display: none;
+        flex-basis: 64pt;
+        padding-left: 33px;
+        align-items: flex-start;
+        display: flex;
+        align-items: center;
+      }
+
+      .variation-300-250 .js-frame:last-child .section--secondary {
+        display: flex;
+      }
+
+      .variation-300-600 .section--secondary {
+        justify-content: flex-start;
+        flex-basis: 100pt;
+        padding-left: 21pt;
+      }
+
+      .variation-160-600 .section--secondary {
+        justify-content: center;
+        flex-basis: 97pt;
+        padding-left: 0;
+      }
+
+      .variation-300-50 .section--secondary {
+        flex-basis: 129pt;
+        padding-left: 8pt;
+      }
+
+      .variation-320-50 .section--secondary {
+        flex-basis: 127pt;
+        padding-left: 8pt;
+      }
+
+      .variation-320-100  .section--secondary {
+        flex-basis: 107pt;
+        padding-left: 5pt;
+        padding-bottom: 8.7pt;
+      }
+
+      .heading--hasCta { padding-bottom: 0.710rem; }
+      
+      .variation-728-90 .heading--hasCta { max-height: 46px; }
+      .variation-300-50 .heading--hasCta { max-height: 31px; }
+      .variation-300-250 .heading--hasCta { max-height: 100px; }
+      .variation-300-600 .heading--hasCta { max-height: 430px; }
+      .variation-320-100 .heading--hasCta { max-height: 55px; }
+      .variation-160-600 .heading--hasCta { max-height: 440px; }
+      .variation-320-50 .heading--hasCta { max-height: 31px; }
+
+      .js-frame .heading--hasBgImage { padding-bottom: 0; }
+
+      .heading__inner {
+        font-size: 1.617rem;
+        font-weight: bold; 
+      }
+
+      .variation-728-90 .heading__inner {
+        line-height: 1.2em;
+
+        color: var(--black);
+      }
+
+      .variation-300-250 .heading__inner {
+        font-size: 20.7pt;
+        line-height: 1.3em;
+        color: #fff;
+      }
+
+      .variation-300-250 .heading__inner .tinymce_style--dark {
+        color: var(--black);
+      }
+
+      .variation-300-250 .heading__inner .tinymce_style--light {
+        color: var(--white);
+      }
+
+      .variation-300-600 .heading__inner {
+        font-size: 23.5pt;
+        line-height: 1.2em;
+      }
+
+      .variation-160-600 .heading__inner {
+        font-size: 16.2pt;
+        line-height: 1.2em;
+      }
+
+      .variation-300-50 .heading__inner {
+        font-size: 7.5pt;
+        line-height: 1.3em;
+      }
+
+      .variation-320-50 .heading__inner {
+        font-size: 11.7pt;
+        line-height: 1.3em;
+      }
+
+      .variation-320-100 .heading__inner {
+        font-size: 14.5pt;
+        line-height: 1.25em;
+      }
+
+      .tinymce_style--light {
+        color: var(--white);
+      }
+
+      .cta {
+        display: flex;
+        align-items: center;
+        font-size: 0.887rem;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      .bgImage-off .cta {
+        display: flex;
+      }
+
+      .cta::after {
+        content: '';
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        background: url(https://files.outfit.io/media_library_items/63546/CTA_icon_sml.png) no-repeat;
+        background-size: 100%;
+        margin-left: 1em;
+      }
+
+      .variation-300-600 .cta {
+        font-size: 0.467rem;
+      }
+
+      .variation-160-600 .cta {
+        font-size: 0.4rem;
+        /* margin-top: 0.4rem;*/
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+      }
+
+      .variation-160-600 .backgroundImage {
+        position: relative;
+        height: 233pt;
+        bottom: 0;
+      }
+      /*
+      .variation-160-600 .js-frame:last-child .backgroundImage {
+      display: none;
+      }        
+      */
+      .variation-300-600 .backgroundImage {
+        position: relative;
+        height: 233pt;
+        bottom: 0;
+      }
+      /*
+      .variation-300-600 .js-frame:last-child .backgroundImage {
+      display: none;
+      }
+
+      .variation-300-250 .js-frame:last-child .backgroundImage {
+      display: none;
+      } 
+
+      */
+
+      .content {
+        position: relative;
+        padding: 0;
+        flex: 1;
+      }
+
+      .variation-160-600 .content {
+        padding: 12.3pt 16pt 0;
+      }
+
+      .variation-160-600 .js-frame:last-child .content {
+       /* padding-top: 29pt; */
+      } 
+
+      .variation-300-600 .content {
+        padding: 20pt 23pt 0;
+      }
+
+      .variation-300-600 .js-frame:last-child .content {
+     /*  padding-top: 31pt; */
+      }   
+
+      .cricos { 
+        display: none;
+        position: absolute;
+        left: 93%;
+        bottom: 0;      
+        font-size: 6.7pt;
+        line-height: 1.1em;      
+      }
+
+      .cricos--rotate {
+        text-align: center;
+        transform: rotate(-90deg);       
+        transform-origin: left bottom;
+        white-space: nowrap;
+      }
+
+      .variation-728-90 .cricos--rotate {
+        display: block;
+      }
+
+      .variation-300-250 .cricos--rotate {
+        display: block;
+        left: 96%;	
+        text-align: start;
+        bottom: 15px;
+      }
+
+      .variation-300-600 .cricos {
+        left: 96%;
+        bottom: 11pt;
+      }
+
+      .variation-300-600 .cricos--rotate {
+        display: block;
+        width: auto!important;
+      }
+
+      .variation-160-600 .cricos {
+        left: auto;
+        bottom: 9pt;
+        text-align: center; 
+      }
+
+      .variation-160-600 .cricos--horizontal {               
+        display: block;         
+      }  
+
+      .variation-300-50 .cricos {
+        left: 91.2%;
+        bottom: -2pt;
+        padding: 0 10pt;      
+        font-size: 6pt;
+        white-space: unset;       
+      }
+
+      .variation-300-50 .cricos--rotate {
+        display: block;
+      }
+
+      .variation-320-50 .cricos {
+        left: 92.3%;
+        bottom: 0pt;
+        width: 73px;
+        padding: 0 10pt;
+        font-size: 6pt;
+        white-space: unset; 
+      }
+
+      .variation-320-50 .cricos--rotate {
+        display: block;
+      }
+
+      .variation-320-100 .cricos--horizontal {
+        left: 37%;
+        bottom: 8.8pt;
+        display: block;
+        width: auto;      
+        transform: none;      
+        font-size: 5.9pt;
+        text-align: unset;            
+      }
+
+      .logo {
+        width: 103pt;
+      }
+
+      .variation-300-50 .logo {
+        width: 88.7pt;
+      }
+
+      .variation-320-50 .logo {
+        width: 88.7pt;
+      }
+
+      .variation-320-100 .logo {
+        width: 89pt;
+      }
+
+      .variation-300-250 .logo {
+        width: 112pt;
+        margin-bottom: 3mm;
+      }
+
+      /*  .variation-300-250 .cta { display: flex; }*/
+
+      .variation-300-600 .logo {
+        width: 116pt;
+      }
+
+      .logoMaster {
+        display: none;
+      }
+
+      .u-hide {
+        display: none;
+      }
+
+      .js-frame { opacity: 0;  }
+
+      .overflow { z-index: 0; }
+
+      /* 320 x 50 default */
+
+      .cta {
+        max-height: 12px;
+      }
+
+      .variation-320-100  .cta {
+        max-height: 17px;
+      }
+
+      .variation-160-600  .cta {
+        max-height: 60px;
+      }
+
+      .variation-300-600  .cta {
+        max-height: 80px;
+      }
+
+      .variation-300-250 .cta {
+        max-height: 50px;
+      }
+
+      .variation-728-90 .cta {
+        max-height: 30px;
+      }
+
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}
+                                         {{{ SU_variation-choice--da }}}" data-crop="{{show-crop}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      {{#placeholder-image-1}}
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+      {{/placeholder-image-1}}
+    </div><!-- end placeholderMaster -->
+    <img class="logoMaster" src="{{{account.logos.primary}}}" />
+    <div class="page">
+
+      <div class="bleed">
+        {{#collection.SU_frames--da}}
+        {{#block.SU_frame--da}}
+        <div class="container fit js-frame">
+          <div class="section section--primary">
+            {{#SU_background-image--da}}
+            <div class="backgroundImage">
+              <div class="reposition-fix">{{{ SU_background-image--da }}} </div> <!-- reposition - fix -->
+            </div><!--backgroundImage-->
+            {{/SU_background-image--da}}
+            <div class="content">
+              {{#SU_header--da}}  
+              <div class="heading 
+                          {{#SU_background-image--da}}heading--hasBgImage{{/SU_background-image--da}}
+                          {{^SU_background-image--da}}bgImage--off {{/SU_background-image--da}}
+                          {{#SU_call-to-action--da}}heading--hasCta{{/SU_call-to-action--da}}"
+                   {{#SU_background-image--da}}data-max-height="dynamic"{{/SU_background-image--da}}
+                   {{^SU_call-to-action--da}}data-max-height="dynamic"{{/SU_call-to-action--da}}>
+                <div class="heading__inner {{^SU_background-image--da}}bgImage-off {{/SU_background-image--da}}{{#SU_call-to-action--da}}textFit-vert{{/SU_call-to-action--da}}">{{{ SU_header--da }}}</div>
+              </div><!--heading-->
+              {{/SU_header--da}}  
+              {{#SU_call-to-action--da}}<div class="cta {{#SU_background-image--da}}u-hide{{/SU_background-image--da}} js-subtrahend" data-max-height="css">{{{ SU_call-to-action--da }}}</div><!--cta-->{{/SU_call-to-action--da}}
+            </div><!--content-->
+          </div><!--section section--primary-->      
+          <div class="section section--secondary">
+            <img class="logo js-logo-target" src="#"><!--logo-->
+            <div class="cricos cricos--horizontal">CRICOS 00026A</div><!--cricos-->
+            <div class="cricos cricos--rotate">CRICOS 00026A</div><!--cricos-->
+          </div><!--section section--secondary-->
+        </div><!--container fit-->
+        {{/block.SU_frame--da}}
+        {{/collection.SU_frames--da}}                  
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <!-- Adding GSAP TweenLite and TimelineLite -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenLite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TimelineLite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/plugins/CSSPlugin.min.js"></script>
+    <script>
+
+      // CricosHeight
+      function cricosHeight() {
+        const cricosCodes = document.querySelectorAll('.cricos--rotate');
+        cricosCodes.forEach(cricos => {
+          const containerH = cricos.parentNode.offsetHeight;
+          cricos.style.width = containerH + 'px';
+        });
+      }
+
+      // Injecting logo from the brand library to collection items
+      function injectLogo() {
+        const logoMaster = document.querySelector('.logoMaster');
+        const logoTargets = document.querySelectorAll('.js-logo-target');
+
+        logoTargets.forEach(target => {
+          target.src = logoMaster.src;
+        });
+      }
+
+
+
+      function slideShow() {
+        const frames = document.querySelectorAll('.js-frame');
+        const tl = new TimelineLite();
+        //const speed = document.body.classList.contains('is-export-mode') ? 2 : 1;
+        const speed = 2;
+
+        tl.timeScale(speed);
+        let delay;
+        let count = 0;     
+
+        function startOver() {
+          setTimeout(() => {
+            count++;
+            if ( count > 2 ) return;
+            tl.restart();
+          }, 3000);
+        }
+
+        frames.forEach((frame, i) => {
+          ( i == 0 ) ? delay = 0 : delay = 3;
+          tl.to(frame, 0, { opacity: 1, delay: delay });
+        });
+
+        tl.eventCallback('onComplete', function() {
+          if ( count >= 2 ) {
+            document.dispatchEvent(new Event('gifready')); 
+          } else {
+            startOver();
+          }
+        });
+      }
+
+      slideShow();
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+        });
+      });
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.bgImage-off.textFit-vert',
+        fitMode: 'vertical',
+        alignItems: 'flex-start'
+      });
+
+      setInterval(() => {
+        maxHeightCheck();
+      }, 500);
+
+      cricosHeight();
+      injectLogo();
+    </script>
+
+
+  </body>
+</html>

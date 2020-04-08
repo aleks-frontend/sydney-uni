@@ -1,0 +1,80 @@
+<!DOCTYPE>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">  
+  <link href="https://outfit-assets-production.s3.amazonaws.com/fonts/apercu-pro/stylesheet.css" rel="stylesheet">  
+</head>
+<style>
+  *,
+  *:before,
+  *:after {
+      -webkit-font-smoothing: antialiased;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border: none;
+      background: none;
+      font-size: 1em;
+      line-height: 1em;
+  }
+  body {
+      font-size: 16px;
+      font-family: 'Apercu Pro', sans-serif;
+      color: black;
+      overflow: hidden;    
+  }
+  .banner__wrapper,
+  .bgImage {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+  .placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-image: url("https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/753f8f10755f54e13f65d44537a57b43/defaultTemplate_Example%204.png");
+    background-position: top left;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .ochreBox {
+    position: absolute;
+    bottom: 0;
+    right: 5.9375rem;
+    z-index: 2;
+    background-color: {{{account.colors.primary}}};
+    width: 19.6875rem;
+    padding: 2.7rem 2rem 2rem;
+    
+  }
+  
+  .logo__wrapper{
+    display:flex;
+    justify-content:center;
+  }
+
+  .logo {
+    width: 14.5rem;
+    margin: 0 0 1.91em 0;
+  }
+  
+</style>
+<body>
+  <div class="banner__wrapper">
+    <div class="bgImage">
+    	{{{eventbriteBannerBg}}}
+    </div>
+    <!--<div class="placeholder"></div>-->
+    <div class="ochreBox">
+      <div class="logo__wrapper">
+        <img class="logo" src="https://files.outfit.io/media_library_items/116785/Horizontal-Logo.svg"> 
+        <!--<img class="logoSpadding" src="{{{account.logos.primary}}}" alt="" />-->
+      </div>
+    </div>
+  </div>
+</body>
+</html>

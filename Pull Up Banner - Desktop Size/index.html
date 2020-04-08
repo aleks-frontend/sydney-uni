@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html data-sign="OS?">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Circular/stylesheet.css');
+
+      html {
+        font-family: "Circular";
+        font-size: 11pt;
+        color: #000;
+        word-break: break-word;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }      
+      
+      /* Helper classes */
+      .u-hide { display: none; }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+      
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+      @import "https://outfit-assets-production.s3.amazonaws.com/fonts/apercu-pro/stylesheet.css";
+    
+      .overflow {
+        position: relative !important;
+        border: 1px dashed red;
+        color: black !important;
+        background: red !important;
+      }
+      .overflow * { 
+        color: inherit !important; 
+      }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 99999999;
+        top: 5px;
+        right: 5px;
+        height: 1.5em;
+        width: 1.5em;
+        min-width: 15px;
+        min-height: 15px;
+        border: 1px solid red;
+        font-size: 1em;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; 
+      }
+      .overflow:after {
+        display: none; 
+      }
+      .overflow:hover:after {
+        display: block;
+        content: 'Number of lines exceeds total allowed';
+        position: absolute;
+        top: calc(1.5em + 5px);
+        right: 5px;
+        background-color: black;
+        color: white;
+        padding: 5px;
+        font-size: 1em;
+        font-weight: 400;
+        width: 100%;
+      }
+      * {
+        -webkit-margin-before: 0;
+        -webkit-margin-after: 0;
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-font-smoothing: antialiased;
+        font-family: 'Apercu Pro', helvetica, arial, sans-serif;
+        color: rgb(10, 10, 10);
+        background-color: #fff;
+      }
+      .tinymce_style--light {
+        color: #E64626;
+      }
+      body {
+        position: relative;
+        margin: 0;
+      }
+      .page {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+      }
+      .background {
+        width: 100%;
+        height: 95%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        padding: 0.25in;
+        box-sizing: border-box;
+      }
+      .background-color {
+        width: 100%;
+        height: 100%;
+        mix-blend-mode: multiply;
+      }
+      .background-image {
+        position: absolute;
+        top: 0.25in;
+        right: 0.25in;
+        bottom: 0.25in;
+        left: 0.25in;
+        background-size: cover;
+        background-position: center;
+        z-index: -1;
+        mix-blend-mode: multiply;
+      }
+      .content {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: start;
+        -ms-flex-align: start;
+        align-items: flex-start;
+        height: 100%;
+        position: relative;
+        box-sizing: border-box;
+        z-index: 2;
+      }
+      .align-bottom {
+        -ms-flex-item-align: end;
+        padding-bottom: 1rem;
+      }
+      .logo {
+        margin: 0 0 1rem;
+      }
+      .logo img {
+        width: 8rem;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin: 0;
+        line-height: 1.1em;
+      }
+      .front-container {
+        width: 100%;
+        flex: 1 0 2%; /* 2% is a weird magic number */
+        background-color: #E64626;
+      }
+
+      .hide-crop-marks .front-container {
+        margin: 0;
+      }
+      .front-container.medium {
+        width: 54.7%;
+      }
+      .front-container.medium h1 {
+        font-size: 1.6em;
+        line-height: 1.1em;
+      }
+      .front-container.medium h2 {
+        font-size: 1.48em;
+      }
+      .front-container.small {
+        width: 50.7%;
+      }
+      .front-container.small h1 {
+        font-size: 1.6em;
+        line-height: 1em;
+      }
+      .front-container.small h2 {
+        font-size: 1.48em;
+      }
+      .front-container.left-align {
+        -ms-flex-item-align: start;
+        align-self: flex-start;
+      }
+      .front-container:before {
+        content: '';
+        width: 100%;
+        height: 0.9rem;
+        background-color: #E64626;
+        position: absolute;
+      }
+      .front-container:after {
+        content: '';
+        width: calc(94% - 1.7rem);
+        height: 0.6rem;
+        background-color: #E64626;
+        position: absolute;
+        top: 0.6rem;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+      }
+      .front-inner-container {
+        padding: 0.9rem 2.55rem 1.6rem;
+        margin-top: 1.05rem;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+      }
+      .cricos-code {
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+        -webkit-transform-origin: left top 0;
+        transform-origin: left bottom 0;
+        font-family: 'Apercu Mono', 'Apercu Pro Mono', monospace;
+        font-size: 0.3rem;
+        bottom: 0.7rem;
+        left: 1.15rem;
+        z-index: 9;
+        color: white;
+        text-transform: uppercase;
+        position: absolute;
+      }
+      .subhead {
+        font-size: 0.28rem;
+        padding: 0 0.6rem;
+        margin-top: -0.8rem;
+        width: 100%;
+        z-index: 10000;
+      }
+      .text-content {
+        margin-top: -0.3em;
+        width: 100%;
+        -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+        flex-grow: 1;
+      }
+      .text-content-right {
+        padding: 0rem 0.9rem 0.0rem 0.3rem;
+        margin-top: -0.3em;
+        width: 50%;
+        align-self: flex-end;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        flex-direction: column;
+        -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+        flex-grow: 1;
+      }
+      .process-sentence {
+        font-family: 'Apercu Mono', 'Apercu Pro Mono', monospace;
+        font-size: 0.55em;
+        -webkit-transform: rotate(-90deg) translateX(100%);
+        transform: rotate(-90deg) translateX(100%);
+        position: absolute;
+        bottom: 2.3rem;
+        right: 1.2rem;
+        -webkit-transform-origin: 100% 100%;
+        transform-origin: 100% 100%;
+      }
+      .process-sentence.top-align {
+        top: 1.4rem;
+        left: 3.1rem;
+        z-index: 5;
+        bottom: initial;
+        right: initial;
+        -webkit-transform-origin: initial;
+        transform-origin: initial;
+        -webkit-transform: initial;
+        transform: initial;
+      }
+      .process-sentence.left-align {
+        bottom: 4.1em;
+        left: 1.2rem;
+        right: initial;
+        top: initial;
+        -webkit-transform: rotate(-90deg) translateY(100%);
+        transform: rotate(-90deg) translateY(100%);
+        -webkit-transform-origin: 0% 0%;
+        transform-origin: 0% 100%;
+      }
+      .col-container {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        padding: 1.6rem 1.6rem 0.5rem 1.6rem;
+        height: 100%;
+      }
+      .col {
+        width: 50%;
+        height: 100%;
+        position: relative;
+      }
+      .col:first-child {
+        padding-right: 1.5em;
+      }
+      .column2-footer {
+        position: absolute;
+        bottom: 0;
+      }
+      .column2-footer img {
+        height: 3em;
+      }
+      .process-marks {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+      }
+      .process-marks:before {
+        left: -1rem;
+        right: initial;
+      }
+      .process-marks:after {
+        right: -1rem;
+        left: initial;
+      }
+      .process-marks:before,
+      .process-marks:after {
+        content: '';
+        height: 0.1em;
+        width: 2rem;
+        position: absolute;
+        top: 1.6rem;
+        background-color: rgb(10, 10, 10);
+      }
+      h1 {
+        font-size: 2.4em;
+        line-height: 1.15em;
+      }
+      h2 {
+        font-size: 1.18em;
+        font-weight: 400;
+        line-height: 1.1em;
+      }
+      h3 {
+        font-size: 2em;
+        line-height: 1em;
+      }
+      h4 {
+        font-size: 0.86em;
+        line-height: 1.1em;
+      }
+      p {
+        font-size: 0.7em;
+        line-height: 1.1em;
+      }
+
+      .test-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-size: contain;
+        background-position: center;
+        z-index: 10;
+        opacity: 0.5;
+      }
+
+      @media print {
+        html {
+          color: rgb(35, 31, 32) !important;
+        }
+        .cricos-code {
+          color: rgb(35, 31, 32) !important;
+        }
+        .vertical-text {
+          color: rgb(35, 31, 32) !important;
+        }
+        .process-marks:after {
+          background-color: rgb(35, 31, 32) !important;
+        }
+      }
+
+      .document {
+        bottom: 0in;
+      }
+
+      .reversed .vertical-text {
+        color:white !important;
+      }
+
+      .reversed .cricos-code {
+        color:white !important;
+      }
+
+    
+      .page:before {
+        content: '';
+        background-color: white;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 600px;
+        z-index: 0; 
+      }
+
+      .crop {
+        z-index: 100000;
+      }
+
+      .front-container {
+        -ms-flex-item-align: end;
+        align-self: flex-end;
+        box-sizing: border-box;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -ms-grid-row-align: center;
+        align-items: center;
+        position: relative !important;
+        width: 100%;
+      }
+      .background-img {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        flex: 1;
+      }
+      .placeholder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/acbca987de4d3deb25063f0a8080ef1d/placeholder.jpg');
+        z-index: 9;
+        opacity: 0.5;
+        background-position: center;
+        background-size: contain;
+      }
+      
+      .backgroundImg{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        
+      }
+      
+      .backgroundImg div{
+		width: 100%;
+        height: 100%;
+        position: relative;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+      }
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}} {{{process-text-colour}}}" data-crop="{{show-crop}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+           <div class="document">
+             <div class="content">        
+               <div class="cricos-code">
+                 <p>{{{cricos-code}}}</p>
+               </div>
+               <div class="front-container">
+                 <div class="front-inner-container">
+                   <div class="logo">
+                     <img src="{{{account.logos.primary}}}" alt="Sydney University Logo" />
+                   </div>
+                   <div class="text-content" style="font-size: {{font-size-slider}}{{^font-size-slider}}0.5{{/font-size-slider}}em;">
+                     <h1 data-limit="4" style="font-weight:bold;">{{{headline}}}</h1>
+                     <h1 style="font-weight:bold;">-</h1>
+                     <div style="font-weight:bold;">  {{{URL-CTA}}}</div>
+                   </div><!--text-content-->
+                 </div><!--front-inner-container-->
+               </div><!--front-container-->
+             </div><!--content-->
+          </div><!--document-->
+          
+                         <div class="backgroundImg">
+                 <div>{{{ background-image }}}</div>
+               </div>
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/hide-empty-titles.js"></script>
+    <script src="js/dynamic-inject.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+        });
+      });
+      
+      const injectObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          injectDynamicContent();
+        });
+      });      
+      
+      const injectSources = document.querySelectorAll('[data-target-id]');
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+      
+      if ( injectSources.length > 0 ) {
+        injectSources.forEach(src => {
+          injectObserver.observe(src, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });            
+        });
+      }    
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+        injectDynamicContent();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+      
+      function detectSystem() {
+        const isMac = window.navigator.appVersion.includes('Mac');
+		if ( isMac ) document.body.classList.add('is-mac');
+      }
+
+      detectSystem();
+
+    </script>
+
+
+  </body>
+</html>

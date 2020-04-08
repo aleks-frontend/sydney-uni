@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html data-sign="OSR">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Circular/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/apercu-pro/stylesheet.css');
+
+      :root {
+        --orange: {{{account.colors.primary}}};
+        --charcoal: {{{account.colors.charcoal}}};
+        --black: #000000;
+      }
+
+      html {
+        font-family: "Apercu Pro";
+        font-size: 11pt;
+        color: #000;
+        word-break: break-word;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }      
+
+      /* Helper classes */
+      .u-hide { display: none; }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      .fit {
+        display: flex;
+        align-items: flex-end;
+        padding: 0pt 20.5pt 35.7pt 34.8pt;
+      }
+      
+
+      .content {
+        display: flex;
+        flex-direction: column;
+        padding: 0 31pt 0 39pt;
+        /*background-color: var(--orange);*/     
+        /*clip-path:  polygon(0 0, 100% 0%, 100% 19pt, 328.5pt 19pt, 328.5pt 21.5pt, 369pt 22pt, 100% 100%, 0 100%, 0 21.3pt, 20.5pt 21.5pt, 20.5pt 19pt, 0 19pt);*/
+        /*-webkit-clip-path: polygon(0 0, 100% 0%, 100% 19pt, 328.5pt 19pt, 328.5pt 21.5pt, 369pt 22pt, 100% 100%, 0 100%, 0 21.3pt, 20.5pt 21.5pt, 20.5pt 19pt, 0 19pt);*/
+      }
+
+
+      .logo {
+        width: 145pt;
+        margin-bottom: 15pt;
+      }
+      
+      .logo-reversed {
+        width: 145pt;
+        margin-bottom: 15pt;
+        display: none;
+      }
+      
+      .text-content {
+          display: flex;
+          flex-direction: column;
+          height: 6.35em;
+	      color: var(--black);
+      }
+      
+          .heading-upper {
+	          font-family: 'Apercu Mono';
+              font-size: 9.4pt;
+              margin-bottom: 1.4em;
+          }
+
+          .heading {
+            font-size: 20pt;
+            margin-bottom: 0.55em;
+            font-weight: bold;
+            line-height: 1.2em;
+          }
+
+          .date {
+            font-size: 12.3pt;        
+          }
+      
+      .notch {
+        position: absolute;
+        width: 3px;
+        background-color: var(--black);
+	    height: 38px;
+        left: 98px;
+      }
+      
+        .higher-notch {
+          top: 0px;
+        }
+
+        .lower-notch {
+          bottom: 0px;
+        }
+
+    .inner-notch {
+      background-color: var(--black);
+      height: 58px;
+      width: 3px;
+      margin-bottom: 0.65em;
+    }
+      
+   
+      
+      
+   /* Theme Properties */
+           
+     /*Black Theme*/
+
+        .theme-colour--black .container {
+           background-color: var(--black);
+        }
+
+        .theme-colour--black .notch,
+        .theme-colour--black .inner-notch {
+           background-color: #ffffff;
+        }
+
+        .theme-colour--black .logo {
+          display: none;
+        }
+
+        .theme-colour--black .logo-reversed {
+          display: block;
+        }
+
+        .theme-colour--black .text-content {
+          color: #ffffff;
+        }
+      
+        .theme-colour--black .page-two .notch {
+          background-color: var(--black) !important;
+        }
+      
+        .theme-colour--black .cricos {
+          color: #ffffff;
+        }
+
+      
+     /*Ochre Theme*/
+
+        .theme-colour--ochre .container {
+           background-color: var(--orange);        
+        }
+      
+        .page-two .container {
+          background-color: #ffffff;  /*Page 2 will be white */
+        }
+      
+        .theme-colour--ochre .cricos {
+          color: var(--black);
+        }
+      
+      /* Properties Exclusive to Page 2*/
+       
+      .page-two-content {
+        display: flex;
+        flex-direction: column;
+        padding: 0 0 0 40pt;
+        width: 100%;
+        height: 15em;
+      }
+      
+      .text-content-upper {
+          width: 62%;
+          height: 49.5%;
+          padding: 0.12em 0.1em 0 0;
+      }
+
+	    .text-content-upper h1 {
+          color: var(--black);
+          font-size: 12pt;
+          line-height: 1.33em;
+        }
+      
+	    .text-content-upper h1 strong {
+          color: var(--black);
+          font-size: 12pt;
+          font-weight: 700;
+          line-height: 1.33em;
+        }      	
+      
+        .text-content-upper p {
+            color: var(--black);
+            font-size: 9.2pt;
+            line-height: 1.3em;
+        }  
+      
+      .text-content-lower-container {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 50%;
+      }
+      
+      .columns-hosts {
+        height: 100%;
+        width: 63%;
+	    display: flex;
+      }
+      
+        .columns-hosts p,
+	    .column-event-details p {
+            font-size: 0.28em;
+        }
+      
+        .columns-hosts a:link, 
+      	.columns-hosts a:visited,
+	    .column-event-details a:link,
+    	.column-event-details a:visited {
+			text-decoration: none;
+          	color: var(--orange);
+        }
+
+        .column-hosts-block {
+          width: 100%;
+          height: 100%;
+          padding: 0.55em 0;
+        }
+
+        .column-hosts-two {
+          width: 100%;
+          height: 100%;        
+        }
+
+      .column-event-details {
+          height: 100%;
+          width: 43%;
+          padding-left: 0.8em;
+          padding: 0.57em 0em 0 0.55em;
+      }
+      
+	  .foldMark {
+        position: absolute;
+        width: 5.5mm;
+        top: 50%;
+        border: 0.5px dashed #888;
+        transform: translateY(-50%);
+        z-index: 999;
+      }
+
+      .foldMark--left {
+        left: 0;
+      } 
+
+      .foldMark--right {
+        right: 0;
+      } 
+
+      .foldMarkDisplay--hide .foldMark {
+        display: none;          
+      }
+
+      .foldMarkDisplay--hide .foldMark {
+        display: none;          
+      }
+
+      .foldMarkDigital--false .foldMark{
+        display: none;
+      }
+     
+      .cricos {
+        position: absolute;
+        top: 28pt;
+        right: 29.2pt;
+        font-family: 'Apercu Mono';
+        font-size: 6pt;
+      }
+      
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}} theme-colour--{{ SU_theme_colour--invB }}{{ ^SU_theme_colour--invB }}black{{ /SU_theme_colour--invB}}
+                                         foldMarkDisplay--{{SU_fold-mark--ib}}{{^SU_fold-mark--ib}}show{{/SU_fold-mark--ib}}
+                                         foldMarkDigital--{{show-crop}}" data-crop="{{show-crop}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-2 }}"></div>
+    </div><!-- end placeholderMaster -->
+    
+    <div class="page">
+      
+      <div class="foldMark foldMark--left"></div><!--foldMark-->
+      <div class="foldMark foldMark--right"></div><!--foldMark-->
+
+      <div class="bleed">
+
+        <div class="container fit">
+            <div class="notch higher-notch"></div>
+
+          <div class="content">
+            
+            <div class="text-content">
+              <div class="inner-notch"></div>
+              
+              <div class="heading-upper" data-max-line="2">{{{SU_title_upper--invB}}}</div>
+              <div class="heading" data-max-line="3">{{{SU_title_lower--invB}}}</div>
+              <div class="date" data-max-line="1">{{{SU_event_date--invB}}}</div>
+            </div>
+            
+	        <img src="{{{account.logos.primary}}}" class="logo">
+            <img src="{{{account.logos.untitled}}}" class="logo-reversed">
+              
+          </div><!--content-->
+          
+            <div class="notch lower-notch"></div>
+            <div class="cricos"><span>{{#metadata}}OF_{{export_id}}{{/metadata}}{{^metadata}}EXPORTID{{/metadata}}</span> {{{SU_cricos--ib}}}</div><!--cricos-->
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    
+    <div class="page page-two">
+      
+      	<div class="foldMark foldMark--left"></div><!--foldMark-->
+     	<div class="foldMark foldMark--right"></div><!--foldMark-->
+
+    	<div class="bleed">
+
+        	<div class="container fit">
+              <div class="notch higher-notch"></div>
+              
+              <div class="page-two-content">
+                <div class="text-content-upper" data-max-height="345">
+               		{{{SU_event_description--invB}}} 
+                </div>
+                
+                <div class="text-content-lower-container">
+                  
+                  <div class="columns-hosts">
+                    {{#collection.host-details}}
+                      <div class="column-hosts-block" data-max-height="345">
+						{{{SU_event_host_details--invB}}}
+                      </div>
+                    {{/collection.host-details}}
+                  </div> <!--columns-hosts-->
+                  
+                  <div class="column-event-details" data-max-height="345">
+                  	{{{SU_event_details--invB}}}
+                  </div> <!--column-event-details-->
+                
+                </div><!--text-content-lower-container-->
+                
+              </div><!--page-two-content-->
+              
+              <div class="notch lower-notch"></div>
+        	</div><!--container fit-->
+          
+    	</div><!--bleed-->
+    </div><!--page-->
+          
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/hide-empty-titles.js"></script>
+    <script src="js/dynamic-inject.js"></script>
+    <script src="js/text-fit-min.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+          hideEmptyTitles();
+        });
+      });
+
+      const injectObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          injectDynamicContent();
+        });
+      });      
+
+      const injectSources = document.querySelectorAll('[data-target-id]');
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      if ( injectSources.length > 0 ) {
+        injectSources.forEach(src => {
+          injectObserver.observe(src, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });            
+        });
+      }    
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+        injectDynamicContent();
+        hideEmptyTitles();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+
+    </script>
+
+
+  </body>
+</html>

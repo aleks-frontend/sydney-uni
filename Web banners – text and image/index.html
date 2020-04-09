@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>University of Sydney Postcard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/stylesheets/main.css">
+
+    <style type="text/css">
+
+
+      body {
+        overflow: hidden;
+      }
+
+
+      @import "https://outfit-assets-production.s3.amazonaws.com/fonts/apercu-pro/stylesheet.css";
+
+      * {
+        -webkit-margin-before: 0;
+        -webkit-margin-after: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        -webkit-font-smoothing: antialiased;
+        font-family: 'Apercu Pro', ZapfDingbatsITC;
+        color: #0a0a0a;
+        background-color: #fff;
+        font-weight: 500;
+      }
+      html.show-crop-marks {
+        font-size: 106.5% !important;
+      }
+
+      .tinymce_style--light {
+        color: #e64626;
+      }
+
+      body {
+        position: relative;
+        margin: 0;
+      }
+
+      .document {
+        height: 100%;
+      }
+
+      .page {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      .background {
+        position: absolute;
+        right: 0;
+        width: 50%;
+        height: 100%;
+        box-sizing: border-box;
+        background: white;
+        z-index: 0;
+      }
+
+      .background-color {
+        width: 100%;
+        height: 100%;
+        mix-blend-mode: multiply;
+      }
+
+      .background-image {
+        position: absolute;
+        top: 0.25in;
+        right: 0.25in;
+        bottom: 0.25in;
+        left: 0.25in;
+        background-size: cover;
+        background-position: center;
+        z-index: -1;
+        mix-blend-mode: multiply;
+      }
+
+      .content {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: start;
+        -ms-flex-align: start;
+        align-items: flex-start;
+        height: 100%;
+        position: relative;
+        box-sizing: border-box;
+      }
+
+      .logo {
+        height: 3.1em;
+        -ms-flex-item-align: end;
+        align-self: flex-end;
+        /* padding-left: 1.6rem; */
+        position: absolute;
+        bottom: 2.6rem;
+      }
+      .logo svg {
+        margin-top: 0.5em;
+        height: 100%;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        margin: 0;
+        line-height: 1em;
+      }
+
+      .front-container {
+        height: 100%;
+        box-sizing: border-box;
+        width: 50%;
+        position: relative;
+        background-color: #e64626;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -ms-flex-line-pack: center;
+        align-content: center;
+        -webkit-box-align: start;
+        -ms-flex-align: start;
+        align-items: flex-start;
+      }
+      .front-container.medium {
+        width: 54.7%;
+      }
+      .front-container.medium h1 {
+        font-size: calc(1.5em{{#headline-font-size-slider}} + {{{headline-font-size-slider}}}em{{/headline-font-size-slider}});
+        line-height: 1.1em;
+      }
+      .front-container.medium h2 {
+        font-size: 1.48em;
+      }
+      .front-container.small {
+        width: 50.7%;
+      }
+      .front-container.small h1 {
+        font-size: calc(1.6em{{#headline-font-size-slider}} + {{{headline-font-size-slider}}}em{{/headline-font-size-slider}});
+        line-height: 1em;
+      }
+      .front-container.small h2 {
+        font-size: 1.48em;
+      }
+      .front-container.left-align {
+        -ms-flex-item-align: start;
+        align-self: flex-start;
+      }
+
+      .front-inner-container {
+        padding: 1.5em 1.5em;
+        box-sizing: border-box;
+      }
+
+      .text-content {
+        padding: 0 0;
+      }
+
+      .line-top {
+        top: 0;
+        position: absolute;
+        width: 3px;
+        height: 22px;
+        background-color: #0a0a0a;
+      }
+
+      .line-bottom {
+        position: absolute;
+        height: 3px;
+        width: 22px;
+        background-color: white;
+        right: 0;
+      }
+
+      .col-container {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        padding: 1.6rem 1.6rem 0.5rem 1.6rem;
+        height: 100%;
+      }
+
+      .col {
+        width: 50%;
+        height: 100%;
+        position: relative;
+      }
+      .col:first-child {
+        padding-right: 1.5em;
+      }
+
+      .column2-footer {
+        position: absolute;
+        bottom: 0;
+      }
+      .column2-footer img {
+        height: 1em;
+      }
+
+      .process-marks {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+      }
+      .process-marks:before, .process-marks:after {
+        content: "";
+        height: 0.1em;
+        width: 2rem;
+        position: absolute;
+        top: 1.6rem;
+        background-color: #0a0a0a;
+      }
+      .process-marks:before {
+        left: -1rem;
+        right: initial;
+      }
+      .process-marks:after {
+        right: -1rem;
+        left: initial;
+      }
+
+      h1 {
+        font-size: calc(2.9em{{#headline-font-size-slider}} + {{{headline-font-size-slider}}}em{{/headline-font-size-slider}});
+        line-height: 1.1em;
+        margin-bottom: 0.1em;
+      }
+
+      h2 {
+        font-size: 1.2em;
+        font-weight: 600;
+        line-height: 1.15em;
+      }
+
+      h3 {
+        font-size: 1em;
+        line-height: 1.4em;
+      }
+
+      p {
+        margin-top: 0em;
+        font-size: 0.8em;
+        line-height: 1.35em;
+      }
+
+      .headlines {
+        margin-bottom: 0em;
+        box-sizing: border-box;
+      }
+
+      .headlines h1 {
+        max-height: 2.3em;
+        /*word-break: break-all;*/
+      }      
+      
+      @media screen and (min-height: 500px) {
+        .headlines h1 {
+          max-height: 3.5em;
+        }
+      }
+      
+      .cta-url {
+        max-height: 3em;
+        overflow: hidden;
+        margin-top: 0.4em;
+
+      }
+
+      .cta-url h2::after {
+        content: ">";
+        color: #e64626;
+        background-color: black;
+        width: 1em;
+        margin-left: 0.55em;
+        margin-top: 0.19em;
+        height: 1em;
+        display: inline-block;
+        line-height: 0.94em;
+        text-align: center;
+        box-sizing: border-box;
+        font-size: 0.85em;
+        font-weight: 600;
+        position: absolute;
+
+
+        content: ">";
+        color: #e64626;
+        background-color: black;
+        width: 1em;
+        margin-left: 0.55em;
+        margin-top: 0em;
+        height: 1em;
+        display: inline-block;
+        line-height: 0.94em;
+        text-align: center;
+        box-sizing: border-box;
+        font-size: 0.85em;
+        font-weight: 600;
+        position: relative;
+        z-index: 5000;
+      }
+
+      /* OVERFLOW */
+      .front-page-copy-overflow-container {
+        overflow: hidden;
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -ms-flex-line-pack: center;
+        align-content: center;
+      }
+
+      .front-page-copy-overflow {
+        max-height: 10.5em;
+      }
+
+      .col-overflow-container {
+        height: 215px;
+        overflow: hidden;
+      }
+
+      .col:nth-child(2) .col-overflow-container {
+        height: 243px;
+      }
+
+      .overflow {
+        border: 1px dashed #0a0a0a;
+        position: relative;
+        background-color: rgba(255, 0, 0, 0.8);
+      }
+      .overflow h1, .overflow h2, .overflow h3, .overflow h4, .overflow h5, .overflow h6, .overflow p, .overflow li {
+        color: #0a0a0a !important;
+      }
+      .overflow::before {
+        content: "-";
+        position: absolute;
+        z-index: 5;
+        top: 0.5em;
+        right: -8px;
+        height: 15px;
+        width: 15px;
+        border: 1px solid red;
+        color: red;
+        padding: 2px;
+        box-sizing: border-box;
+        font-size: 23px;
+        text-align: center;
+        line-height: 8px;
+        background-color: white;
+      }
+      .overflow:hover:before {
+        background-color: red;
+        color: white;
+      }
+      .overflow:after {
+        display: none;
+      }
+      .overflow:hover:after {
+        display: block;
+        content: "There is overset content in this column. Please remove it";
+        position: absolute;
+        top: 2.8em;
+        right: -10px;
+        background-color: #0a0a0a;
+        color: white;
+        border-radius: 2px;
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1em;
+        text-align: center;
+        width: 10em;
+      }
+
+      @media print {
+        .overflow.overflow {
+          background-color: rgba(255, 0, 0, 0.8);
+          position: relative;
+          border: initial;
+        }
+        .overflow.overflow h2, .overflow.overflow p, .overflow.overflow h6 {
+          color: initial;
+        }
+        .overflow::before {
+          content: "";
+          display: none;
+        }
+        .overflow:after {
+          display: block;
+          content: "There is overset content in this column. Please remove it";
+          position: absolute;
+          top: 0em;
+          left: 0em;
+          right: 0em;
+          color: white;
+          border-radius: 2px;
+          padding: 5px;
+          box-sizing: border-box;
+          font-size: 0.5em;
+          font-weight: 400;
+          line-height: 1em;
+          text-align: center;
+        }
+      }
+      @media (max-aspect-ratio: 20 / 6) {
+        .cta-url {
+          position: absolute;
+          bottom: 2em;
+          bottom: 40px;
+          font-size: 0.7em;
+        }
+
+        .front-inner-container {
+          padding: 2em 1.5em 1.5em 1.5em;
+        }
+
+        .front-container {
+          -webkit-box-pack: start;
+          -ms-flex-pack: start;
+          justify-content: flex-start;
+          -ms-flex-line-pack: start;
+          align-content: flex-start;
+        }
+
+        .line-bottom {
+          bottom: 1.5em;
+          bottom: 45px;
+        }
+      }
+
+
+
+      @media (max-aspect-ratio: 20/10)  {
+        .front-container {
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          -ms-flex-line-pack: center;
+          align-content: center;
+          -webkit-box-align: start;
+          -ms-flex-align: start;
+          align-items: flex-start;
+        }
+        .front-inner-container {
+          padding: 2em 1.5em 3.5em 1.5em;
+        }
+
+        .front-page-copy-overflow {
+          max-height: 16em;
+        }
+        h1 {
+          font-size: calc(18pt{{#headline-font-size-slider}} + {{{headline-font-size-slider}}}em{{/headline-font-size-slider}});
+          line-height: 1.1em;
+          margin-bottom: 0.1em;
+        }
+        h2 {
+          margin-top: 1em;
+          font-size: 1.5em;
+          font-weight: 600;
+          line-height: 1.15em;
+        }
+        .cta-url h2 {
+          font-size: 1.4em;
+          font-weight: 500;
+        }
+      }
+
+
+
+      @media (min-aspect-ratio: 20/5)  {
+        .cta-url {
+          margin-top: 0.5em;
+        }
+        h1 {
+          font-size: calc(22pt{{#headline-font-size-slider}} + {{{headline-font-size-slider}}}em{{/headline-font-size-slider}});
+          line-height: 1.1em;
+          margin-bottom: 0.1em;
+        }       
+
+        h2 {
+          font-size: 1.6em;
+          font-weight: 600;
+          line-height: 1.15em;
+        }
+        .front-page-copy-overflow {
+          max-height: 7.3em;
+        }
+      }
+
+      @media (min-aspect-ratio: 20/4)  {
+        .line-bottom {
+          display: none;
+        }
+        .line-top {
+          display: none;
+        }
+        .cta-url h2 {
+          font-size: 1.2em;
+          font-weight: 500;
+        }
+
+        .cta-url {
+          position: absolute;
+          bottom: 2em;
+          bottom: 40px;
+        }
+
+        .front-container {
+          -webkit-box-pack: start;
+          -ms-flex-pack: start;
+          justify-content: flex-start;
+          -ms-flex-line-pack: start;
+          align-content: flex-start;
+        }
+      }
+
+
+
+      .ochre-large .front-container {
+        width: 60%;
+      }
+
+      .ochre-large .cta-url h2 {
+        font-size: 1.6em;
+        font-weight: 400;
+      }
+
+      .ochre-large h1 {
+        font-size: calc(26pt{{#headline-font-size-slider}} + {{{headline-font-size-slider}}}em{{/headline-font-size-slider}});
+        line-height: 1.1em;
+        margin-bottom: 0.1em;
+      }
+
+      .ochre-large h2 {
+        font-size: 1.8em;
+        font-weight: 600;
+        line-height: 1.15em;
+      }
+
+      .ochre-large .line-top {
+        display: none;
+      }
+
+      .ochre-large .line-bottom {
+        display: none;
+      }
+
+      .ochre-large .front-container {
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+        -ms-flex-line-pack: start;
+        align-content: flex-start;
+      }
+
+      .ochre-large .cta-url {
+        position: absolute;
+        bottom: 2em;
+        bottom: 40px;
+      }
+
+      .cta-url h2 {
+        margin-top: 0em;
+      }
+
+      @media (min-aspect-ratio: 20/5)  {
+        .ochre-large .front-page-copy-overflow {
+          max-height: 6em;
+        }
+      }
+
+
+
+      @media (min-aspect-ratio: 75/10) { 
+        .front-page-copy-overflow {
+          max-height: 5em;
+        }
+        .cta-url {
+          display: none;
+        }
+      }
+
+      @media only screen and (width:1000px) {
+        h1 {
+          font-size: calc(2.3em + -0.2em);
+        }
+
+        h2 {
+          font-size: calc(18pt + 0em);
+        }
+
+        .cta-url {
+          font-size: 0.7em;
+        }
+      }
+
+
+
+
+
+
+
+      h1 {
+
+      }
+
+      h2 {
+        font-size: calc(18pt{{#subheading-font-size-slider}} + {{{subheading-font-size-slider}}}em{{/subheading-font-size-slider}});
+      }
+
+      .cta-url h2 {
+        font-size: calc(18pt{{#subheading-font-size-slider}} + {{{subheading-font-size-slider}}}em{{/subheading-font-size-slider}});
+        font-weight: 500;
+      }
+
+
+
+
+
+
+
+      .ochre-1 .background {
+        width: 50%;
+      }
+      .ochre-1 .front-container {
+        width: 50%;
+      }
+
+      .ochre-2 .background {
+        width: 45%;
+      }
+      .ochre-2 .front-container {
+        width: 55%;
+      }
+
+      .ochre-3 .background {
+        width: 40%;
+      }
+      .ochre-3 .front-container {
+        width: 60%;
+      }
+
+      .ochre-4 .background {
+        width: 35%;
+      }
+      .ochre-4 .front-container {
+        width: 65%;
+      }
+
+      .ochre-5 .background {
+        width: 30%;
+      }
+      .ochre-5 .front-container {
+        width: 70%;
+      }
+
+
+
+
+    </style>
+
+  </head>
+  <body>
+
+    <div class='page ochre-{{{container-size}}}'>
+      <div class='document'>
+        <div class='background'>
+
+          {{{resizable-image}}}
+
+        </div>
+        <div class='content'>
+          <div class='front-container'>
+            <div class='front-inner-container'>
+              <div class='line-top'></div>
+              <div class='text-content'>
+                <div class='front-page-copy-overflow-container'>
+                  <div class='front-page-copy-overflow'>
+                    <div class='headlines'>
+                      <h1 data-max-height="css">{{{headline}}}</h1>
+                      <h2>{{{subheading}}}</h2>
+                    </div>
+                  </div>
+                </div>
+                {{#cta}}
+                <div class='cta-url'>
+                  <div class='cta'>
+                    <h2>{{{cta}}}</h2>
+                  </div>
+                </div>
+                {{/cta}}
+              </div>
+              <div class='line-bottom'></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js'></script>
+    <script type="text/javascript" src="assets/javascripts/main.js"></script>
+
+    <script>
+      function loop() {
+        checkHeight(document.getElementsByClassName('cta'));
+        /* Add any other text boxes you want to check the overflows on with the following: checkHeight(document.getElementsByClassName('CLASS NAME')); */
+
+      } setInterval(loop, 500);
+
+      function checkHeight(element) {
+        for (i = 0 ; i < element.length ; i++ ) {
+          var currentElement = element[i];
+          var height         = currentElement.offsetHeight;
+          var parent         = currentElement.parentNode;
+          var parentHeight   = parent.offsetHeight;
+
+          if (height > parentHeight) {
+            parent.classList.add('overflow');
+          } else {
+            parent.classList.remove('overflow');
+          }
+
+          if ((currentElement).parentNode.classList.contains('overflow')) {
+            document.body.classList.add('overflow-true');
+          } else {
+            document.body.classList.remove('overflow-true'); 
+          }
+        }
+      }  
+
+      /*
+      *  Include this Snippet to Enforce Text lockups and line limits
+      *  NOTES 
+      *   - This requires base.css as it utilises overflow clss styles.
+      *   - Your element must have an explicit line-heights set
+      */
+
+      // Grab all nodes to be checked
+      var nodesToCheck = document.querySelectorAll('[data-limit]');
+
+      // Set up our Observables
+      var lineObservable = new ResizeObserver(function(entries, observer) {
+        entries.forEach(function(entry) {
+          checkLimitedText(entry.target);
+        })
+      });  
+
+      // Observe All the Nodes
+      nodesToCheck.forEach(function(node) {
+        lineObservable.observe(node);      
+      });
+
+      function checkLimitedText(node) {
+        // Check the line limit set   
+        const limit = node.getAttribute('data-limit');
+        // Count the amount of lines currently in the element
+        const lines = countElementLines(node); 
+        if (lines > limit) {
+          node.classList.add("overflow");
+        } 
+        else {
+          node.classList.remove("overflow");
+        }
+      }
+      // Calculates the amount lines in a node
+      // based on the css line-height value
+      function countElementLines(node) {
+        const height = node.clientHeight;
+        const lineHeight = parseFloat(window.getComputedStyle(node).getPropertyValue('line-height'));
+        const lines = Math.ceil(height / lineHeight);
+        return lines;
+      }      
+
+
+      // Responsive Text Sizing
+      window.addEventListener("resize", setSize);
+      document.addEventListener("DOMContentLoaded", setSize);
+
+      function setSize() {
+        var vw   = window.innerWidth / 100
+        var vh   = window.innerHeight / 100
+        var vmin = Math.min(vw, vh)
+        var vmax = Math.max(vw, vh)
+        document.documentElement.style.fontSize =  (( vmin * vminsize ) + ( vmax * vmaxsize ) + ( vh * vhsize ))  + "px";
+      }
+
+      var vminsize = 1
+      var vmaxsize = 1
+      var vhsize   = 2
+
+
+      /* New maxHeightCheck function */
+      /* We added this because of it's css mode, so max-height can change withing media query */
+      function maxHeightCheck(variation = 'primary') {
+        const textBlocks = document.querySelectorAll('[data-max-height]');        
+        
+        textBlocks.forEach(block => {
+          const dynamicCheck = block.dataset.maxHeight == 'dynamic' || block.dataset.maxHeightDynamic == 'true';
+          if ( dynamicCheck ) dynamicAssign(block);
+
+          const cssCheck = block.dataset.maxHeight == 'css';
+          const bodyComputedStyle = window.getComputedStyle(document.body);
+          const blockHeight = block.scrollHeight;
+          const unit = block.dataset.maxHeightUnit || 'px';
+          const maxHeightAlt = block.dataset.maxHeightAlt || block.dataset.maxHeight;
+          let maxHeight = (variation == 'primary') ? block.dataset.maxHeight : maxHeightAlt;    
+
+          if ( cssCheck ) {
+            const computedBlockStyle = window.getComputedStyle(block);
+            maxHeight = parseInt(computedBlockStyle.maxHeight);
+          } else {
+            // Setting the element's max-height
+            block.style.maxHeight = maxHeight + unit;
+
+            // Recalculating maxHeight in case 'rem' is set as a unit
+            if ( unit == 'rem' ) maxHeight = maxHeight * parseFloat(bodyComputedStyle.fontSize);      
+          }
+
+          // Adding an 'overflow' class to an element if it's offset height exceedes the max-line-height
+          ( blockHeight > maxHeight ) ? block.classList.add('overflow') : block.classList.remove('overflow');
+        });
+      }
+
+      function dynamicAssign(element) {
+        const container = element.parentNode;
+        container.style.overflow = 'hidden';
+        const containerHeight = container.offsetHeight;
+        const subtrahendHeight = container.querySelector('.js-subtrahend').offsetHeight || 0;
+        const dynamicHeight = containerHeight - subtrahendHeight;
+
+        element.dataset.maxHeightDynamic = 'true';
+        element.dataset.maxHeight = dynamicHeight;
+        container.style.overflow = 'visible';
+      }
+      
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxHeightCheck(); 
+        });
+      });
+      
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });        
+
+    </script>
+  </body>
+</html>

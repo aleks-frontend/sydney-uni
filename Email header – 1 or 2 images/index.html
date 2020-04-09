@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Print Generic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://outfit-assets-production.s3.amazonaws.com/fonts/apercu-pro/stylesheet.css" rel="stylesheet">
+    <script src="tinycolor.js"></script>
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    <style>
+/********************/
+/*  OVERFLOW STYLES */
+/********************/
+.overflow {
+    position: relative !important;
+    border: 1px dashed red;
+    color: red !important;
+  }
+.overflow * { 
+    color: inherit !important; 
+}
+.overflow::before {
+    content: '+';
+    position: absolute;
+    z-index: 99999999;
+    top: 5px;
+    right: 5px;
+    height: 1.5em;
+    width: 1.5em;
+    min-width: 15px;
+    min-height: 15px;
+    border: 1px solid red;
+    font-size: 1em;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.overflow:hover:before {
+    background-color: red;
+    color: white; 
+}
+.overflow:after {
+    display: none; 
+}
+.overflow:hover:after {
+    display: block;
+    content: 'Number of lines exceeds total allowed';
+    position: absolute;
+    top: calc(1.5em + 5px);
+    right: 5px;
+    background-color: black;
+    color: white;
+    padding: 5px;
+    font-size: 1em;
+    font-weight: 400;
+    width: 15em;
+}        
+      * {
+        -webkit-font-smoothing: antialiased;
+        font-family: 'Apercu Pro', sans-serif;
+      }
+      
+      h1, h2, h3, h4, h5, h6 { font-weight: 700; line-height: 1.3em; }
+      h1 { font-size: 23px; font-weight: 400; }
+      h2 { font-size: 23px; font-weight: 400; }
+      
+      .placeholder {
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/50b5cf3568568951787ecc2169495eac/7146.2_Golden_Graduate_eheader_850px_8Jan_v2.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0.7;
+        z-index: 100;
+      }
+      
+      .image { display: flex; flex-direction: row; width: 100%; height: calc(100% - 80px); }
+      .block { position: relative; display: flex; flex: 1 1 0; width: 50%; height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover; }
+      .text { display: flex; justify-content: space-between; align-items: center; position: absolute; bottom: 0; left: 0; right: 0; height: 80px; padding: 15px 20px; z-index: 10; background-color: {{{account.colors.primary}}}; }
+      .right { height: 100%; }
+      .left {
+        max-width: 80%;
+      }
+      .logo { width: 140px; align-items: flex-end; }
+      .logo img { width: 100%; transform: translateY(4%) }
+      
+      @media (min-width: 900px) and (max-width: 1700px) {
+        
+      .image { height: calc(100% - 160px); }
+      .text { height: 160px; padding: 30px 40px; }
+      .logo { width: 270px; }
+        h1 { font-size: 46px; }
+        h2 { font-size: 46px; }
+        
+      }
+      
+    </style>
+  </head>
+  <body style="background: {{{ account.colors.primary }}};">
+
+    <div class="page">
+      
+      <div class="image">
+        {{#image-left}}<div class="block one">{{{ image-left }}}</div>{{/image-left}}
+        {{#image-right}}<div class="block two">{{{ image-right }}}</div>{{/image-right}}
+      </div>
+      <div class="text">
+        <div class="left">
+          <h1 data-limit="1">{{{ headline }}}</h1>
+          <h2 data-limit="1">{{{ subheading }}}</h2>
+        </div>
+        <div class="right"><div class="logo"><img src="{{{ account.logos.primary }}}"></div>
+        </div>
+      </div>
+    </div>
+
+  <script>
+    window.showCrop = {{show-crop}};
+  </script>
+<script>
+    /*
+    *  Include this Snippet to Enforce Text lockups and line limits
+    *  NOTES 
+    *   - This requires base.css as it utilises overflow clss styles.
+    *   - Your element must have an explicit line-heights set
+    */
+
+    // Grab all nodes to be checked
+    var nodesToCheck = document.querySelectorAll('[data-limit]');
+
+    // Set up our Observables
+    var lineObservable = new ResizeObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+          checkLimitedText(entry.target);
+        })
+    });  
+    
+    // Observe All the Nodes
+    nodesToCheck.forEach(function(node) {
+        lineObservable.observe(node);      
+    });
+    
+    function checkLimitedText(node) {
+      console.log("we ran");
+          // Check the line limit set   
+          const limit = node.getAttribute('data-limit');
+          // Count the amount of lines currently in the element
+          const lines = countElementLines(node); 
+          if (lines > limit) {
+              node.classList.add("overflow");
+          } 
+          else {
+              node.classList.remove("overflow");
+          }
+    }
+    // Calculates the amount lines in a node
+    // based on the css line-height value
+    function countElementLines(node) {
+        const height = node.clientHeight;
+        const lineHeight = parseFloat(window.getComputedStyle(node).getPropertyValue('line-height'));
+        const lines = Math.ceil(height / lineHeight);
+        return lines;
+    }
+  </script>    
+  <script src="main.js"></script>
+  <script src="prefixfree.js"></script>
+  </body>
+</html>

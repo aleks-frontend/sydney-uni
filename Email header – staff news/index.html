@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" style="background: #ffffff;">
+<head>
+  <link type="text/css" rel="stylesheet" href="main.css" />
+  <style type="text/css">
+      :root {
+      --red: #FD110D;
+      --yellow: #FFBF00;
+      --blue: #06153D; 
+      --gray: #E6E7E8;
+      --black: #000000;
+      --white: #FFFFFF;
+      /*--ochre: {{{account.colors.primary}}};*/
+      --ochre: rgb(230, 70, 38);  
+      --charcoal: rgb(66,66,66);
+    }
+    .headline {
+      font-size: {{{EDM-headline-font-size}}}px;
+    }
+    .headings.no-graphic {
+      width: 430px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page pc-{{digitalEDM-colour-theme}}{{^digitalEDM-colour-theme}}black{{/digitalEDM-colour-theme}}">
+    <div class="bleed">
+      <div class="test contain fit d-none"></div>
+      <div class="wrapper fit">
+        <div class="background fit">{{{digitalEDM-background-image}}}</div>
+        <div class="quad contain"></div>
+        <div class="headings">
+          {{#digitalEDM-headline}}
+          <h1 class="headline" data-limit="1">{{digitalEDM-headline}}</h1>
+          {{/digitalEDM-headline}}
+          
+          {{#digitalEDM-tagline}}
+          <div class="box-limit box-tagline">
+            <div class="box-inner">
+              <h2 class="tagline" data-limit="2">{{{digitalEDM-tagline}}}</h2>
+            </div>
+          </div>
+          {{/digitalEDM-tagline}}
+        </div>
+        <div class="logo contain"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    window.showQuad = '{{digitalEDM-show-quad-graphic}}' !== 'false';
+    if (!showQuad) { 
+      document.querySelector('.quad').classList.add('d-none'); 
+      document.querySelector('.headings').classList.add('no-graphic')
+    }
+
+    /*
+    *  Include this Snippet to Enforce Text lockups and line limits
+    *  NOTES 
+    *   - This requires base.css as it utilises overflow clss styles.
+    *   - Your element must have an explicit line-heights set
+    */
+
+    // Grab all nodes to be checked
+    var nodesToCheck = document.querySelectorAll('[data-limit]');
+
+    // Set up our Observables
+    var lineObservable = new ResizeObserver(function(entries, observer) {
+        entries.forEach(function(entry) {
+            checkLimitedText(entry.target);
+        })
+    });  
+
+    // Observe All the Nodes
+    nodesToCheck.forEach(function(node) {
+        lineObservable.observe(node);      
+    });
+
+    function checkLimitedText(node) {
+            // Check the line limit set   
+            const limit = node.getAttribute('data-limit');
+            // Count the amount of lines currently in the element
+            const lines = countElementLines(node); 
+            if (lines > limit) {
+                node.classList.add("overflow");
+            } 
+            else {
+                node.classList.remove("overflow");
+            }
+    }
+    // Calculates the amount lines in a node
+    // based on the css line-height value
+    function countElementLines(node) {
+        const height = node.clientHeight;
+        const lineHeight = parseFloat(window.getComputedStyle(node).getPropertyValue('line-height'));
+        const lines = Math.ceil(height / lineHeight);
+        return lines;
+    }  
+  </script>
+</body>
+</html>

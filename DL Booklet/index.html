@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" style="background: #ffffff;">
+
+<head>
+  <link type="text/css" rel="stylesheet" href="main.css" />
+  <style type="text/css">
+  </style>
+</head>
+
+<body>
+  <div class="page front-cover">
+    <div class="bleed">
+      <div class="test fit contain .d-none"></div>
+      <div class="boundary"></div>
+      <div class="wrapper fit">
+        <div class="cover-image">
+          {{{DL_Booklet_cover-image}}}
+        </div>
+        <div class="content">
+          <!--<span class="process process-left"></span>
+          <span class="process process-right"></span>-->
+          <div class="url">
+            <a href="" target="_blank">sydney.edu.au</a>
+          </div>
+          {{#DL_Booklet_headline}}
+          <div class="box-limit headline">
+            <div class="box-inner">
+              {{{DL_Booklet_headline}}}
+            </div>
+          </div>
+          {{/DL_Booklet_headline}}
+          {{#DL_Booklet_subheading}}
+          <div class="box-limit subheading">
+            <div class="box-inner">
+              {{{DL_Booklet_subheading}}}
+            </div>
+          </div>
+          {{/DL_Booklet_subheading}}
+          <img class="logo" src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/1bc7953e1233fe8679083acf9a54323c/logo.svg" />
+        </div>
+      </div>
+    </div>
+  </div>
+  {{#collection.DL_Booklet_pages}}
+    {{#block.page-inner}}
+      <div class="page page-inner">
+        <div class="bleed">
+          <div class="test fit contain .d-none"></div>
+          <div class="boundary"></div>
+          <div class="wrapper fit">
+            <div class="content">
+              <span class="process process-top"></span>
+              <span class="process process-bottom"></span>
+              <div class="main">
+                <div class="box-limit page-inner-text check-overflow">
+                  <div class="box-inner">
+                    {{#collection.DL_Booklet_section}}
+                      {{#block.text}}
+                    	{{{text}}}
+                      {{/block.text}}
+                      {{#block.image}}
+                      <div class="image-block">
+                        {{#image}}<img src="{{{image}}}" />{{/image}}
+                        {{#image-caption}}<small>{{{image-caption}}}</small>{{/image-caption}}
+                      </div>
+                      {{/block.image}}
+                    {{/collection.DL_Booklet_section}}                                                             
+                  </div>
+                </div>
+              </div>
+              <div class="control">
+                <p class="page-number"></p>
+                <div class="control-text">                
+                  <p class="lhs-text"></p>
+                  <p class="lhs-url"></p>
+                </div>
+              </div>
+            </div>            
+          </div>
+        </div>
+      </div>
+    {{/block.page-inner}}
+  {{/collection.DL_Booklet_pages}}
+  <div class="page back-cover">
+    <div class="bleed">
+      <div class="test fit contain .d-none"></div>
+      <div class="boundary"></div>
+      <div class="wrapper fit">
+        <div class="content">
+          <span class="process process-top"></span>
+          <span class="process process-bottom"></span>
+          <div class="main">
+            <div class="box-limit back-cover-text">
+              <div class="box-inner">
+                {{{DL_Booklet_backpage-text}}}
+              </div>
+            </div>
+          </div>
+          {{#DL_Booklet_backpage-bottom-text}}
+          <div class="box-limit back-cover-notes">
+            <div class="box-inner">
+              {{{DL_Booklet_backpage-bottom-text}}}
+            </div>
+          </div>
+          {{/DL_Booklet_backpage-bottom-text}}
+          <div class="control">
+            <div class="control-text">
+              <p>CRICOS 00026A</p>
+              {{{DL_Booklet_backpage-middle}}}
+              <p>sydney.edu.au</p>
+            </div>
+          </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const showCrop = '{{show-crop}}' === 'true';
+
+    function cropMarks(showCrop) {
+      if (showCrop) {
+        document.querySelector('body').classList.add('crop');
+      }
+
+      Array.prototype.slice.call(document.querySelectorAll('.page')).forEach(function (page) {
+        const parser = new DOMParser();
+        const cropString = '<div class="crop-marks"><span class="cm1"></span><span class="cm2"></span><span class="cm3"></span><span class="cm4"></span></div>';
+        const cropNode = parser.parseFromString(cropString, "text/html").body.firstChild;
+        !!showCrop && page.insertBefore(cropNode, null);
+      });
+    }
+
+    function getSize() {
+      const vw = (showCrop ? window.innerWidth : window.innerWidth + 57.62) / 100;
+      const vh = (showCrop ? window.innerHeight : window.innerHeight + 57.62) / 100;
+      const vmin = Math.min(vw, vh);
+      const vmax = Math.max(vw, vh);
+      return (vmin * 2) + (vmax * 1.41891892) + (vh * 2);
+    }
+
+    function setSize() {
+      const size = getSize();
+      document.documentElement.style.fontSize = `${size}px`;
+    };
+
+    function heightObservable() {
+      Array.prototype.slice.call(document.querySelectorAll('.box-limit .box-inner')).forEach(function (e) {
+        checkHeight(e);
+      });
+    }
+
+    function checkHeight(element) {
+      const elementHeight = element.getBoundingClientRect().height;
+      const parent = element.parentElement;
+      const parentHeight = parent.getBoundingClientRect().height;
+
+      if (elementHeight > parentHeight) {
+        parent.classList.add('overflow');
+      } else {
+        parent.classList.remove('overflow');
+      }
+    }
+
+    function renderPageNumber() {
+      Array.prototype.slice.call(document.querySelectorAll('.page-inner')).forEach(function (e, index) {
+        e.querySelector('.page-number').innerHTML = `Page ${index + 1}`;
+        e.querySelector('.lhs-url').innerHTML = `{{{DL_Booklet_lsh-url}}}`;
+        e.querySelector('.lhs-text').innerHTML = `{{{DL_Booklet_lsh-text}}}`;
+      });
+    }
+
+    cropMarks(showCrop);
+    setSize();
+    renderPageNumber();
+
+    window.addEventListener('resize', function () {
+      setSize();
+    });
+
+    window.addEventListener('load', function () {
+      heightObservable();
+    });
+
+    window.addEventListener('DOMSubtreeModified', function () {
+      heightObservable();
+    });    
+  </script>
+</body>
+
+</html>

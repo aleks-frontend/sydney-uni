@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html class="{{crop-marks}}-crop-marks {{^crop-marks}}show-crop-marks{{/crop-marks}}">
+<head>
+  <title>University of Sydney Directional Signs</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="assets/stylesheets/main.css">
+  
+   <style type="text/css">
+   </style>
+  
+</head>
+<body class="{{crop-marks}}-crop-marks {{^crop-marks}}show-crop-marks{{/crop-marks}} {{wayfinding-layout}}">
+  <div class="page">
+   
+
+    <div class="document">
+      <div class="content">
+        <div class="front-container" >
+        
+          <div class="process-text-container">
+            <div class="process-text">
+          		{{vertical-process-sentence}}
+            </div>
+          </div>
+          
+          <div class="front-inner-container">
+            
+            
+            <div class="text-content">
+              
+              <div class="arrow-large {{arrow-direction}}"></div>
+              
+              
+                <div class="wayfinder-container align-center">
+                  <div class="text">
+
+                        <div class="wayfinder">
+					      
+                          {{#wayfinding-locations}}<div class="arrow {{arrow-direction}}{{^arrow-direction}}none{{/arrow-direction}}"></div>{{/wayfinding-locations}}
+                          <div class="headline">
+                            <h1>{{{wayfinding-locations}}}<div class="{{icon}}{{^icon}}no-icon{{/icon}}"></div></h1>
+                          </div>
+
+                        </div>
+
+                  </div>
+               </div>
+            </div><!--text-content-->
+            
+
+        </div><!--front-inner-container-->
+          
+          
+
+          
+          
+      </div><!--front-container-->
+    </div><!--content-->
+    </div><!--document-->
+
+  </div><!--page-->
+
+
+  
+  
+ 
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script type="text/javascript" src="assets/javascripts/main.js"></script>
+  
+  
+  
+  <script>
+    function loop() {
+      checkHeight(document.getElementsByClassName('text'));
+
+      /* Add any other text boxes you want to check the overflows on with the following: checkHeight(document.getElementsByClassName('CLASS NAME')); */
+
+    } setInterval(loop, 500);
+
+    function checkHeight(element) {
+      for (i = 0 ; i < element.length ; i++ ) {
+        var currentElement = element[i];
+        var height         = currentElement.offsetHeight;
+        var parent         = currentElement.parentNode;
+        var parentHeight   = parent.offsetHeight;
+
+        if (height > parentHeight) {
+          parent.classList.add('overflow');
+        } else {
+          parent.classList.remove('overflow');
+        }
+
+        if ((currentElement).parentNode.classList.contains('overflow')) {
+          document.body.classList.add('overflow-true');
+        } else {
+          document.body.classList.remove('overflow-true'); 
+        }
+      }
+    }
+  </script>
+</body>
+</html>

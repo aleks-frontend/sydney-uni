@@ -1,0 +1,162 @@
+<!DOCTYPE>
+<html class="">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="assets/stylesheets/main.css">
+
+    <script type="text/javascript">
+
+      var vminsize = 1.8
+      var vmaxsize = 1.2
+      var vhsize   = 1.8
+
+      window.addEventListener("resize", setSize);
+      document.addEventListener("DOMContentLoaded", setSize);
+
+      function setSize() {
+        var vw   = window.innerWidth / 100
+        var vh   = window.innerHeight / 100
+        var vmin = Math.min(vw, vh)
+        var vmax = Math.max(vw, vh)
+        document.documentElement.style.fontSize =  (( vmin * vminsize ) + ( vmax * vmaxsize ) + ( vh * vhsize ))  + "px";
+      }
+
+    </script>
+
+    <style type="text/css">
+
+      html {
+        color: black;
+        background-color: rgb(230,70,38);
+      }
+
+      .headline {
+        font-size: {{headline-font-size}}em;
+      }
+
+      .subheading {
+        font-size: {{cta-font-size}}em;
+      }
+
+      .logo {      
+        background-image: url('assets/images/logo.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: right;
+      }
+
+      .vertical-center .logo, .vertical-bottom .logo {
+        background-position: left;
+      }
+      
+      @media (min-width: 1451px) and (max-width: 1456px) and (min-height: 175px) and (max-height: 180px) {
+        .headline { max-height: 3.5em; }
+      }
+      @media (min-width: 295px) and (max-width: 300px) and (min-height: 245px) and (max-height: 250px) {
+        .headline { max-height: 7.4em; }
+      }
+      @media (min-width: 595px) and (max-width: 600px) and (min-height: 95px) and (max-height: 100px), (min-width: 1195px) and (max-width: 1205px) and (min-height: 195px) and (max-height: 205px) {
+        .headline { max-height: 3.7em; }
+      }
+      
+      .overflow {
+        border: 1px dashed white;
+        position: relative; }
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: white !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 5px;
+        right: 5px;
+        height: 15px;
+        width: 15px;
+        border: 1px solid red;
+        color: red;
+        padding: 2px 2px 2px 3px;
+        box-sizing: border-box;
+        font-size: 13px;
+        text-align: center;
+        line-height: 8px;
+        background-color: white;
+        text-align: center; }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 25px;
+        right: 5px;
+        background-color: black;
+        color: white;
+        border-radius: 2px;
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.1em;
+        text-align: right;
+        width: 15em;
+      }
+
+    </style>
+
+  </head>
+  <body>
+       
+    <div class="content">
+      <div class="text">
+        <div class="headline">
+          <div class="check-overflow">
+            <h1>{{^headline}}Example Headline.{{/headline}}{{{headline}}}</h1>
+          </div>
+        </div>
+        <div class="cta">
+          {{#call-to-action}}<div class="subheading"><h2>{{{call-to-action}}}<div class="arrow"></div></h2></div>{{/call-to-action}}
+        </div>
+      </div>
+      <div class="logo"></div>    
+    </div>
+    
+  </body>
+  <script>
+
+    function loop() {
+      checkHeight(document.getElementsByClassName('check-overflow'));
+
+    } setInterval(loop, 500);
+
+    function checkHeight(element) {
+      for (i = 0 ; i < element.length ; i++ ) {
+        var currentElement = element[i];
+        var height         = currentElement.offsetHeight;
+        var parent         = currentElement.parentNode;
+        var parentHeight   = parent.offsetHeight;
+
+        if (height > parentHeight) {
+          parent.classList.add('overflow');
+        } else {
+          parent.classList.remove('overflow');
+        }
+
+        if ((currentElement).parentNode.classList.contains('overflow')) {
+          document.body.classList.add('overflow-true');
+        } else {
+          document.body.classList.remove('overflow-true'); 
+        }
+      }
+    }   
+
+  </script>
+</html>

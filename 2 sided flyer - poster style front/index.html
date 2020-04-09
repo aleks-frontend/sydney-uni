@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Print Generic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://outfit-assets-production.s3.amazonaws.com/fonts/apercu-pro/stylesheet.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        color: black !important;
+        font-family: 'Apercu Pro', sans-serif;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: bold;
+      }
+
+      h1 {
+        font-size: {{{ a4-base-header-size }}}em;
+        line-height: 1.1em;
+      }
+      .text-top h1 {
+        font-size: {{{ a4-base-header-size }}}em;
+      }
+      .text-top h1 p {
+        font-size: 1em;
+      }
+      .p2-header h1 {
+        font-size: {{{ a4-lastPage-header-size}}}em;
+      }	
+      h2 {
+        font-size: 0.35em;
+        font-weight: normal;
+      }
+
+      p {
+        font-size: 0.25em;
+        line-height: 1.3em;
+      }
+      
+      .crop-marks-false .bleed,
+      .crop-marks-false .last-page .bleed {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important; 
+      }
+      .last-page .bleed {
+        top: 7.41mm !important;
+        bottom: 7.41mm !important;
+        left: 7.41mm !important;
+        right: 7.41mm !important; 
+      }
+      .bleed {
+        overflow: hidden;
+      }
+		
+      .background-image {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+
+      .container {
+        position: absolute;
+        bottom: 1.25em;
+        left: 1.3rem;
+        width: 50%;
+        background-color: {{{account.colors.primary}}};
+      }
+
+      .inner {
+        position: relative;
+        height: 100%;
+        padding: 0.8em 1.1em 0.3em 1.1em;
+      }
+
+      .process-marks-top {
+        position: absolute;
+        top: -0.48em;
+        left: 0;
+        right: 0;
+        width: 100%;
+      }
+
+      .process-marks-bottom {
+        position: absolute;
+        bottom: -0.48em;
+        left: 0;
+        right: 0;
+        width: 100%;
+      }
+
+      .process-marks-left {
+        float: left;
+        width: 7.3%;
+        height: 0.48em;
+        background-color: {{{account.colors.primary}}};
+      }
+
+      .process-marks-right {
+        float: right;
+        width: 91.9%;
+        height: 0.48em;
+        background-color: {{{account.colors.primary}}};
+      }
+      
+      .header {
+        max-height: 3em;
+        overflow: hidden;
+      }
+
+      .subheader {
+        max-height: 1.5em;
+        margin: 0.6em 0 0 0;
+        overflow: hidden;
+      }
+
+      .copy {
+        max-height: 2.6em;
+        margin: 0.45em 0 0 0;
+        overflow: hidden;
+      }
+
+      .details {
+        max-height: 2.6em;
+        margin: 0.35em 0 0 0;
+        overflow: hidden;
+      }
+
+      .logo {
+        width: 3.5em;
+        margin: 0.55em 0 -0.3em 0;
+      }
+
+      .text-bottom {
+        margin: 0.8em 0 0 0;
+      }
+      
+      .url {
+        max-height: 1.6em;
+        overflow: hidden;
+      }
+
+      .url p {
+        font-size: 0.35em;
+        font-weight: bold;
+      }
+      /* BACKGROUND HELPER */
+
+      .placeholder {
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/180c9d3ba2d2af72cfae7c77f59a0146/6892.3%20India%20Open%20Day%20flyer%20PRINT%20-%20Chennai_Page_1.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0.3;
+        z-index: 100;
+      }
+
+      /* OVERFLOW HELPER */
+
+      .overflow {
+        border: 1px dashed red;
+        position: relative;
+      }
+
+      .overflow h1, .overflow h2, .overflow h3, .overflow h4, .overflow h5, .overflow h6, .overflow p, .overflow li {
+        color: red !important;
+      }
+
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 5px;
+        right: 5px;
+        height: 15px;
+        width: 15px;
+        border: 1px solid red;
+        color: red;
+        padding: 2px 2px 2px 3px;
+        box-sizing: border-box;
+        font-size: 13px;
+        text-align: center;
+        line-height: 8px;
+        background-color: white;
+        text-align: center;
+      }
+
+      .overflow:hover:before {
+        background-color: red;
+        color: white;
+      }
+
+      .overflow:after {
+        display: none;
+      }
+
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 25px;
+        right: 5px;
+        background-color: black;
+        color: white;
+        border-radius: 2px;
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.1em;
+        text-align: right;
+        width: 15em;
+      }
+      .flex-container {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+      }
+      .content {
+        height: 100%;
+      }
+      .col-container { 
+        display: flex; 
+        justify-content: space-between; 
+        width: 100%; 
+        height: 100%;
+        position: relative;
+      }
+      .col-2 .text {
+        column-count: 2;
+      }
+      .col-3 .text {
+        column-count: 3;
+      }
+      .col-container .text {
+        column-fill: auto;
+        width: 100%;
+        column-gap: 15px;
+        height: 100%;
+      }
+      .col-container .text h1 {
+        font-size: 0.38em;
+        padding: 0px 0 0.1rem;
+        margin: 0 0 0.25rem;
+        border-bottom: 2px dotted {{{account.colors.primary}}};
+        color: {{{account.colors.primary}}}; 
+      }
+      .col-container .text h2 { 
+        color: {{{account.colors.primary}}};
+        font-size: 0.3em; 
+        margin: 0 0 0.06rem;
+        font-weight: 700;
+      }      
+      .col-container .text h3 { 
+        font-size: 0.3em; 
+        margin: 0 0 0.06rem;
+        font-weight: 700;
+      } 
+      .col-container .text p { 
+        margin: 0 0 0.8em 0; 
+        position: relative;
+      }
+      .col-container .text ul,
+      .col-container .text ol {
+        padding: 0 0 0 20px;
+        margin: 0 0 0.8em;
+        font-size: 0.2em;
+      }
+      .col-container .text ul li *,
+      .col-container .text ol li * {
+        font-size: 1em;
+      }
+      .col-container .text li {
+
+      }
+      .col-container .text ul li:before {
+        content: "—";
+        font-weight: bolder;
+        display: inline-block;
+        margin-left: -1.3em;
+        width: 1.3em;
+        position: absolute;
+      }
+      .col-container .text ol > li:before {
+        content: none;
+      }
+      .col-container .text a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .col-3 .contact-details {
+        width: 32%;
+      }
+      .contact-details {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 49%;
+      }
+      .contact-details .text {
+        columns: unset !important;
+      }
+      .contact-details .text > *:last-child {
+        margin: 0;
+      }
+      .contact-details ul {
+        margin: 0;
+        color: {{{account.colors.primary}}};
+      }
+      .contact-box {
+        margin: 0 0 0.2em 0;
+      }
+      .contact-box p {
+        margin: 0;
+      }
+      .bleed .content {
+        padding: 0.7rem 0.8rem 0.7rem 1.1rem;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        align-items: stretch;
+      }
+      .image__container {
+        flex: 0 0 5.9rem;
+        width: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 0 0 0.65rem;
+      }
+      .image__container div:first-child:last-child,
+      .image__container div:first-child:nth-last-of-type(1) {
+        width: 100%;
+        margin: 0;
+      }
+      .image__container div:first-child {
+        width: 60%;
+        margin: 0 0.2rem 0 0;
+      }
+      .image__container div:last-child {
+        width: calc(40% - 0.2rem);
+      }
+      .image1,
+      .image2 {
+        height: 5.3rem;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }      
+      .content__wrapper {
+        padding: 0 0 0 0.8rem;
+        flex: 1;
+        overflow: hidden;
+        /* height: calc(100% - 5.9rem);  Take the Image Container height off */
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        align-items: stretch;
+      }
+      
+      .inner__content {
+        flex: 1;
+        overflow: hidden;
+      }
+      
+      .p2-header {
+        font-size: 0.8em;
+        padding: 0 0 0.7rem;
+        flex: 0 0 auto;
+      }      
+      .hide {
+        display: none;
+      }
+      .placeholder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/45ca8e4c0347a40eb5af8916e4a7ca64/placeholder.png');
+        background-position: top center;
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+
+    </style>
+  </head>
+  <body style="background: white">
+    {{#collection.a4flyerWCover}}
+    {{#block.a4flyerWCover-frontPage}}
+    <div class="page"><!-- {{page-title}} -->
+      <!--<div class="placeholder"></div>-->
+      <div class="bleed">
+
+        <div class="background-image">{{{ resizable-background-image }}}</div>
+
+        <div class="container">
+
+          <div class="inner">
+
+            <div class="process-marks-top">
+              <div class="process-marks-left"></div>
+              <div class="process-marks-right"></div>
+            </div><!--process-marks-->
+
+            <div class="text">
+
+              <div class="text-top">
+                <div class="header"><div class="check-overflow"><h1>{{{ header }}}</h1></div></div>
+                <div class="subheader"><div class="check-overflow"><h2>{{{ subheader }}}</h2></div></div>
+                <div class="copy"><div class="check-overflow"><p>{{{ a4-base-copy }}}</p></div></div>
+                <div class="details"><div class="check-overflow"><p>{{{ a4-base-details }}}</p></div></div>
+              </div><!--top-->
+
+              <div class="text-bottom">
+                <div class="url"><div class="check-overflow"><p>{{{ url }}}</p></div></div>
+                <div class="logo"><img src="{{{account.logos.primary}}}"></div>
+              </div><!--bottom-->
+
+            </div><!--text-->
+
+            <div class="process-marks-bottom">
+              <div class="process-marks-left"></div>
+              <div class="process-marks-right"></div>
+            </div><!--process-marks-->
+
+          </div><!--inner-->
+
+        </div><!--container-->
+      </div><!--bleed-->
+    </div><!--page-->
+    {{/block.a4flyerWCover-frontPage}}
+
+    {{#block.a4flyerWCover-lastPage}}
+    <div class="page flex-container last-page"><!-- {{page-title}} -->
+      <!--<div class="placeholder"></div>-->
+      <div class="bleed">
+        <div class="content">
+            <div class="image__container" {{#image1}} style="display: flex !important;"{{/image1}} {{#image2}} style="display: flex !important;"{{/image2}} {{^image1}} style="display: none;" {{/image1}}{{^image2}} style="display: none;" {{/image2}}>
+              {{#image1}}<div class="image1" style=" background-image: url('{{{ image1 }}}')"></div>{{/image1}}
+              {{#image2}}<div class="image2" style="background-image: url('{{{ image2 }}}');"></div>{{/image2}}
+            </div>
+            {{#header}}
+          <div class="content__wrapper"> <!-- Used to Check Height against -->
+              <div class="p2-header">
+                <h1>{{{header}}}</h1>
+              </div>
+              {{/header}}
+              <div class="inner__content">
+                <div class="col-container col-{{text-columns}}">
+                    <div class="text">
+                      {{{last-page-copy}}}
+                    </div>
+                    <div class="contact-details {{show-contact-details}}">
+                        <div class="text">
+                            <h1>{{{contact-heading}}}</h1>
+                            <div class="contact-box">
+                              <p class="name">{{{contact-name}}}</p>
+                              <p class="title">{{{contact-title}}}</p>
+                            </div>
+                            <div class="contact-box">
+                              {{{contact-address}}}
+                            </div>
+                            <div class="contact-box">
+                              <p class="phone">{{{contact-phone}}}</p>
+                              <p class="email">{{{contact-email}}}</p>
+                            </div>
+                            <ul>
+                              <li>sydney.edu.au/{{{contact-url-extension}}}</li>
+                            </ul>
+                        </div>
+                      </div>
+                </div><!-- End Col-container -->
+            </div><!-- End Inner Content -->
+          </div><!-- End Content Wrapper -->
+        </div><!-- End Content -->
+      </div><!-- End Bleed -->
+    </div><!-- End Last Page -->
+    {{/block.a4flyerWCover-lastPage}}
+    {{/collection.a4flyerWCover}}
+    <script>
+      
+      window.showCrop = {{show-crop}};
+
+      function loop() {
+        checkHeight(document.getElementsByClassName('check-overflow'));
+
+      } setInterval(loop, 1000);
+
+      function checkHeight(element) {
+        for (i = 0 ; i < element.length ; i++ ) {
+          var currentElement = element[i];
+          var height         = currentElement.offsetHeight;
+          var parent         = currentElement.parentNode;
+          var parentHeight   = parent.offsetHeight;
+
+          if (height > parentHeight) {
+            parent.classList.add('overflow');
+          } else {
+            parent.classList.remove('overflow');
+          }
+
+          if ((currentElement).parentNode.classList.contains('overflow')) {
+            document.body.classList.add('overflow-true');
+          } else {
+            document.body.classList.remove('overflow-true'); 
+          }
+        }
+      }
+
+      function checkCrop() {
+        if ({{show-crop}} === true) {
+          document.body.classList.add('crop-marks-true')
+        } else {
+          document.body.classList.add('crop-marks-false')
+        }
+      }
+
+      checkCrop();
+      
+      function checkLastPage(contentParent) {
+        // Grab the Container which houses the columned content
+        // Grab Parent Boundaries
+        var parentRect = contentParent.getBoundingClientRect();
+        
+        // Check to see if we are displaying any contact Details
+        var contactDetails = document.querySelector(".contact-details");
+        var contactRect = contactDetails.getBoundingClientRect();        
+        
+        var heightBoundary = parentRect.height - contactRect.height;
+        
+        // Grab All the Children
+        // We need to see if any nodes either ocupy the same space as contact or are outside the container.
+        // We have to go two levels because of the Token Value
+        var pageChildren = contentParent.children.item(0).children;
+
+        // Iterate through children checking against Boundaries
+        for(var i = 0; i < pageChildren.length; i++) {
+          var child = pageChildren.item(i);
+		  var childRects = child.getClientRects();
+          console.log(childRects);
+          // Loop Through Each Rect and Check its location
+          for(var j = 0; j < childRects.length; j++) {
+            var rect = childRects.item(j);
+            // Check to see if we are in the last column
+            if(Math.round(rect.right) == Math.round(parentRect.right)) {
+              // Check if we are taller than the allowed container
+              // OR Check if we Finish inside the Contact Us
+              if(rect.height > heightBoundary) {   
+                overflowOn(contentParent.parentNode);
+                return;
+              } // End If
+              else if(rect.bottom > contactRect.top && contactRect.top != 0) {
+                overflowOn(contentParent.parentNode);
+                return;
+              } // End Else If
+            } // End If
+          } // End For
+        } // End For
+        
+        // If we get to this point without returning we have no outliers so we should remove overflow
+        contentParent.parentNode.classList.remove('overflow');
+      }
+
+      function overflowOn(node) {
+        if(node.classList.contains('overflow')) { return }
+        // If not add then return
+        node.classList.add('overflow');
+        return;            
+      }
+      
+      // Grab the Token Value which holds all our dynamic content
+	  var tokenValue = document.querySelector(".last-page .col-container .text token-value");
+	
+      // Grab the Container which is used for bounds
+      var contentParent = document.querySelector(".last-page .col-container .text");
+      
+      // Set up Our Observable to fire a checkLastPage
+      var tokenObserver = new MutationObserver(debounce(function () {
+        checkLastPage(contentParent);
+      }, 250));
+
+      
+      // Attach Observable to Token Value and its children
+      tokenObserver.observe(tokenValue, { childList: true });
+      
+      // Javascript Debounce
+      // https://davidwalsh.name/javascript-debounce-function
+      
+      // Returns a function, that, as long as it continues to be invoked, will not
+      // be triggered. The function will be called after it stops being called for
+      // N milliseconds. If `immediate` is passed, trigger the function on the
+      // leading edge, instead of the trailing.
+      function debounce(func, wait, immediate) {
+          var timeout;
+          return function() {
+              var context = this, args = arguments;
+              var later = function() {
+                  timeout = null;
+                  if (!immediate) func.apply(context, args);
+              };
+              var callNow = immediate && !timeout;
+              clearTimeout(timeout);
+              timeout = setTimeout(later, wait);
+              if (callNow) func.apply(context, args);
+          };
+      };
+      
+    </script>
+    <script src="main.js"></script>
+    <script src="prefixfree.js"></script>
+  </body>
+</html>

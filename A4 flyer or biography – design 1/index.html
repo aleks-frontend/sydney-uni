@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Print Generic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://outfit-assets-production.s3.amazonaws.com/fonts/apercu-pro/stylesheet.css" rel="stylesheet">
+    <script src="tinycolor.js"></script>
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    <style>
+      * { -webkit-font-smoothing: antialiased; }
+      .overflow {
+        border: 1px dashed red;
+        position: relative; }
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 5px;
+        right: 5px;
+        height: 15px;
+        width: 15px;
+        border: 1px solid red;
+        color: red;
+        padding: 2px 2px 2px 3px;
+        box-sizing: border-box;
+        font-size: 13px;
+        text-align: center;
+        line-height: 8px;
+        background-color: white;
+        text-align: center; }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 25px;
+        right: 5px;
+        background-color: black;
+        color: white;
+        border-radius: 2px;
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.1em;
+        text-align: right;
+        width: 15em;
+      }
+      body { font-family: 'Apercu Pro', sans-serif; }
+      h1, h2, h3, h4, h5, h6 { font-weight: bold; }
+      h1 { font-size: 0.8em; }
+      h2 { font-size: 0.6em; }
+      p { font-size: 0.2em; }
+      .logo { position: absolute; top: 0.9em; left: 1em; width: 2.7em; } .logo img { width: 100%; }
+      .faculty { position: absolute; top: 1.7em; left: 2.05em; color: black; }
+      .faculty p { font-size: 0.22em; font-weight: bold; }
+      .headline { position: absolute; top: 1.4em; right: 1em; } .headline h1 { color: {{{account.colors.primary}}}; font-size: 0.45em; }
+      .content { position: absolute; top: 3.3em; left: 1em; right: 1em; }
+      .ochre-box { 
+        display: flex;
+        flex-flow: row nowrap;
+        width: 100%; 
+        height: 3.6em; 
+        background-color: {{{account.colors.primary}}};
+      }
+      .right-image { 
+        width: 35%; 
+        height: 3.6em; 
+        position: relative;
+        overflow: hidden;
+      }
+      .inner { 
+        width: 65%; 
+        padding: 0.6em; 
+      }
+      .header { position: relative; color: white; }
+      .header h1 { font-size: 0.55em; font-weight: 500; }
+      .header h2 { color: black; margin: 0.8em 0 0 0; font-size: 0.4em; font-weight: 500; }
+      .text { margin: 0.3em 0 0 0; width: 100%; height: 10em; }
+      .text h3 { color: {{{account.colors.primary}}}; margin: 0 0 0.3em 0; font-size: 0.35em; }
+      .two-columns { height: 20em; -webkit-column-count: 2; -moz-column-count: 2; column-count: 2; -webkit-column-gap: 15px; -moz-column-gap: 15px; column-gap: 15px; }
+      .footer { position: absolute; left: 1em; bottom: 0.8em; } 
+      .website { color: {{{account.colors.primary}}}; font-size: 0.3em; font-weight: 500; } .cricos { margin: 0.8em 0 0 0; font-size: 0.15em; }
+      
+      .page.two { display: {{{ hide-page-two-block }}}; }
+    </style>
+  </head>
+  <body style="background: white">
+    
+    <div class="page one">
+      <div class="bleed">
+        <div class="logo"><img src="{{{account.logos.primary}}}"></div>
+        {{#team.logo-lockup-line-one}}
+          <div class="faculty"><p>—<br>{{{team.logo-lockup-line-one}}}<br>{{{team.logo-lockup-line-two}}}<br>{{{team.logo-lockup-line-three}}}<br>{{{team.logo-lockup-line-four}}}</p></div>			 	{{/team.logo-lockup-line-one}}
+        <div class="headline"><div style="max-height: 1.6em;"><div class="check-overflow"><h1 style="text-align: right;">{{{ headline }}}</h1></div></div></div>
+        <div class="content">
+          {{#header}}
+          <div class="ochre-box">
+            <div class="inner">
+              <div class="header">
+                <div style="max-height: 2.5em;">
+                  <div class="check-overflow">
+                    <h1>{{{ header }}}</h1>
+                    <h2>{{{ subheader }}}</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="right-image">
+            	{{{background-image}}}
+            </div>
+          </div>
+          {{/header}}
+          {{^header}}
+            <div class="ochre-box" style="background-color: rgba(0,0,0,0); background-image: url({{{ background-image }}}); height: 5em;"></div>
+          {{/header}}
+          <div class="text">
+            <div class="{{#2-columns}}{{{ 2-columns }}}{{/2-columns}}" style="{{^2-columns}}max-height: 10em;{{/2-columns}}">
+              <div class="check-overflow">{{{ copy }}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><p class="website">{{{ website }}}</p><p class="cricos">{{{ cricos }}}</p></div>
+      </div>
+    </div>
+    <div class="page two">
+      <div class="bleed">
+        <div class="logo"><img src="{{{account.logos.primary}}}"></div>
+        <div class="headline"><div style="max-height: 1.6em;"><div class="check-overflow"><h1 style="text-align: right;">{{{ headline-two }}}</h1></div></div></div>
+        <div class="content">
+          
+          {{#header-two}}
+          <div class="ochre-box">
+            <div class="inner"><div class="header"><div style="max-height: 2.5em;"><div class="check-overflow"><h1>{{{ header-two }}}</h1><h2>{{{ subheader-two }}}</h2></div></div></div></div></div>   
+          {{/header-two}}
+          {{^header-two}}
+            {{#background-image-two}}<div class="ochre-box" style="background-color: rgba(0,0,0,0); background-image: url({{{ background-image-two }}}); height: 5em;"></div>{{/background-image-two}}
+          {{/header-two}}
+          
+          <div class="text">
+            <div class="{{#2-columns-two}}{{{ 2-columns-two }}}{{/2-columns-two}}" style="{{^2-columns-two}}max-height: 10em;{{/2-columns-two}}">
+              <div class="check-overflow">{{{ copy-two }}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><p class="website">{{{ website }}}</p><p class="cricos">{{{ cricos }}}</p></div>
+      </div>
+    </div>
+    <script>
+      window.showCrop = {{show-crop}};
+    </script>
+    <script src="main.js"></script>
+    <script src="prefixfree.js"></script>
+    <script>
+      function loop() {
+        checkHeight(document.getElementsByClassName('check-overflow'));
+
+      } setInterval(loop, 500);
+
+      function checkHeight(element) {
+        for (i = 0 ; i < element.length ; i++ ) {
+          var currentElement = element[i];
+          var height         = currentElement.offsetHeight;
+          var parent         = currentElement.parentNode;
+          var parentHeight   = parent.offsetHeight;
+
+          if (height > parentHeight) {
+            parent.classList.add('overflow');
+          } else {
+            parent.classList.remove('overflow');
+          }
+
+          if ((currentElement).parentNode.classList.contains('overflow')) {
+            document.body.classList.add('overflow-true');
+          } else {
+            document.body.classList.remove('overflow-true'); 
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

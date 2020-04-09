@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Print Generic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://outfit-assets-production.s3.amazonaws.com/fonts/apercu-pro/stylesheet.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    <style>
+
+      body {
+        color: black !important;
+        font-family: 'Apercu Pro', sans-serif;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: bold;
+      }
+
+      h1 {
+        font-size: {{{ a4-base-header-size }}}em;
+        line-height: 1.1em;
+      }
+
+      h2 {
+        font-size: 0.35em;
+        font-weight: normal;
+      }
+
+      p {
+        font-size: 0.25em;
+        line-height: 1.4em;
+      }
+      
+      .crop-marks-false .bleed {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important; 
+      }
+      
+      .bleed {
+        overflow: hidden;
+      }
+
+      .background-image {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+
+      .container {
+        position: absolute;
+        bottom: 1.25em;
+        left: 1em;
+        width: 50%;
+        background-color: {{{account.colors.primary}}};
+      }
+
+      .inner {
+        position: relative;
+        height: 100%;
+        padding: 0.8em 1.1em 0.3em 1.1em;
+      }
+
+      .process-marks-top {
+        position: absolute;
+        top: -0.48em;
+        left: 0;
+        right: 0;
+        width: 100%;
+      }
+
+      .process-marks-bottom {
+        position: absolute;
+        bottom: -0.48em;
+        left: 0;
+        right: 0;
+        width: 100%;
+      }
+
+      .process-marks-left {
+        float: left;
+        width: 7.3%;
+        height: 0.48em;
+        background-color: {{{account.colors.primary}}};
+      }
+
+      .process-marks-right {
+        float: right;
+        width: 91.9%;
+        height: 0.48em;
+        background-color: {{{account.colors.primary}}};
+      }
+      
+      .header {
+        max-height: 3em;
+        overflow: hidden;
+      }
+
+      .subheader {
+        max-height: 1.5em;
+        margin: 0.6em 0 0 0;
+        overflow: hidden;
+      }
+
+      .copy {
+        max-height: 2.6em;
+        margin: 0.45em 0 0 0;
+        overflow: hidden;
+      }
+
+      .details {
+        max-height: 2.6em;
+        margin: 0.35em 0 0 0;
+        overflow: hidden;
+      }
+
+      .logo {
+        width: 3.5em;
+        margin: 0.55em 0 -0.3em 0;
+      }
+
+      .text-bottom {
+        margin: 0.8em 0 0 0;
+      }
+      
+      .url {
+        max-height: 1.6em;
+        overflow: hidden;
+      }
+
+      .url p {
+        font-size: 0.35em;
+        font-weight: bold;
+      }
+      /* BACKGROUND HELPER */
+
+      .placeholder {
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/180c9d3ba2d2af72cfae7c77f59a0146/6892.3%20India%20Open%20Day%20flyer%20PRINT%20-%20Chennai_Page_1.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0.7;
+        z-index: 100;
+      }
+
+      /* OVERFLOW HELPER */
+
+      .overflow {
+        border: 1px dashed red;
+        position: relative;
+      }
+
+      .overflow h1, .overflow h2, .overflow h3, .overflow h4, .overflow h5, .overflow h6, .overflow p, .overflow li {
+        color: red !important;
+      }
+
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 5px;
+        right: 5px;
+        height: 15px;
+        width: 15px;
+        border: 1px solid red;
+        color: red;
+        padding: 2px 2px 2px 3px;
+        box-sizing: border-box;
+        font-size: 13px;
+        text-align: center;
+        line-height: 8px;
+        background-color: white;
+        text-align: center;
+      }
+
+      .overflow:hover:before {
+        background-color: red;
+        color: white;
+      }
+
+      .overflow:after {
+        display: none;
+      }
+
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 25px;
+        right: 5px;
+        background-color: black;
+        color: white;
+        border-radius: 2px;
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.1em;
+        text-align: right;
+        width: 15em;
+      }
+
+    </style>
+  </head>
+  <body style="background: white">
+
+    <div class="page">
+      <div class="bleed">
+
+        <div class="background-image">{{{ resizable-background-image }}}</div>
+
+        <div class="container">
+
+          <div class="inner">
+
+            <div class="process-marks-top">
+              <div class="process-marks-left"></div>
+              <div class="process-marks-right"></div>
+            </div><!--process-marks-->
+
+            <div class="text">
+
+              <div class="text-top">
+                <div class="header"><div class="check-overflow"><h1>{{{ header }}}</h1></div></div>
+                <div class="subheader"><div class="check-overflow"><h2>{{{ subheader }}}</h2></div></div>
+                <div class="copy"><div class="check-overflow"><p>{{{ a4-base-copy }}}</p></div></div>
+                <div class="details"><div class="check-overflow"><p>{{{ a4-base-details }}}</p></div></div>
+              </div><!--top-->
+
+              <div class="text-bottom">
+                <div class="url"><div class="check-overflow"><p>{{{ url }}}</p></div></div>
+                <div class="logo"><img src="{{{account.logos.primary}}}"></div>
+              </div><!--bottom-->
+
+            </div><!--text-->
+
+            <div class="process-marks-bottom">
+              <div class="process-marks-left"></div>
+              <div class="process-marks-right"></div>
+            </div><!--process-marks-->
+
+          </div><!--inner-->
+
+        </div><!--container-->
+      </div><!--bleed-->
+    </div><!--page-->
+
+    <script>
+      
+      window.showCrop = {{show-crop}};
+
+      function loop() {
+        checkHeight(document.getElementsByClassName('check-overflow'));
+
+      } setInterval(loop, 500);
+
+      function checkHeight(element) {
+        for (i = 0 ; i < element.length ; i++ ) {
+          var currentElement = element[i];
+          var height         = currentElement.offsetHeight;
+          var parent         = currentElement.parentNode;
+          var parentHeight   = parent.offsetHeight;
+
+          if (height > parentHeight) {
+            parent.classList.add('overflow');
+          } else {
+            parent.classList.remove('overflow');
+          }
+
+          if ((currentElement).parentNode.classList.contains('overflow')) {
+            document.body.classList.add('overflow-true');
+          } else {
+            document.body.classList.remove('overflow-true'); 
+          }
+        }
+      }
+
+      function checkCrop() {
+        if ({{show-crop}} === true) {
+          document.body.classList.add('crop-marks-true')
+        } else {
+          document.body.classList.add('crop-marks-false')
+        }
+      }
+
+      checkCrop();
+      
+    </script>
+    <script src="main.js"></script>
+    <script src="prefixfree.js"></script>
+  </body>
+</html>

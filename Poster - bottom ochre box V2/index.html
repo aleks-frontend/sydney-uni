@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html class="{{{ chevron-visibility }}}">
+  <head>
+    <title>Print Generic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://outfit-assets-production.s3.amazonaws.com/fonts/apercu-pro/stylesheet.css" rel="stylesheet">
+    <script src="tinycolor.js"></script>
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    <style>
+    * { -webkit-font-smoothing: antialiased;
+              box-sizing: border-box;}
+    .overflow {
+    border: 1px dashed red;
+    position: relative; }
+    .overflow h1,
+    .overflow h2,
+    .overflow h3,
+    .overflow h4,
+    .overflow h5,
+    .overflow h6,
+    .overflow p,
+    .overflow li { color: red !important; }
+    .overflow::before {
+    content: '+';
+    position: absolute;
+    z-index: 5;
+    top: 5px;
+    right: 5px;
+    height: 15px;
+    width: 15px;
+    border: 1px solid red;
+    color: red;
+    padding: 2px 2px 2px 3px;
+    box-sizing: border-box;
+    font-size: 13px;
+    text-align: center;
+    line-height: 8px;
+    background-color: white;
+    text-align: center; }
+    .overflow:hover:before {
+    background-color: red;
+    color: white; }
+    .overflow:after {
+    display: none; }
+    .overflow:hover:after {
+    display: block;
+    content: 'There is overset content in this column. Please remove it';
+    position: absolute;
+    top: 25px;
+    right: 5px;
+    background-color: black;
+    color: white;
+    border-radius: 2px;
+    padding: 5px;
+    box-sizing: border-box;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.1em;
+    text-align: right;
+    width: 15em;
+    }
+    body { font-family: 'Apercu Pro', sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-weight: bold; }
+    h1 { font-size: 0.8em; }
+    h2 { font-size: 0.6em; }
+    p { font-size: 0.2em; }
+    
+    .bleed { position: relative; }
+    .page {
+    border-bottom: 1px solid #0ff;
+    }
+    @media print {
+    .page {
+    border: none;
+    }
+    }
+    
+    .flex-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: absolute;
+    top: 1em;
+    left: 1em;
+    bottom: 1em;
+    right: 1em;
+    }
+    .hide {
+    display: none;
+    }
+    .error {
+    padding: 15mm;
+    background: white;
+    position: absolute;
+    z-index: 1;
+    color: red;
+    font-size: 1.8em;
+    }
+      
+      .tinymce_style--light {
+        color: #e64626;
+      }
+
+      .content {
+        height: 100%;
+        position: relative;
+        box-sizing: border-box;
+      }
+
+      .logo {
+        width: 9.1em;
+        position: relative;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin: 0;
+        line-height: 1em;
+      }
+
+      .flex-two-col {
+        display : -webkit-flex;
+        display : -ms-flexbox;
+        display : flex;
+        -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+      }
+
+      .image-container{
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        position: relative;
+      }
+
+      .front-container {
+        background-color: #E64626;
+        -ms-flex-item-align: end;
+        align-self: flex-end;
+        bottom: 0;
+        box-sizing: border-box;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -ms-grid-row-align: center;
+        align-items: center;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        box-sizing: border-box;
+        position: absolute;
+        opacity: 1;
+        right: 1.35rem;
+        bottom: 1.25rem;
+        left: 1.35rem;
+        font-size: 0.4em;
+      }
+      .front-inner-container {
+        background-color: #E64626;
+        padding: 0.25rem 1.1rem;
+        margin-top: 0;
+        box-sizing: border-box;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+      }
+      .cricos-code {
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+        -webkit-transform-origin: left top 0;
+        transform-origin: left bottom 0;
+        text-align: center;
+        font-family: 'Apercu Mono', 'Apercu Pro Mono', monospace;
+        bottom: 0;
+        font-size: 0.16rem;
+        right: -2.46rem;
+        color: #fff;
+        box-sizing: border-box;
+        position: absolute;
+      }
+      .subhead {
+        font-family: 'Apercu Mono', 'Apercu Pro Mono', monospace;
+        font-size: 0.23rem;
+        padding: 0px 0.7rem;
+        margin-top: -0.2rem;
+        width: 100%;
+        z-index: 10000;
+      }
+      
+ 
+
+      .process-marks-container {
+        margin-top: 0.6em;
+        width: 100%;
+        height: 0.1em;
+        position: relative;
+      }
+
+      .process-mark-left {
+        float: left;
+        height: 100%;
+        width: 6% !important;
+        background-color: white;
+      }
+
+      .process-mark-right {
+        float: right;
+        height: 100%;
+        width: 6% !important;
+        background-color: white;
+      }
+
+      h1 {
+        font-size: 1.8em !important;
+        line-height: 1.2em;
+        font-weight: 400;
+      }
+      h2 {
+        font-size: 1.18em;
+        font-weight: 400;
+        line-height: 1.1em;
+      }
+      h3 {
+        font-size: 1em;
+        line-height: 1.3em;
+      }
+      h4 {
+        font-size: 0.86em;
+        line-height: 1.1em;
+      }
+
+      h5 {
+        font-size: 1.86em !important;
+        letter-spacing: 0;
+        font-weight: 400 !important;
+        line-height: 1.2em;
+      }
+      p {
+        font-size: 0.78em;
+        letter-spacing: 0;
+        font-weight: 400;
+        line-height: 1.3em;
+      }
+      
+       .mt-1 {
+        margin-top: 0em;
+
+      }
+
+      .mt-1 h1 {
+        font-size: 2.6em !important;
+        letter-spacing: -0.02em;
+        line-height: 1.2em;
+        margin-top: 0em;
+        font-weight: 600;
+      }
+      
+      .content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+      
+      
+      .process-marks-container {
+        width: 100%;
+        height: 1.5em;
+        position: absolute;
+        margin-top: -1.7em;
+        background-color: #E64626;
+      }
+
+      .process-mark-left {
+        width: 87% !important;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        float: initial;
+        margin-top: 0.2em;
+        background-color: #E64626;
+      }
+
+      .process-mark-right {
+        display: none;
+      }
+      
+      .placeholder {
+        position: absolute;
+        top: 3mm;
+        left: 3mm;
+        right: 3mm;
+        bottom: 3mm;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/990caa2f8aa1de66e14d529139a40bb3/Screen%20Shot%202018-06-13%20at%2012.25.46%20pm.png');
+        background-position: center;
+        z-index: 100;
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      
+      .background {
+        position: absolute;
+        top: 0mm;
+        left: 0mm;
+        right: 0mm;
+        bottom: 0mm;
+      }
+      
+      .background-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+
+  <body style="background: white" class="{{colour}} {{{poster-layout}}}">
+    <div class="page">
+      <div class="bleed">
+        <div class="background"><div class="background-container">{{{ custom-background-image }}}</div></div><!--background-->
+        <!--<div class="placeholder"></div>-->
+
+          <div class="content">
+
+            <div class="image-container"></div>
+
+            <div class="front-container">
+              
+              <div class="process-marks-container">
+                <div class="process-mark-left"></div>
+                <div class="process-mark-right"></div>
+              </div>
+
+              <div class="front-inner-container">
+                <div class="cricos-code">17/IO CRICOS 00026A</div>
+                <div class="process-sentence-container">
+                  <div class="process-sentence-text">
+                    {{{process-text}}}
+                  </div>
+                </div>
+
+                <div class="text-content mt-1" style="margin-bottom: 0.8rem;">
+                  {{{poster-copy}}}
+                  {{^poster-copy}}<h1>{{{headline}}}</h1>{{/poster-copy}}
+                  
+                  <div class="secondary-details">
+                    {{^poster-copy}} <h5>{{{secondary-details}}}</h5>{{/poster-copy}}
+                  </div>
+                </div><!--text-content-->
+                
+                <div class="text-content-right-flex-top">
+                    {{^poster-copy}} {{{copy}}} {{/poster-copy}}
+                </div><!--text-content-->
+                
+                <div class="flex-two-col"> <!--flex-two-col-->
+                  <div class="text-content">
+                    <div class="logo"><img src="{{{account.logos.primary}}}"></div><!--logo-->
+                  </div><!--text-content-->
+                  <div class="text-content-right">
+                    <div class="align-bottom" style="margin-bottom: 0.4rem;">
+                      {{{URL-CTA}}}
+                    </div>
+                  </div>
+                </div><!--flex-two-col-->
+                
+              </div><!--front-inner-container-->
+              
+              <div class="process-marks-container-bottom">
+                <div class="process-mark-left"></div>
+                <div class="process-mark-right"></div>
+              </div>
+              
+            </div><!--front-container-->
+            
+          </div><!--content-->
+          
+        </div><!--document-->
+        
+      </div>
+      
+    </div>
+        
+    <script>
+    window.showCrop = {{show-crop}};
+    </script>
+    <script src="main.js"></script>
+    <script src="prefixfree.js"></script>
+    <script>
+    
+    function checkHeight(element) {
+    for (i = 0 ; i < element.length ; i++ ) {
+    var currentElement = element[i];
+    var height         = currentElement.offsetHeight;
+    var parent         = currentElement.parentNode;
+    var parentHeight   = parent.offsetHeight;
+    
+    if (height > parentHeight) {
+    parent.classList.add('overflow');
+    } else {
+    parent.classList.remove('overflow');
+    }
+    if ((currentElement).parentNode.classList.contains('overflow')) {
+    document.body.classList.add('overflow-true');
+    } else {
+    document.body.classList.remove('overflow-true');
+    }
+    }
+    }
+    
+    var cricos = document.getElementsByClassName('cricos');
+    for ( i = 0 ; i < cricos.length ; i++ ) {
+    cricos[i].innerHTML = '{{{ cricos }}}'
+    };
+    
+    </script>
+  </body>
+</html>

@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Print Generic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://outfit-assets-production.s3.amazonaws.com/fonts/apercu-pro/stylesheet.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <style>
+        * {
+          -webkit-margin-before: 0;
+          -webkit-margin-after: 0;
+          box-sizing: border-box;
+        }
+
+        h1, h2, h3, h4, h5, h6, p {
+          margin: 0;
+          padding: 0;
+        }
+
+        html {
+          -webkit-font-smoothing: antialiased;
+          font-family: 'Apercu Pro', helvetica, arial, sans-serif;
+          color: rgb(10, 10, 10);
+          background-color: #fff;
+        }
+        html.show-crop-marks { font-size: 106.5% !important; }
+
+        .tinymce_style--light { color: #E64626; }
+
+        body {
+          position: relative;
+          margin: 0;
+        }
+        svg {
+          overflow: visible;
+        }
+        .page {
+          position: relative;
+          width: 100vw;
+          height: 100vh;
+        }
+        .background {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0in;
+          left: 0;
+          padding: 0.25in;
+          box-sizing: border-box;
+        }
+        .background-color {
+          width: 100%;
+          height: 100%;
+          mix-blend-mode: multiply;
+        }
+        .background-image {
+          position: absolute;
+          top: 0.25in;
+          right: 0.25in;
+          bottom: 0.25in;
+          left: 0.25in;
+          background-size: cover;
+          background-position: center;
+          z-index: -1;
+          mix-blend-mode: multiply;
+        }
+        .content {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-pack: justify;
+          -ms-flex-pack: justify;
+          justify-content: space-between;
+          -webkit-box-orient: vertical;
+          -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+          flex-direction: column;
+          -webkit-box-align: start;
+          -ms-flex-align: start;
+          align-items: flex-start;
+          height: 100%;
+          padding: 1.4rem 1.6rem;
+          position: relative;
+          box-sizing: border-box;
+        }
+        .logo {
+          display: block;
+          width: 5.5rem;
+        }
+        .back-page-logo {
+          padding-left: 1.4rem;
+        }
+        .back-page.logo {
+          height: 3.6rem;
+          width: 8.1rem;
+          position: absolute;
+          bottom: 0.8rem;
+        }
+        .back-page.logo svg {
+          height: 100%;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          margin: 0;
+          line-height: 1em;
+        }
+        .front-container {
+          -ms-flex-item-align: end;
+          align-self: flex-end;
+          height: 100%;
+          box-sizing: border-box;
+          width: 64%;
+          position: relative;
+        }
+
+        .front-container.medium { width: 54.7% }
+        .front-container.medium h1 { 
+          font-size: 1.5em;
+          line-height: 1.1em; }
+        .front-container.medium h2 {
+          font-size: 1.48em; }
+
+        .front-container.small { width: 50.7% }
+        .front-container.small h1 { 
+          font-size: 1.6em;
+          line-height: 1em; }
+        .front-container.small h2 {
+          font-size: 1.48em; }
+
+        .front-container.left-align {
+          -ms-flex-item-align: start;
+          align-self: flex-start;
+        }
+
+        .front-container:before {
+          content: '';
+          width: 100%;
+          height: calc(1.7rem - 2px);
+          background-color: #E64626;
+          position: absolute;
+        }
+        .front-container:after {
+          content: '';
+          width: calc(100% - 56px);
+          height: 1.6rem;
+          background-color: #E64626;
+          position: absolute;
+          top: 0.2rem;
+          left: 50%;
+          -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+        }
+        .front-inner-container {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          background-color: #E64626;
+          margin: 1.7rem 0 0;
+          padding: 0.15rem 1.6rem 1.6rem 2.1rem;
+          height: calc(100% - 1.75rem);
+        }
+        .process-sentence {
+          font-family: 'Apercu Mono', 'Apercu Pro Mono', monospace;
+          font-size: 0.33rem !important;
+          -webkit-transform: rotate(-90deg) translateX(100%);
+          transform: rotate(-90deg) translateX(100%);
+          position: absolute;
+          bottom: 3.15rem;
+          right: 1.75rem;
+          -webkit-transform-origin: 100% 100%;
+          transform-origin: 100% 100%;
+          max-width: 79%;
+        }
+
+        .process-sentence-left {
+        font-family: 'Apercu Mono', 'Apercu Pro Mono', monospace;
+        font-size: 0.33rem !important;
+        -webkit-transform: rotate(-90deg) translateX(100%);
+        transform: rotate(-90deg) translateX(100%);
+        position: absolute;
+        bottom: -4.6rem;
+        left: 1.75rem;
+        -webkit-transform-origin: 100% 100%;
+        transform-origin: 0% 0%;
+        width: 240px;
+        }
+
+        .process-sentence-top {
+          font-family: 'Apercu Mono', 'Apercu Pro Mono', monospace;
+          font-size: 0.33rem !important;
+          position: absolute;
+          top: 1.2rem;
+          left: 3.45rem;
+          max-width: 79%;
+        }
+
+        .process-sentence.top-align {
+          top: 1.4rem;
+          left: 3.1rem;
+          z-index: 5;
+          bottom: initial;
+          right: initial;
+          -webkit-transform-origin: initial;
+          transform-origin: initial;
+          -webkit-transform: initial;
+          transform: initial;
+          max-width: 79%;}
+        .process-sentence.left-align {
+          bottom: 4.1em;
+          left: 1.2rem;
+          right: initial;
+          top: initial;
+          -webkit-transform: rotate(-90deg) translateY(100%);
+          transform: rotate(-90deg) translateY(100%);
+          -webkit-transform-origin: 0% 0%;
+          transform-origin: 0% 100%;
+          max-width: 79%;}
+        .col-container {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-orient: horizontal;
+          -webkit-box-direction: normal;
+          -ms-flex-direction: row;
+          flex-direction: row;
+          padding: 1.05rem 1.4rem 1rem 1.4rem;
+          height: 100%;
+          width: 100%;
+        }
+        .col {
+          width: 50%;
+          height: 100%;
+          position: relative;
+        }
+        .col:first-child {
+          padding-right: 1em;
+        }
+
+        .column2-footer {
+          position: absolute;
+           bottom: 0.25em;
+         }
+        .column2-footer img { height: 3em; }
+        .process-marks {
+          font-size: 1rem !important;
+          position: absolute;
+          top: 0;
+          right: 0;
+          left: 0;
+        }
+        .process-marks:before,
+        .process-marks:after {
+          content: '';
+          height: 2px;
+          width: 30px;
+          position: absolute;
+          top: 1.35rem;
+          background-color: rgb(10, 10, 10);
+        }
+        .process-marks:before {
+          left: 0.35rem;
+          right: initial;
+        }
+        .process-marks:after {
+          right: 0.35rem;
+          left: initial;
+        }
+
+        .headlines {
+          font-size: {{{PCP-heading-size}}}px;
+        }
+      
+        h1 {
+          font-size: 1em;
+          font-weight: 700;          
+          line-height: 1.2em; 
+      }
+        h2 {
+          font-size: 0.6875em;
+          font-weight: 300;
+          line-height: 1.1em; 
+      }
+        h3 {
+          font-size: 0.6em;
+          margin: 0.15rem 0;
+          font-weight: 700;
+      }
+        p {
+          font-size: 0.44em;
+          line-height: 1.35em; 
+      }
+        .headlines { 
+          margin-bottom: 1em; 
+      }
+
+        /* OVERFLOW */
+
+        .front-page-copy-overflow-container {
+          height: 162px;
+        }
+
+        .col-overflow-container {
+          height: 204px;
+      }
+        .col:nth-child(2) .col-overflow-container {
+          height: 243px;
+        }
+
+        .overflow {
+          border: 1px dashed black;
+          position: relative;
+          background-color: rgba(255,0,0,0.8); }
+        .overflow h1,
+        .overflow h2,
+        .overflow h3,
+        .overflow h4,
+        .overflow h5,
+        .overflow h6,
+        .overflow p,
+        .overflow li { color: white !important; }
+        .overflow::before {
+          content: '-';
+          position: absolute;
+          z-index: 5;
+          top: 0.5em;
+          right: -8px;
+          height: 15px;
+          width: 15px;
+          border: 1px solid red;
+          color: red;
+          padding: 2px;
+          box-sizing: border-box;
+          font-size: 23px;
+          text-align: center;
+          line-height: 8px;
+          background-color: white; }
+        .overflow:hover:before {
+          background-color: red;
+          color: white; }
+        .overflow:after {
+          display: none; }
+        .overflow:hover:after {
+          display: block;
+          content: 'There is overset content in this column. Please remove it';
+          position: absolute;
+          top: 2.8em;
+          right: -10px;
+          background-color: black;
+          color: white;
+          border-radius: 2px;
+          padding: 5px;
+          box-sizing: border-box;
+          font-size: 11px;
+          font-weight: 400;
+          line-height: 1em;
+          text-align: center;
+          width: 10em; }
+
+        @media print {
+          .overflow.overflow {
+            background-color: rgba(255, 0, 0, 0.8);
+            position: relative;
+            border: initial; }
+          .overflow h2, .overflow p, .overflow h6 { color: initial; }
+          .overflow::before {
+            content: '';
+            display: none; }
+          .overflow:after {
+            display: block;
+            content: 'There is overset content in this column. Please remove it';
+            position: absolute;
+            top: 0em;
+            left: 0em;
+            right: 0em;
+            color: white;
+            border-radius: 2px;
+            padding: 5px;
+            box-sizing: border-box;
+            font-size: 0.5em;
+            font-weight: 400;
+            line-height: 1em;
+            text-align: center;
+          }
+        }
+
+        @media print {
+          html {
+            color: rgb(35, 31, 32) !important;
+          }
+          .process-marks:after {
+            background-color: rgb(35, 31, 32) !important;
+          }
+        }
+
+      .text-content {
+        height: 400px;
+      }
+      .text-content{
+        font-size: 0.6em;
+      }
+      .text-content p {
+        font-size: 0.74em;
+      }
+
+      .contact-details {
+        font-size: 0.75em;
+        margin-top: 0.25em;
+      }
+
+      .social-links-div {
+        margin-left: 1.1em;
+        width: 15em;
+        overflow-wrap: break-word;
+      }
+
+      .mt-1 {
+        margin-top: 1.5em;}
+
+      .insta {
+        margin-top: 0.17em;
+        margin-right: 0.25em;
+        position: absolute;
+
+        float: left;
+        height: 1em;
+        width: 1em;
+        background-repeat: no-repeat;
+        background-image: url("data:image/svg+xml;utf8,<svg width='100%' height='100%' viewBox='0 0 9 9' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'> <g id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'> <g id='Group-2' fill='#404041'> <path d='M6.23729744,2.38244628 C5.96629744,2.38244628 5.75029744,2.16544628 5.75029744,1.89544628 C5.75029744,1.62544628 5.96629744,1.40844628 6.23729744,1.40844628 C6.50829744,1.40844628 6.72429744,1.62544628 6.72429744,1.89544628 C6.72429744,2.16544628 6.50829744,2.38244628 6.23729744,2.38244628 M4.06629744,2.71144628 C3.32029744,2.71144628 2.71129744,3.32044628 2.71129744,4.06644628 C2.71129744,4.81344628 3.32029744,5.42244628 4.06629744,5.42244628 C4.81329744,5.42244628 5.42229744,4.81344628 5.42229744,4.06644628 C5.42229744,3.32044628 4.81329744,2.71144628 4.06629744,2.71144628 M4.06629744,6.15244628 C2.91229744,6.15244628 1.98029744,5.22044628 1.98029744,4.06644628 C1.98029744,2.91244628 2.91229744,1.98044628 4.06629744,1.98044628 C5.22029744,1.98044628 6.15229744,2.91244628 6.15229744,4.06644628 C6.15229744,5.22044628 5.22029744,6.15244628 4.06629744,6.15244628 M1.66829744,0.894446281 C1.48229744,0.968446281 1.34429744,1.05844628 1.20229744,1.20144628 C1.05829744,1.34444628 0.968297442,1.48244628 0.894297442,1.66744628 C0.683297442,2.20244628 0.730297442,3.47344628 0.730297442,4.06644628 C0.730297442,4.65944628 0.683297442,5.93044628 0.894297442,6.46544628 C0.968297442,6.65044628 1.05829744,6.78744628 1.20229744,6.93044628 C1.34429744,7.07344628 1.48229744,7.16344628 1.66829744,7.23744628 C2.20329744,7.44944628 3.47329744,7.40244628 4.06629744,7.40244628 C4.65929744,7.40244628 5.93029744,7.44944628 6.46529744,7.23744628 C6.65029744,7.16344628 6.78829744,7.07344628 6.93029744,6.93044628 C7.07429744,6.78744628 7.16429744,6.65044628 7.23829744,6.46544628 C7.45029744,5.93044628 7.40229744,4.65944628 7.40229744,4.06644628 C7.40229744,3.47344628 7.45029744,2.20244628 7.23829744,1.66744628 C7.16429744,1.48244628 7.07429744,1.34444628 6.93029744,1.20144628 C6.78829744,1.05844628 6.65029744,0.968446281 6.46529744,0.894446281 C5.93029744,0.683446281 4.65929744,0.730446281 4.06629744,0.730446281 C3.47329744,0.730446281 2.20329744,0.683446281 1.66829744,0.894446281 M8.10629744,5.74444628 C8.07429744,6.39644628 7.92629744,6.97344628 7.45029744,7.44944628 C6.97329744,7.92644628 6.39629744,8.07444628 5.74529744,8.10644628 C5.18329744,8.13844628 4.62829744,8.13244628 4.06629744,8.13244628 C3.50529744,8.13244628 2.94929744,8.13844628 2.38729744,8.10644628 C1.73629744,8.07444628 1.15929744,7.92644628 0.683297442,7.44944628 C0.207297442,6.97344628 0.058297442,6.39644628 0.026297442,5.74444628 C-0.004702558,5.18344628 0.000297441999,4.62744628 0.000297441999,4.06644628 C0.000297441999,3.50544628 -0.004702558,2.94944628 0.026297442,2.38744628 C0.058297442,1.73644628 0.207297442,1.15944628 0.683297442,0.683446281 C1.15929744,0.206446281 1.73629744,0.058446281 2.38729744,0.026446281 C2.94929744,-0.00555371901 3.50529744,0.000446280992 4.06629744,0.000446280992 C4.62829744,0.000446280992 5.18329744,-0.00555371901 5.74529744,0.026446281 C6.39629744,0.058446281 6.97329744,0.206446281 7.45029744,0.683446281 C7.92629744,1.15944628 8.07429744,1.73644628 8.10629744,2.38744628 C8.13829744,2.94944628 8.13329744,3.50544628 8.13329744,4.06644628 C8.13329744,4.62744628 8.13829744,5.18344628 8.10629744,5.74444628' id='Fill-244'></path> </g> </g> </svg>");
+      }
+
+      .fb {
+        margin-top: 0.17em;
+        margin-right: 0.25em;
+        position: absolute;
+
+        float: left;
+        height: 1em;
+        width: 1em;
+        background-repeat: no-repeat;
+        background-image: url("data:image/svg+xml;utf8,<svg width='100%' height='100%' viewBox='0 0 9 9' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'> <defs></defs> <g id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'> <g id='Group' fill='#404041'> <path d='M8.133,0.590577032 L8.133,7.82257703 C8.133,8.07157703 7.932,8.27357703 7.683,8.27357703 L5.612,8.27357703 L5.612,5.12257703 L6.666,5.12257703 L6.825,3.89457703 L5.612,3.89457703 L5.612,3.11057703 C5.612,2.75657703 5.708,2.51757703 6.222,2.51757703 L6.867,2.51257703 L6.867,1.41657703 C6.756,1.40057703 6.37,1.36857703 5.925,1.36857703 C4.987,1.36857703 4.342,1.94057703 4.342,2.98857703 L4.342,3.89457703 L3.283,3.89457703 L3.283,5.12257703 L4.342,5.12257703 L4.342,8.27357703 L0.45,8.27357703 C0.201,8.27357703 0,8.07157703 0,7.82257703 L0,0.590577032 C0,0.341577032 0.201,0.140577032 0.45,0.140577032 L7.683,0.140577032 C7.932,0.140577032 8.133,0.341577032 8.133,0.590577032' id='Fill-242'></path> </g> </g> </svg>");
+      }
+
+      .tw {
+        margin-top: 0.17em;
+        margin-right: 0.25em;
+        position: absolute;
+
+        float: left;
+        height: 1em;
+        width: 1em;
+        background-repeat: no-repeat;
+        background-image: url('data:image/svg+xml;utf8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%0A%3C!--%20Generator%3A%20Adobe%20Illustrator%2021.0.2%2C%20SVG%20Export%20Plug-In%20.%20SVG%20Version%3A%206.00%20Build%200)%20%20--%3E%0A%3Csvg%20version%3D%221.1%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%0A%09%20viewBox%3D%220%200%2092.1%2074%22%20style%3D%22enable-background%3Anew%200%200%2092.1%2074%3B%22%20xml%3Aspace%3D%22preserve%22%3E%0A%3Cstyle%20type%3D%22text%2Fcss%22%3E%0A%09.st0%7Bfill%3A%23414042%3B%7D%0A%3C%2Fstyle%3E%0A%3Cpath%20class%3D%22st0%22%20d%3D%22M81.6%2C18.8c0.1%2C0.8%2C0.1%2C1.6%2C0.1%2C2.4c0%2C24-18.3%2C51.6-51.6%2C51.6c-10.3%2C0-19.8-3-27.9-8.1c1.5%2C0.2%2C2.9%2C0.2%2C4.4%2C0.2%0A%09c8.5%2C0%2C16.3-2.9%2C22.5-7.8c-8-0.2-14.7-5.4-17-12.6c1.1%2C0.2%2C2.2%2C0.3%2C3.4%2C0.3c1.6%2C0%2C3.3-0.2%2C4.8-0.6c-8.3-1.7-14.5-9-14.5-17.8%0A%09c0-0.1%2C0-0.2%2C0-0.2c2.4%2C1.3%2C5.2%2C2.2%2C8.2%2C2.3c-4.9-3.3-8.1-8.8-8.1-15.1c0-3.4%2C0.9-6.5%2C2.5-9.2c8.9%2C11%2C22.4%2C18.2%2C37.4%2C19%0A%09c-0.3-1.3-0.4-2.8-0.4-4.2c0-10%2C8.1-18.1%2C18.1-18.1c5.2%2C0%2C9.9%2C2.2%2C13.3%2C5.7c4.1-0.8%2C8-2.3%2C11.5-4.4c-1.3%2C4.2-4.2%2C7.8-8%2C10%0A%09c3.7-0.4%2C7.2-1.4%2C10.4-2.8C88.3%2C13.1%2C85.2%2C16.3%2C81.6%2C18.8z%22%2F%3E%0A%3C%2Fsvg%3E%0A');
+      }
+      
+      /*----------------*\
+      	V2 Styles
+      \*----------------*/
+      .background {
+        background-color: {{{account.colors.primary}}};
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-position-x: center;
+        background-position-y: center;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
+      .placeholder {
+        background-image: url("https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/041b662e83fd96005ee346d4ec002422/postCardp1.jpg");
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body style="background: white">
+    <!--<div class="page placeholder"></div>-->
+    <div class="page">
+      <div class="bleed center-children">
+        <div class="background">
+        	{{{background-image}}}
+        </div>
+<div class="content">
+                  <div class="front-container {{ochre-container-position}} {{ochre-container-size}}">
+            <div class="front-inner-container">
+              <div class="text-content" >
+                <div class="wrapper" >
+                    <div class="headlines" data-max-line="3">
+                      <h1 >{{{headline}}}</h1>
+                      <h2>{{{secondary-headline}}}</h2>
+                    </div>
+                  <div data-max-line="8">
+                    {{{front-page-copy}}}
+                  </div>
+                  </div>
+              </div><!--text-content-->
+              <div>
+                <img src="{{{account.logos.primary}}}" class="logo">
+              </div>
+            </div><!--front-inner-container-->
+          </div><!--front-container-->
+        </div><!--content-->
+      </div>
+    </div>
+<script src="https://outfit-assets-production.s3.amazonaws.com/scripts/textoverflow.0.0.1.min.js" type="text/javascript"></script>
+  <script>    
+    window.showCrop = {{show-crop}};
+  </script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="main.js"></script>
+    <script src="prefixfree.js"></script>
+      <script>    
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+        });
+      });
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+        
+  		</script>
+  </body>
+</html>

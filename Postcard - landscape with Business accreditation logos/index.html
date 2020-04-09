@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html class="{{crop-marks}}-crop-marks {{^crop-marks}}show-crop-marks{{/crop-marks}}">
+<head>
+  <title>University of Sydney Postcard</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="assets/stylesheets/main.css">
+  <style>
+    {{^custom-background-image}}
+      .background {
+        background-color: white; }
+    {{/custom-background-image}}
+    /*
+    .back-logo-upload {
+        height: 4em;
+    }
+    
+    {{#footer-logo}}
+    .back-logo {
+    height: 3.1em;
+      padding-left: 6.3rem; }
+    {{/footer-logo}} */
+    
+  </style>
+</head>
+<body class="{{crop-marks}}-crop-marks {{^crop-marks}}show-crop-marks{{/crop-marks}}">
+  
+  {{{ custom-background-image }}}
+  
+  <div class="page">
+     <div class="background"></div><!--background-->
+
+    <div class="document">
+      <div class="content">
+        <div class="front-container {{ochre-container-position}} {{ochre-container-size}}">
+          <div class="front-inner-container">
+            <div class="text-content">
+              <div class="front-page-copy-overflow-container">
+                <div class="front-page-copy-overflow">
+                  <div class="headlines">
+                    <h1>{{{headline}}}</h1>
+                    {{{secondary-headline}}}
+                  </div>
+                  {{{front-page-copy}}}
+                </div><!--front-page-copy-overflow-->
+              </div><!--front-page-copy-overflow-container-->
+            </div><!--text-content-->
+            {{#front-page-process-text}}<div class="process-sentence {{front-page-process-position}}">{{{front-page-process-text}}}</div>{{/front-page-process-text}}
+
+            <div class="logo">
+				<img src="{{logo-front-page}}">
+          </div><!--logo-->
+        </div><!--front-inner-container-->
+      </div><!--front-container-->
+    </div><!--content-->
+    </div><!--document-->
+
+  </div><!--page-->
+
+
+  
+  <div class="page" style=" background-color: white;">
+    <div class="document">
+      <div class="content">
+        <div class="process-marks"></div>
+        <div class="col-container">
+          <div class="col">
+            <div class="col-overflow-container">
+              <div class="col-1-overflow">
+                <div>{{{intro-copy}}}</div>
+                
+                <div class="column2-footer">
+                  
+                  {{^footer-logo}}
+                  <div class="footer-logo" id="foo">
+                    <style>
+                    .footer-logo h3, .footer-logo {
+                      font-size:{{footer-url-font-size}}pt;
+                    }
+
+                    </style>
+                    {{{footer-URL}}}</div>
+                  {{/footer-logo}}
+
+                </div>
+                
+              </div><!--col-overflow-->
+            </div><!--col-overflow-container-->
+          </div><!--col-1-->
+
+          <div class="col">
+            <div class="col-overflow-container">
+              <div class="col-2-overflow">
+                <div>{{{copy}}}</div>
+            
+
+              </div><!--col-overflow-->
+            </div><!--col-overflow-container-->
+          </div><!--col 2-->
+        </div><!--col-container-->
+
+        {{#back-page-process-text}}<div class="process-sentence">{{{back-page-process-text}}}</div>{{/back-page-process-text}}
+			
+        <!--
+        <div class="back-logo-upload">
+			                  <img style="width: 20%;" src="{{footer-logo}}">
+          </div>-->
+        
+            <div class="back-logo">
+			    <img src="{{logo-back-page}}">
+          </div><!--logo-->
+    </div><!--content-->
+    </div><!--document-->
+  </div> 
+ 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script type="text/javascript" src="assets/javascripts/main.js"></script>
+  
+  <script>
+    function loop() {
+      checkHeight($(".front-page-copy-overflow"), 170);
+      checkHeight($(".col-1-overflow"), 245);
+      checkHeight($(".col-2-overflow"), 245);
+      
+    } setInterval(loop, 2000);
+
+    function checkHeight(element, maxHeight) {
+      var $height = element.height();
+      
+      if ($height > maxHeight) {
+        element.parent().parent().addClass('overflow');
+      } else {
+        element.parent().parent().removeClass('overflow');
+      }
+    }
+  </script>
+  <script>
+    var computedFontSize = window.getComputedStyle(document.getElementById("foo")).fontSize;
+
+    if (computedFontSize <= '6px') {
+      document.getElementById("foo").parentElement.classList.add('overflow');
+    } else {
+      document.getElementById("foo").parentElement.classList.remove('overflow');
+    }
+    console.log(computedFontSize);
+  </script>
+</body>
+</html>

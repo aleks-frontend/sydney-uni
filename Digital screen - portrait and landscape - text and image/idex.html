@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Print Generic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://outfit-assets-production.s3.amazonaws.com/fonts/apercu-pro/stylesheet.css" rel="stylesheet">
+    <script src="tinycolor.js"></script>
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    <style>
+      .placeholder {
+        background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/7d79e47cdb2bd85ffe38b285b7dbfd5e/Screen%20Shot%202018-03-27%20at%2010.30.41%20am.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0.7;
+        z-index: 100;
+      }
+      * { -webkit-font-smoothing: antialiased; }
+      .overflow {
+        border: 1px dashed black;
+        position: relative; }
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: blue !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 5px;
+        right: 5px;
+        height: 15px;
+        width: 15px;
+        border: 1px solid blue;
+        color: blue;
+        padding: 2px 2px 2px 3px;
+        box-sizing: border-box;
+        font-size: 13px;
+        text-align: center;
+        line-height: 8px;
+        background-color: blue;
+        text-align: center; }
+      .overflow:hover:before {
+        background-color: blue;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 25px;
+        right: 5px;
+        background-color: blue;
+        color: white;
+        border-radius: 2px;
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.1em;
+        text-align: right;
+        width: 15em;
+      }
+      body { font-family: 'Apercu Pro', sans-serif; }
+      h1, h2, h3, h4, h5, h6 { font-weight: bold; }
+      h1 { font-size: 0.8em; }
+      h2 { font-size: 0.6em; }
+      p { font-size: 0.2em; }
+      a { color: black; }
+      .page { display: flex; flex-direction: column; }
+      .image { position: relative; width: 100%; height: 100%; overflow: hidden; }
+      .content { position: relative; width: 100%; padding: 1em 1.2em; background-color: {{{account.colors.primary}}}; }
+      .content:before { position: absolute; top: 0.5em; left: 0; content: ""; width: 0.6em; height: 0.09em; background-color: white; }
+      .content:after { position: absolute; top: 0.5em; right: 0; content: ""; width: 0.6em; height: 0.09em; background-color: white; }
+      .logo { display: block; width: 2.8em; top: 0.17em; position: relative; }
+      .faculty { position: relative; left: 1.075em;}
+      .faculty p { color: black; font-size: 0.22em; font-weight: bold; }
+      .text { display: flex; justify-content: space-between; width: 100%; }
+      .text h1 { margin: 0 0 0.6em 0; color: black; font-size: 0.55em; font-weight: 500; }
+      .text h2 { margin: 0 0 0.6em 0; color: black; font-size: 0.4em; font-weight: 500; }
+      .text p { margin: 0 0 0.6em 0; color: black; font-size: 0.3em; font-weight: 500; }
+
+      .text ul, .text ol { margin: 0 0 0.5em 0; color: black; font-size: 0.3em; font-weight: 500; list-style: none; }
+      .text li { position: relative; padding-left: 1.3em; margin-bottom: 0.1em; }
+      .text li::before { position: absolute; top: 0; left: 0; }
+      .text ul li::before { content: '\02022'; font-size: 1.25em; line-height: 1em; }
+      .text ol { counter-reset: text-ol; }
+      .text ol li::before { content: counter(text-ol) '.'; counter-increment: text-ol; font-size: 1em; }
+
+
+      .half { width: 47%; }
+      .footer { display: flex; justify-content: space-between; align-items: flex-end; width: 100%; margin: 1em 0 0 0; } 
+      .footer p { margin: 0; color: black; font-size: 0.35em; font-weight: 500; }
+      .website { color: {{{account.colors.primary}}}; font-size: 0.3em; font-weight: 500; } .cricos { margin: 0.8em 0 0 0; font-size: 0.15em; }
+      .overflow-height { max-height: 6.6em; }
+      .copy-one { display: none; }
+
+      @media (min-width: 850px) and (max-width: 900px) and (min-height: 1550px) and (min-height: 1600px) {
+        .content { display: flex; justify-content: space-between; flex-direction: column; padding: 1.2em; height: 50%; }
+        .content:before, .content:after { background-color: black; }   
+        .text .half { width: auto; }
+        .image { height: 50%; }
+        .copy-one { display: block; }
+        .copy-two { display: none; }
+        .overflow-height { max-height: 6.8em; }
+        .footer {margin-top: 0;}
+      }
+
+      @media (min-width: 1550px) and (min-width: 1600px) and (min-height: 850px) and (max-height: 900px)  {
+        .page { flex-direction: row-reverse; }
+        .text .half { width: auto; }
+        .content { display: flex; justify-content: space-between; flex-direction: column; padding: 1.6em 1.2em; }
+        .content:before, .content:after { background-color: black; height: 0.8em; width: 0.07em; }   
+        .content:before { top: 0; bottom: auto; left: 1.2em; }
+        .content:after { top: auto; bottom: 0; left: 1.2em; }
+        .copy-one { display: block; }
+        .copy-two { display: none; }
+        .text h1 { margin: 0 0 1em 0; font-size: 0.8em; font-weight: 500; }
+        .text h2 { margin: 0 0 1em 0; font-size: 0.7em; font-weight: 500; }
+        .text h2 strong { font-weight: 500 !important; }
+        .text p { margin: 0 0 1em 0; font-size: 0.6em; font-weight: 500; }
+        .text ul, .text ol { margin: 0 0 1em 0; font-size: 0.6em; font-weight: 500; }
+        .overflow-height { max-height: 10em; }
+        .logo { width: 3.2em; }
+        .faculty { left: 1.22em; }
+        .footer {
+          margin-top: 0;
+        }
+      }      
+      
+      @media (min-width: 1075px) and (max-width: 1085px) and (min-height: 1915px) and (max-height: 1925px) {
+        .footer {
+          margin: 0.5em 0 0;
+        }
+        text h2 {
+          margin: 0;
+        }
+      }
+
+
+      @media (width: 900px) and (height: 600px) {
+        .page {
+          display: flex;
+          flex-direction: row-reverse;
+        }
+
+        .content {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+
+        .text {
+          flex-direction: column;
+        }
+
+        .half {
+          width: 100%;
+        }
+                 .page { flex-direction: row-reverse; }
+        .text .half { width: auto; }
+        .content { display: flex; justify-content: space-between; flex-direction: column; padding: 1.6em 1.2em; }
+        .content:before, .content:after { background-color: black; height: 0.8em; width: 0.07em; }   
+        .content:before { top: 0; bottom: auto; left: 1.2em; }
+        .content:after { top: auto; bottom: 0; left: 1.2em; }
+        .copy-one { display: block; }
+        .copy-two { display: none; }
+        .text h1 { margin: 0 0 1em 0; font-size: 0.8em; font-weight: 500; }
+        .text h2 { margin: 0 0 1em 0; font-size: 0.7em; font-weight: 500; }
+        .text h2 strong { font-weight: 500 !important; }
+        .text p { margin: 0 0 1em 0; font-size: 0.6em; font-weight: 500; }
+        .text ul, .text ol { margin: 0 0 1em 0; font-size: 0.6em; font-weight: 500; }
+        .overflow-height { max-height: 10.5rem; }
+        .logo { width: 3.2em; }
+        .faculty { left: 1.22em; }
+        .footer { margin-top: 0;}
+      } 
+      
+      @media (width: 1920px)  and (height: 1080px) {
+        .page {
+          display: flex;
+          flex-direction: row-reverse;
+        }
+
+        .content {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+
+        .text {
+          flex-direction: column;
+        }
+
+        .half {
+          width: 100%;
+        }
+         .page { flex-direction: row-reverse; }
+        .text .half { width: auto; }
+        .content { display: flex; justify-content: space-between; flex-direction: column; padding: 1.6em 1.2em; }
+        .content:before, .content:after { background-color: black; height: 0.8em; width: 0.07em; }   
+        .content:before { top: 0; bottom: auto; left: 1.2em; }
+        .content:after { top: auto; bottom: 0; left: 1.2em; }
+        .copy-one { display: block; }
+        .copy-two { display: none; }
+        .text h1 { margin: 0 0 1em 0; font-size: 0.8em; font-weight: 500; }
+        .text h2 { margin: 0 0 1em 0; font-size: 0.7em; font-weight: 500; }
+        .text h2 strong { font-weight: 500 !important; }
+        .text p { margin: 0 0 1em 0; font-size: 0.6em; font-weight: 500; }
+        .text ul, .text ol { margin: 0 0 1em 0; font-size: 0.6em; font-weight: 500; }
+        .overflow-height { max-height: 10.5rem; }
+        .logo { width: 3.2em; }
+        .faculty { left: 1.22em; }  
+        .footer {
+          margin-top: 0;
+        }
+      }
+    </style>
+  </head>
+  <body style="background: white">
+    <div class="page">
+      <div class="image">
+        {{{ main-image }}}
+      </div>
+      <div class="content">
+        <div class="text">
+          <div class="half">
+            <div class="overflow-height">
+              <div class="check-overflow">
+                <h1><strong>{{{ header }}}</strong></h1>
+                <h2><strong>{{{ subheader }}}</strong></h2>
+                <div class="copy-one">{{{ copy }}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="half copy-two">
+            <div style="max-height: 10em;">
+              <div class="check-overflow">
+                {{{ copy }}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <div class="half">
+            <img class="logo" src="{{{account.logos.primary}}}">
+            {{#team.logo-lockup-line-one}}
+            <div class="faculty"><p>—<br>{{{team.logo-lockup-line-one}}}<br>{{{team.logo-lockup-line-two}}}<br>{{{team.logo-lockup-line-three}}}<br>{{{team.logo-lockup-line-four}}}</p></div>			      {{/team.logo-lockup-line-one}}
+          </div>
+          <div class="half">
+            <div style="max-height: 1em;">
+              <div class="check-overflow">
+                <p><strong>{{{ footer }}}</strong></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      window.showCrop = {{show-crop}};
+    </script>
+    <script src="main.js"></script>
+    <script src="prefixfree.js"></script>
+    <script>
+      function loop() {
+        checkHeight(document.getElementsByClassName('check-overflow'));
+
+      } setInterval(loop, 500);
+
+      function checkHeight(element) {
+        for (i = 0 ; i < element.length ; i++ ) {
+          var currentElement = element[i];
+          var height         = currentElement.offsetHeight;
+          var parent         = currentElement.parentNode;
+          var parentHeight   = parent.offsetHeight;
+
+          if (height > parentHeight) {
+            parent.classList.add('overflow');
+          } else {
+            parent.classList.remove('overflow');
+          }
+
+          if ((currentElement).parentNode.classList.contains('overflow')) {
+            document.body.classList.add('overflow-true');
+          } else {
+            document.body.classList.remove('overflow-true'); 
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

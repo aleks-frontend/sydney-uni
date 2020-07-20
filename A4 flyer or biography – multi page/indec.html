@@ -107,6 +107,9 @@
         bottom: 1em;
         right: 1em;
       }
+      .hide {
+        display: none;
+      }
       .error {
         padding: 15mm;
         background: white;
@@ -259,20 +262,20 @@
       .page.addition .col-container {
         min-height: 100%;
       }
-
+      .page.addition .text {
+        columns: 2;
+        column-fill: auto;
+        width: 100%;
+        column-gap: 1rem;
+      }
       .page.addition .text *:last-child {
         margin: 0;
       }
-
-      .contact-details-wrapper {
-        display: none;
-        justify-content: flex-end;
-      }     
-      .text-content-1 .text-container:nth-child(1) .contact-details-wrapper,
-      .text-content-2 .text-container:nth-child(2) .contact-details-wrapper { display: flex;}
-
       .contact-details {
-        width: 5.65rem;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 50%;
         padding: 0 0 0 0.5rem;
       }
       .contact-details .text {
@@ -282,23 +285,20 @@
         margin: 0;
       }
 
-      .col-container .text h1,
-      .contact-details .text h1 {
+      .col-container .text h1 {
         font-size: 0.3em;
         padding: 0px 0 0.1rem;
         margin: 0 0 0.2rem;
         border-bottom: 2px dotted {{{account.colors.primary}}};
         color: {{{account.colors.primary}}}; 
       }
-      .col-container .text h2,
-      .contact-details .text h2 { 
+      .col-container .text h2 { 
         color: {{{account.colors.primary}}};
         font-size: 0.25em;
         padding: 0;
         margin: 0 0 0.05rem;
       }
-      .col-container .text h3,
-      .contact-details .text h3 { 
+      .col-container .text h3 { 
         color: #414042; 
         font-size: 0.25em;
         padding: 0;
@@ -349,36 +349,6 @@
       }
 
       {{{account.snippets.overflow-color-change}}}
-
-      .text-container { display: flex; flex-direction: column; flex: 1; background: lightblue;}
-      .text-container + .text-container { margin-left: 0.9rem; background: lightgreen; }
-      .text-column { flex: 1; }
-
-      .picture { position: relative; }
-
-      .reposition-fix {
-        position: absolute;
-        overflow: hidden;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;        
-      }
-
-      .reposition-fix div {
-        top: 0 !important;
-        bottom: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-      }
-
-      .hide {
-        display: none;
-      }
-
-      .master-container { display: none; }
       /*------------------*\
       PLACEHOLDERS
       \*------------------*/
@@ -519,28 +489,11 @@
           <div class="content">
             <div class="col-container check-overflow">
               {{#block.flyer-page}} <!-- {{{page-title}}} -->
-              {{#collection.column--a4f}}
-              <div class="text-container">
-                <div class="text-column js-imageHeightSetter-container">
-                  {{#collection.content--a4f}}
-                  {{#block.flyer-copy}}
-                  {{#flyer-copy--a4f}}
-                  <div class="text">
-                    {{{flyer-copy--a4f}}}
-                  </div><!-- text -->
-                  {{/flyer-copy--a4f}}
-                  {{/block.flyer-copy}}
-                  {{#block.image}}
-                  {{#image--a4f}}
-                  <div class="picture js-imageHeightSetter-image" data-image-height="{{image-height--a4f}}">
-                    <div class="reposition-fix">{{{image--a4f}}}</div><!-- reposition-fix -->
-                  </div><!-- picture -->
-                  {{/image--a4f}}
-                  {{/block.image}}
-                  {{/collection.content--a4f}}
-                </div><!-- text-column -->
-              </div> <!-- text-container -->
-              {{/collection.column--a4f}}
+              {{#flyer-copy}}
+              <div class="text">
+                {{{ flyer-copy }}}
+              </div>
+              {{/flyer-copy}}
               {{/block.flyer-page}}
             </div><!-- End Col-container -->
           </div><!-- End Content -->
@@ -551,30 +504,7 @@
     {{/block.a4additonalPages}}
 
     {{#block.a4flyer-lastPage}}
-    <div class="page addition js-back-page"> <!-- {{page-title}} -->
-      <div class="master-container">
-        <div class="contact-details-container contact-details-container-bottom {{show-contact-details}} js-inject-src" data-target-id="contact-details">
-          <div class="contact-details">
-            <div class="text">
-              <h1>{{{contact-heading}}}</h1>
-              <div class="contact-box">
-                <p class="name">{{{contact-name}}}</p>
-                <p class="title">{{{contact-title}}}</p>
-              </div><!-- contact-box -->
-              <div class="contact-box">
-                {{{contact-address}}}
-              </div><!-- contact-box -->
-              <div class="contact-box">
-                <p class="phone">{{{contact-phone}}}</p>
-                <p class="email">{{{contact-email}}}</p>
-              </div><!-- contact-box -->
-              <ul>
-                <li>sydney.edu.au{{{contact-url-extension}}}</li>
-              </ul>
-            </div><!-- text -->
-          </div><!-- contact-details -->
-        </div><!-- contact-details-container -->
-      </div><!-- master-container -->
+    <div class="page addition"> <!-- {{page-title}} -->
       <div class="bleed">
         <div class="error">
           <p>
@@ -585,30 +515,31 @@
         </div>
         <div class="flex-container">
           <div class="content">
-            <div class="col-container check-overflow">            
-              {{#collection.column--a4f}}
-              <div class="text-container text-container-back-page js-text-container">
-                <div class="text-column js-imageHeightSetter-container">
-                  {{#collection.content--a4f}}
-                  {{#block.flyer-copy}}
-                  {{#flyer-copy--a4f}}
-                  <div class="text last-page">
-                    {{{flyer-copy--a4f}}}
-                  </div><!-- text -->
-                  {{/flyer-copy--a4f}}
-                  {{/block.flyer-copy}}
-                  {{#block.image}}
-                  {{#image--a4f}}
-                  <div class="picture js-imageHeightSetter-image" data-image-height="{{image-height--a4f}}">
-                    <div class="reposition-fix">{{{image--a4f}}}</div><!-- reposition-fix -->
-                  </div><!-- picture -->
-                  {{/image--a4f}}
-                  {{/block.image}}
-                  {{/collection.content--a4f}}
-                </div><!-- text-column -->
-                <div class="contact-details-wrapper" data-target="contact-details"></div>
-              </div> <!-- text-container -->
-              {{/collection.column--a4f}} 
+            <div class="col-container check-overflow">
+              {{#flyer-copy}}
+              <div class="text last-page">
+                {{{ flyer-copy }}}
+              </div>
+              <div class="contact-details {{show-contact-details}}">
+                <div class="text">
+                  <h1>{{{contact-heading}}}</h1>
+                  <div class="contact-box">
+                    <p class="name">{{{contact-name}}}</p>
+                    <p class="title">{{{contact-title}}}</p>
+                  </div>
+                  <div class="contact-box">
+                    {{{contact-address}}}
+                  </div>
+                  <div class="contact-box">
+                    <p class="phone">{{{contact-phone}}}</p>
+                    <p class="email">{{{contact-email}}}</p>
+                  </div>
+                  <ul>
+                    <li>sydney.edu.au{{{contact-url-extension}}}</li>
+                  </ul>
+                </div>
+              </div>
+              {{/flyer-copy}}
             </div><!-- End Col-container -->
           </div><!-- End Content -->
         </div><!-- End Flex-container -->
@@ -622,7 +553,6 @@
     </script>
     <script src="main.js"></script>
     <script src="prefixfree.js"></script>
-    <script src="js/dynamic-inject.js"></script>
     <script>
       var error = document.querySelectorAll(".error");      
       error.forEach(node => node.style.display = "none");
@@ -631,11 +561,9 @@
         setFirstPageHeight();
         checkHeight(document.getElementsByClassName('check-overflow'));
         checkLastPage();
-        injectDynamicContent();
       } 
       setInterval(loop, 1000);
 
-      injectDynamicContent();
 
       function checkLastPage() {
         // Check to see if we are displaying any contact Details
@@ -739,35 +667,6 @@
         p1Text.setAttribute("style", "height: calc(100% - " + p1OchreBoxHeight + ")");
         p1ColContainer.setAttribute("style" , "height: calc(100% - " + p1TextheadHeight + ")"); 
       }
-
-      function imageHeightSetter() {
-        const colContainers = document.querySelectorAll('.js-imageHeightSetter-container');
-
-        colContainers.forEach(colContainer => {
-          const colContainerHeight = colContainer.offsetHeight;
-          const imageBlocks = colContainer.querySelectorAll('.js-imageHeightSetter-image');
-
-          imageBlocks.forEach(image => {
-            const setHeight = image.dataset.imageHeight || 50;
-
-            image.style.height = `${( colContainerHeight / 100 ) * setHeight - 1}px`;
-          });          
-        })
-      }
-
-      imageHeightSetter();
-
-      function contactDetailsController() {
-        const backPages = document.querySelectorAll('.js-back-page');
-
-        backPages.forEach(backPage => {
-          const textContainer =  backPage.querySelectorAll('.js-text-container').length;
-          backPage.classList.add(`text-content-${textContainer}`)
-        })
-
-      }
-
-      contactDetailsController();
     </script>
   </body>
 </html>

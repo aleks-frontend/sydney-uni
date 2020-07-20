@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Print Generic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://outfit-assets-production.s3.amazonaws.com/fonts/apercu-pro/stylesheet.css" rel="stylesheet">
+    <script src="tinycolor.js"></script>
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="crop.css">
+    {{{account.snippets.typography}}}
+    <style>
+      body {
+        counter-reset: page-no 1;
+      }
+
+      div.page:not(:first-of-type)::before {
+        counter-increment: page-no;
+        content: "Page " counter(page-no);
+        position: absolute;
+        bottom: 10mm;
+        right: 10mm;
+        font-size: 0.2em;
+        font-family: var(--font-1);
+      }      
+
+      * { -webkit-font-smoothing: antialiased; }
+      .overflow {
+        border: 1px dashed red;
+        position: relative; }
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 5px;
+        right: 5px;
+        height: 15px;
+        width: 15px;
+        border: 1px solid red;
+        color: red;
+        padding: 2px 2px 2px 3px;
+        box-sizing: border-box;
+        font-size: 13px;
+        text-align: center;
+        line-height: 8px;
+        background-color: white;
+        text-align: center; }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 25px;
+        right: 5px;
+        background-color: black;
+        color: white;
+        border-radius: 2px;
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.1em;
+        text-align: right;
+        width: 15em;
+      }
+      body { font-family: var(--font-1); }
+      h1 { font-size: 0.8em; }
+      h2 { font-size: 0.6em; }
+      p { font-size: 0.2em; }
+
+      /* This is to deal with Soft returns which generate P tags while Hard Returns generate Brs */
+      h1 p,
+      h2 p {
+        font-size: 1em !important;
+        margin: 0 !important;
+      }
+
+      .bleed { position: relative; }
+      .page {
+        border-bottom: 1px solid #0ff;
+      }
+      @media print {
+        .page {
+          border: none;
+        }
+      }
+
+      .flex-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: absolute;
+        top: 1em;
+        left: 1em;
+        bottom: 1em;
+        right: 1em;
+      }
+      .error {
+        padding: 15mm;
+        background: white;
+        position: absolute;
+        z-index: 1;
+        color: red;
+        font-size: 1.8em;
+      }
+      /*-------------------*\
+      HEADER STYLES
+      \*-------------------*/
+      .main-header {
+        padding: 0 0 0.8rem;
+      }
+      .facultyLockup {
+        width: 2.7em;
+        float: left;
+        margin: 0 0.35rem 0.35rem 0;        
+      }
+
+      .faculty::before {
+        content: "";
+        border-top: 1px solid black;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0.15rem;
+      }
+
+      .logo { 
+        display: block;
+        max-width: 100%;
+      }
+
+      .faculty p:first-child {
+        padding-top: 0.075rem;
+      }      
+
+      .faculty { 
+        position: relative;
+        margin-top: -0.07rem;
+        margin-left: 1.04em; 
+        width: 1.75em; 
+        color: black;
+      }
+      .faculty p { 
+        font-size: 0.22em; 
+        white-space: nowrap;
+      }
+      .headline { 
+        margin: 0.05em 0 0;
+        width: 70%;
+        float: right;
+      } 
+      .addition .headline {
+        width: 100%;
+      }
+      .addition .footer {
+        padding: 1em 0 0;
+        margin: -1em 0 0;
+      }
+      .headline h1 { color: {{{account.colors.primary}}}; text-align: right; }
+      .content {
+        height: 100%;
+      }
+      .ochre-box { position: relative; width: 100%; height: 3.6em; background-color: {{{account.colors.primary}}}; 
+        background-size: cover; background-repeat: no-repeat; background-position: center; }
+      .right-image { position: absolute; top: 0; right: 0; width: 35%; height: 3.6em; background-color: {{{account.colors.primary}}};
+        background-size: cover; background-repeat: no-repeat; background-position: center; }
+      .inner { position: absolute; top: 0; bottom: 0; left: 0; width: 65%; padding: 0.6em; }
+      .header { position: relative; } 
+      .front-page-text { width: 100%; margin: 0; height: 100%; }
+      .text h2 { 
+        color: black; 
+        padding: 0.6em 0; 
+        font-size: 0.35em; 
+      }
+      .text h3 { color: {{{account.colors.primary}}}; margin: 0 0 0.3em 0; font-size: 0.25em; } 
+      .text p { margin: 0 0 0.8em 0; }
+      .text ul,
+      .text ol {
+        padding: 0 0 0 20px;
+        margin: 0 0 0.8em;
+        font-size: 0.2em;
+      }
+
+      .text ul li *,
+      .text ol li * {
+        font-size: 1em;
+      }
+
+      .text ul li:before {
+        content: "—";
+        display: inline-block;
+        margin-left: -1.3em;
+        width: 1.3em;
+      }
+      .text ol > li:before {
+        content: none;
+      }
+      .text a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .image { 
+        margin: 0.3em 0 0 0; 
+      } 
+      .image img { 
+        width: 100%;
+        display: block;
+      }
+      .two-columns { -webkit-column-count: 2; -moz-column-count: 2; column-count: 2;
+        -webkit-column-gap: 15px; -moz-column-gap: 15px; column-gap: 15px; -webkit-column-fill: 2; -moz-column-fill: auto; column-fill: auto; }
+      .cricos { 
+        margin: 0.8em 0 0 0; 
+        font-family: var(--font-2); 
+        font-size: 0.1em; 
+        -moz-font-feature-settings: "ss04";
+        -webkit-font-feature-settings: "ss04";
+        font-feature-settings: "ss04";
+        font-variant-numeric: slashed-zero;
+      }
+
+      .shape { 
+        width: 100%;
+      }
+      .shape.none {
+        display: none;
+        height: 0px;
+      }
+      .page.addition .logo { 
+        position: absolute; 
+        top: auto; 
+        bottom: 0; 
+        left: auto; 
+        right: 1em; 
+        width: 2.7em; 
+        display: flex; 
+        align-items: flex-end; 
+        padding: 0 0 0.9em;
+      } 
+
+      .page.addition .col-container, 
+      .col-container { 
+        display: flex; 
+        justify-content: space-between; 
+        width: 100%; 
+        position: relative;
+      }
+      .page.addition .col-container {
+        min-height: 100%;
+      }
+
+      .page.addition .text *:last-child {
+        margin: 0;
+      }
+
+      .contact-details-wrapper {
+        display: none;
+        justify-content: flex-end;
+      }     
+      .text-content-1 .text-container:nth-child(1) .contact-details-wrapper,
+      .text-content-2 .text-container:nth-child(2) .contact-details-wrapper { display: flex;}
+
+      .contact-details {
+        width: 5.65rem;
+        padding: 0 0 0 0.5rem;
+      }
+      .contact-details .text {
+        columns: unset !important;
+      }
+      .contact-details ul {
+        margin: 0;
+      }
+
+      .col-container .text h1,
+      .contact-details .text h1 {
+        font-size: 0.3em;
+        padding: 0px 0 0.1rem;
+        margin: 0 0 0.2rem;
+        border-bottom: 2px dotted {{{account.colors.primary}}};
+        color: {{{account.colors.primary}}}; 
+      }
+      .col-container .text h2,
+      .contact-details .text h2 { 
+        color: {{{account.colors.primary}}};
+        font-size: 0.25em;
+        padding: 0;
+        margin: 0 0 0.05rem;
+      }
+      .col-container .text h3,
+      .contact-details .text h3 { 
+        color: #414042; 
+        font-size: 0.25em;
+        padding: 0;
+        margin: 0 0 0.05rem;
+      } 
+
+      .page.addition .col-1, .page.addition .col-2, .col-1, .col-2 { width: 343.75px; height: 100%; }
+      .col-1__wrapper,
+      .col-2__wrapper {
+        height: 100%;
+      }
+      .page.addition .highlight { background-color: #f1f1f1; padding: 0.3em; margin: 0 0 0.3em 0; }
+      .page.addition .highlight p { margin: 0; }
+      .page.addition .table-highlight { color: white; background-color: black; }
+      .page.addition .image { color: #828282; font-size: 0.15em; }
+      .page.addition .caption { color: #828282; margin: 0.8em 0; font-size: 0.15em; }
+      .page.addition .timetable { margin: 0 0 0.3em 0; }
+      .page.addition .timetable table { width: 100%; font-size: 0.25em; }
+      .page.addition .timetable tr td { border-bottom: 2px solid black; padding: 0.45em 0.8em; }
+
+      #Shape-1 { fill: {{{account.colors.primary}}}; opacity: 0.4 }
+      #Shape-2 { fill: {{{account.colors.primary}}}; opacity: 0.6; }
+      #Shape-3 { fill: {{{account.colors.primary}}}; opacity: 0.8; }
+      #Shape-4 { fill: {{{account.colors.primary}}}; } 
+
+      .shape-text { 
+        position: absolute; 
+        bottom: 1.35em; 
+        left: 1em; 
+        width: calc(100% - 1em); 
+        height: 0.6em; 
+        z-index: 1; 
+      }
+      .shape-text ul { display: flex; width: 100%; }
+      .shape-text-item { display: flex; align-items: center; width: 8em; color: black; margin: 0 0 0 4em; font-size: 0.2em; }
+      .shape-text ul { display: flex; }
+      .shape-text-item { display: flex; align-items: center; width: 10em; color: black; margin: 0 0 0 4.8em; font-size: 0.2em; }
+      .shape-text-item:first-of-type { margin: 0; }
+
+      .contact-box {
+        margin: 0 0 0.2em 0;
+      }
+      .contact-box p {
+        margin: 0;
+      }
+      .contact-details ul {
+        color: {{{account.colors.primary}}};
+      }
+
+      {{{account.snippets.overflow-color-change}}}
+
+      .text-container { display: flex; flex-direction: column; flex: 1; }
+      .text-container + .text-container { margin-left: 0.9rem; }
+      .text-column { flex: 1; }
+
+      .picture { position: relative; }
+      
+      .text,
+      .picture {    
+        margin-bottom: 0.5rem;
+      }
+      
+      .text:last-child,
+      .picture:last-child {
+        margin-bottom: 0;
+      }
+
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      .hide {
+        display: none;
+      }
+
+      .master-container { display: none; }
+      /*------------------*\
+      PLACEHOLDERS
+      \*------------------*/
+      /*.page.addition {
+      background-image: url('https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/141dc3317ff36a12f55ae33db6c16fbe/frontPage-01.png');
+      background-size: cover;
+      background-position: top left;
+      background-repeat: no-repeat;
+      }*/
+    </style>
+  </head>
+
+  <body style="background: white">
+    {{#collection.a4flyer}}
+    {{#block.a4flyerFirstPage}}
+    <div class="page">
+      <div class="bleed">
+        <div class="flex-container">
+          <div class="main-header">
+            <div class="facultyLockup">
+              <img class="logo" src="{{{account.logos.primary}}}">
+              {{#team.logo-lockup-line-one}}
+              <div class="faculty">
+                <p>{{{team.logo-lockup-line-one}}}</p>
+
+                {{#team.logo-lockup-line-two}}
+                <p>{{{team.logo-lockup-line-two}}}</p>
+                {{/team.logo-lockup-line-two}}
+
+                {{#team.logo-lockup-line-three}}
+                <p>{{{team.logo-lockup-line-three}}}</p>
+                {{/team.logo-lockup-line-three}}
+
+                {{#team.logo-lockup-line-four}}
+                <p>{{{team.logo-lockup-line-four}}}</p>
+                {{/team.logo-lockup-line-four}}
+
+              </div>				  
+              {{/team.logo-lockup-line-one}}
+            </div>
+            <div class="headline">
+              <div style="max-height: 1.6em;">
+                <div class="check-overflow">
+                  <h1 style="font-size: 0.{{{title-top-font-size}}}em;">{{{ title-top }}}</h1>
+                </div>
+              </div>
+            </div>
+          </div><!--header-->
+
+          <div id="p1Content" class="content">
+            {{#box-header-image}}
+            <div class="ochre-box">
+              <div class="right-image" style="background-image: url({{{ box-header-image }}});"></div>
+              <div class="inner"><div class="header"><div style="max-height: 1.75em;"><div class="check-overflow">
+                <h1 style="font-size: 0.{{{box-headline-font-size}}}em;">{{{ box-headline }}}</h1></div></div></div></div></div>
+            {{/box-header-image}}
+            {{^box-header-image}}
+            <div class="ochre-box">
+              <div class="inner" style="right: 0; width: auto;"><div class="header"><div style="max-height: 1.75em;"><div class="check-overflow">
+                <h1 style="font-size: 0.{{{box-headline-font-size}}}em;">{{{ box-headline }}}</h1></div></div></div></div></div>
+            {{/box-header-image}}
+
+            <div class="text">
+              <h2>{{{ highlight-copy }}}</h2>
+              <div class="two-columns col-container">
+                <div>
+                  <div class="col-1">
+                    <div class="col-1__wrapper">
+                      <div class="check-overflow">
+                        <div class="front-page-text">
+                          {{#collection.front-page-left-column}}{{#block.front-page-copy}}{{#copy}}<div class="text">{{{ copy }}}</div>{{/copy}}{{/block.front-page-copy}}
+                          {{#block.front-page-image}}{{#image}}<div class="image"><img src="{{{image}}}"></div>{{/image}}{{/block.front-page-image}}{{/collection.front-page-left-column}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="col-2">
+                    <div class="col-2__wrapper">
+                      <div class="check-overflow">
+                        <div class="front-page-text">
+                          {{#collection.front-page-right-column}}{{#block.front-page-copy}}{{#copy}}<div class="text">{{{ copy }}}</div>{{/copy}}{{/block.front-page-copy}}
+                          {{#block.front-page-image}}{{#image}}<div class="image"><img src="{{{image}}}"></div>{{/image}}{{/block.front-page-image}}{{/collection.front-page-right-column}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="shape-text" style="display: {{{ chevron-visibility }}};">
+              <ul>
+                <div class="shape-text-item" style="max-height: 2.6em;"><div class="check-overflow"><li>{{{ shape-text-one }}}</li></div></div>
+                <div class="shape-text-item" style="max-height: 2.6em;"><div class="check-overflow"><li>{{{ shape-text-two }}}</li></div></div>
+                <div class="shape-text-item" style="max-height: 2.6em;"><div class="check-overflow"><li>{{{ shape-text-three }}}</li></div></div>
+                <div class="shape-text-item" style="max-height: 2.6em;"><div class="check-overflow"><li>{{{ shape-text-four }}}</li></div></div>
+              </ul>
+            </div>
+
+          </div>
+          <div class="shape {{{chevron-visibility}}}">
+            <svg width="100%" height="100%" viewBox="0 0 474 69" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <defs></defs>
+              <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g id="Shape">
+                  <path d="M132,34.5 L99.5481857,69 L0,69 L32.4518143,34.5 L0,0 L99.5481857,0 L132,34.5 Z" id="Shape-1"></path>
+                  <path d="M246,34.5 L213.548186,69 L114,69 L146.451814,34.5 L114,0 L213.548186,0 L246,34.5 Z" id="Shape-2"></path>
+                  <path d="M360,34.5 L327.548186,69 L228,69 L260.451814,34.5 L228,0 L327.548186,0 L360,34.5 Z" id="Shape-3"></path>
+                  <path d="M474,34.5 L441.548186,69 L342,69 L374.451814,34.5 L342,0 L441.548186,0 L474,34.5 Z" id="Shape-4"></path>
+                </g>
+              </g>
+            </svg>
+          </div>
+          <div class="footer"><p class="cricos"></p></div>
+        </div><!--flex-container-->
+
+      </div>
+    </div>
+    {{/block.a4flyerFirstPage}}
+    {{/collection.a4flyer}}
+
+    {{#collection.a4flyer}}
+    {{#block.a4additonalPages}}
+    {{#collection.flyer-pages}}
+    <div class="page addition">
+      <div class="bleed">
+        <div class="error">
+          <p>
+            Too many last page type blocks have been added. 
+            <br />
+            Please ensure there is only one block of type last page before exporting
+          </p>
+        </div>
+        <div class="flex-container">
+          <div class="content">
+            <div class="col-container check-overflow">
+              {{#block.flyer-page}} <!-- {{{page-title}}} -->
+              {{#collection.column--a4f}}
+              <div class="text-container">
+                <div class="text-column js-imageHeightSetter-container">
+                  {{#collection.content--a4f}}
+                  {{#block.flyer-copy}}
+                  {{#flyer-copy--a4f}}
+                  <div class="text">
+                    {{{flyer-copy--a4f}}}
+                  </div><!-- text -->
+                  {{/flyer-copy--a4f}}
+                  {{/block.flyer-copy}}
+                  {{#block.image}}
+                  {{#image--a4f}}
+                  <div class="picture js-imageHeightSetter-image" data-image-height="{{image-height--a4f}}">
+                    <div class="reposition-fix">{{{image--a4f}}}</div><!-- reposition-fix -->
+                  </div><!-- picture -->
+                  {{/image--a4f}}
+                  {{/block.image}}
+                  {{/collection.content--a4f}}
+                </div><!-- text-column -->
+              </div> <!-- text-container -->
+              {{/collection.column--a4f}}
+              {{/block.flyer-page}}
+            </div><!-- End Col-container -->
+          </div><!-- End Content -->
+        </div><!-- End Flex-container -->
+      </div><!-- End Bleed -->
+    </div><!-- End Additional Pages -->
+    {{/collection.flyer-pages}} 
+    {{/block.a4additonalPages}}
+
+    {{#block.a4flyer-lastPage}}
+    <div class="page addition js-back-page"> <!-- {{page-title}} -->
+      <div class="master-container">
+        <div class="contact-details-container contact-details-container-bottom {{show-contact-details}} js-inject-src" data-target-id="contact-details">
+          <div class="contact-details">
+            <div class="text">
+              <h1>{{{contact-heading}}}</h1>
+              <div class="contact-box">
+                <p class="name">{{{contact-name}}}</p>
+                <p class="title">{{{contact-title}}}</p>
+              </div><!-- contact-box -->
+              <div class="contact-box">
+                {{{contact-address}}}
+              </div><!-- contact-box -->
+              <div class="contact-box">
+                <p class="phone">{{{contact-phone}}}</p>
+                <p class="email">{{{contact-email}}}</p>
+              </div><!-- contact-box -->
+              <ul>
+                <li>sydney.edu.au{{{contact-url-extension}}}</li>
+              </ul>
+            </div><!-- text -->
+          </div><!-- contact-details -->
+        </div><!-- contact-details-container -->
+      </div><!-- master-container -->
+      <div class="bleed">
+        <div class="error">
+          <p>
+            Too many last page type blocks have been added. 
+            <br />
+            Please ensure there is only one block of type last page before exporting
+          </p>
+        </div>
+        <div class="flex-container">
+          <div class="content">
+            <div class="col-container check-overflow">            
+              {{#collection.column--a4f}}
+              <div class="text-container text-container-back-page js-text-container">
+                <div class="text-column js-imageHeightSetter-container">
+                  {{#collection.content--a4f}}
+                  {{#block.flyer-copy}}
+                  {{#flyer-copy--a4f}}
+                  <div class="text last-page">
+                    {{{flyer-copy--a4f}}}
+                  </div><!-- text -->
+                  {{/flyer-copy--a4f}}
+                  {{/block.flyer-copy}}
+                  {{#block.image}}
+                  {{#image--a4f}}
+                  <div class="picture js-imageHeightSetter-image" data-image-height="{{image-height--a4f}}">
+                    <div class="reposition-fix">{{{image--a4f}}}</div><!-- reposition-fix -->
+                  </div><!-- picture -->
+                  {{/image--a4f}}
+                  {{/block.image}}
+                  {{/collection.content--a4f}}
+                </div><!-- text-column -->
+                <div class="contact-details-wrapper" data-target="contact-details"></div>
+              </div> <!-- text-container -->
+              {{/collection.column--a4f}} 
+            </div><!-- End Col-container -->
+          </div><!-- End Content -->
+        </div><!-- End Flex-container -->
+      </div><!-- End Bleed -->
+    </div><!-- End Additional Pages -->    
+    {{/block.a4flyer-lastPage}}
+    {{/collection.a4flyer}}
+
+    <script>
+      window.showCrop = {{show-crop}};
+    </script>
+    <script src="main.js"></script>
+    <script src="prefixfree.js"></script>
+    <script src="js/dynamic-inject.js"></script>
+    <script>
+      var error = document.querySelectorAll(".error");      
+      error.forEach(node => node.style.display = "none");
+
+      function loop() {
+        setFirstPageHeight();
+        checkHeight(document.getElementsByClassName('check-overflow'));
+        checkLastPage();
+        injectDynamicContent();
+      } 
+      setInterval(loop, 1000);
+
+      injectDynamicContent();
+
+      function checkLastPage() {
+        // Check to see if we are displaying any contact Details
+        var contactDetails = document.querySelectorAll(".contact-details");
+        var contactDetailsNode;
+        if(contactDetails.length == 0) {
+          return;
+        }
+        else {
+          contactDetailsNode = contactDetails.item(0);
+        }
+
+        var contactHeight = parseFloat(window.getComputedStyle(contactDetailsNode,null).getPropertyValue("height"));
+
+        // Check to see if we have a last page
+        var lastPage = document.querySelectorAll(".last-page token-value");
+        if(lastPage.length == 0) {
+          // No last page found
+          return;
+        } 
+        // Check to see if we have too many last pages (I.e More than one)
+        if(lastPage.length > 1) {
+          // Display Error too many last pages
+          error.forEach(node => node.style.display = "block");
+        }
+
+        // Hide the error and continue on
+        error.forEach(node => node.style.display = "none");
+
+        // We need to add the height of all the nodes inside
+        // To see if larger than parent.
+        var lastPageNode = lastPage.item(0);
+        var parentNode = lastPageNode.parentNode;
+        var pHeight = parentNode.offsetHeight;
+        var innerHeight = 0;
+
+        var pageChildren = lastPageNode.children;
+
+        // Calculate the inner height
+        for(var i = 0; i < pageChildren.length; i++) {
+          var child = pageChildren.item(i);
+          var childHeight = parseFloat(window.getComputedStyle(child,null).getPropertyValue("height"));
+          var childPadding = parseFloat(window.getComputedStyle(child,null).getPropertyValue("padding-bottom"));
+          var childBorder = parseFloat(window.getComputedStyle(child,null).getPropertyValue("border-bottom"));
+          var childMargin = parseFloat(window.getComputedStyle(child,null).getPropertyValue("margin-bottom"));
+          // Add child height to innerHeight
+          innerHeight = innerHeight + childHeight + childMargin + childPadding + childBorder;
+        }
+
+        if (innerHeight > (pHeight * 2 - contactHeight)) {
+          parentNode.classList.add('overflow');
+        } 
+        else {
+          parentNode.classList.remove('overflow');
+        }
+      }
+
+      function checkHeight(element) {
+        for (i = 0 ; i < element.length ; i++ ) {
+          var currentElement = element[i];
+          var height         = currentElement.offsetHeight;
+          var parent         = currentElement.parentNode;
+          var parentHeight   = parent.offsetHeight;
+
+          if (height > parentHeight) {
+            parent.classList.add('overflow');
+          } else {
+            parent.classList.remove('overflow');
+          }
+
+          if ((currentElement).parentNode.classList.contains('overflow')) {
+            document.body.classList.add('overflow-true');
+          } else {
+            document.body.classList.remove('overflow-true'); 
+          }
+        }
+      }
+
+      var cricos = document.getElementsByClassName('cricos');
+      for ( i = 0 ; i < cricos.length ; i++ ) {
+        cricos[i].innerHTML = '{{{ cricos }}} <span>{{#metadata}}OF_{{export_id}}{{/metadata}}{{^metadata}}EXPORTID{{/metadata}}</span>'
+      };
+
+      // Page 1 Height
+      var p1content = document.getElementById("p1Content");
+      var p1Header = document.querySelector(".main-header");
+      var p1Footer = document.querySelector(".shape");
+      var p1OchreBox = document.querySelector(".ochre-box");
+      var p1Text = document.querySelector("#p1Content .text");
+      var p1TextHead = document.querySelector("#p1Content .text h2");
+      var p1ColContainer = document.querySelector("#p1Content .col-container");
+
+      function setFirstPageHeight() {
+        var p1headerHeight = window.getComputedStyle(p1Header,null).getPropertyValue("height");
+        var p1headerPadding = window.getComputedStyle(p1Header,null).getPropertyValue("padding-bottom");
+        var p1footerHeight = window.getComputedStyle(p1Footer,null).getPropertyValue("height");
+        var p1OchreBoxHeight = window.getComputedStyle(p1OchreBox,null).getPropertyValue("height");
+        var p1TextheadHeight = window.getComputedStyle(p1TextHead,null).getPropertyValue("height");
+        // Set Content Height
+        p1content.setAttribute("style","height: calc(100% - 4.41mm - " + p1headerPadding + " - " + p1headerHeight + " - " + p1footerHeight + ")");
+        p1Text.setAttribute("style", "height: calc(100% - " + p1OchreBoxHeight + ")");
+        p1ColContainer.setAttribute("style" , "height: calc(100% - " + p1TextheadHeight + ")"); 
+      }
+
+      function imageHeightSetter() {
+        const colContainers = document.querySelectorAll('.js-imageHeightSetter-container');
+
+        colContainers.forEach(colContainer => {
+          const colContainerHeight = colContainer.offsetHeight;
+          const imageBlocks = colContainer.querySelectorAll('.js-imageHeightSetter-image');
+
+          imageBlocks.forEach(image => {
+            const setHeight = image.dataset.imageHeight || 50;
+
+            image.style.height = `${( colContainerHeight / 100 ) * setHeight - 1}px`;
+          });          
+        })
+      }
+
+      imageHeightSetter();
+
+      function contactDetailsController() {
+        const backPages = document.querySelectorAll('.js-back-page');
+
+        backPages.forEach(backPage => {
+          const textContainer =  backPage.querySelectorAll('.js-text-container').length;
+          backPage.classList.add(`text-content-${textContainer}`)
+        })
+
+      }
+
+      contactDetailsController();
+    </script>
+  </body>
+</html>

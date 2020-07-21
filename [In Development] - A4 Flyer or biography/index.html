@@ -104,7 +104,7 @@
         position: absolute;
         top: 1em;
         left: 1em;
-        bottom: 1em;
+        bottom: 1.1em;
         right: 1em;
       }
       .error {
@@ -350,17 +350,17 @@
 
       {{{account.snippets.overflow-color-change}}}
 
-      .text-container { display: flex; flex-direction: column; flex: 1; }
+      .text-container { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
       .text-container + .text-container { margin-left: 0.9rem; }
-      .text-column { flex: 1; }
+      .text-column { flex: 1; overflow: hidden; }
 
       .picture { position: relative; }
-      
+
       .text,
       .picture {    
         margin-bottom: 0.5rem;
       }
-      
+
       .text:last-child,
       .picture:last-child {
         margin-bottom: 0;
@@ -765,7 +765,13 @@
         })
       }
 
-      imageHeightSetter();
+      const images = document.querySelectorAll('img');
+
+      images.forEach(image => {
+        image.onload = () => { 
+          imageHeightSetter();
+        }
+      })
 
       function contactDetailsController() {
         const backPages = document.querySelectorAll('.js-back-page');

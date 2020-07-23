@@ -9,6 +9,12 @@
     <link rel="stylesheet" type="text/css" href="minireset.css">
     {{{account.snippets.typography}}}
     <style>
+      :root {
+        --color-primary: {{{account.colors.primary}}};
+        --color-secondary: #f8d9c6;
+        --color-tertiary: #faeae9;
+      }
+
       .crop-marks {
         position: absolute;
         top: 0;
@@ -254,7 +260,6 @@
       }
       .contact-details {
         width: 4.75rem;
-        padding: 0 0 0 0.1rem;
       }
       .contact-details .text {
         columns: unset !important;
@@ -341,7 +346,7 @@
       .col { flex: 1; overflow: hidden; }
       .col + .col { margin-left: 0.4rem; }
 
-      .picture { position: relative; }
+      .picture { position: relative; flex-shrink: 0; }
 
       .text,
       .picture {    
@@ -386,6 +391,84 @@
 
       .col { display: flex; flex-direction: column;  }
       .col-inner { flex: 1; overflow: hidden; }
+
+      table {
+        display: table;
+        table-layout: fixed;
+        width: 100%;
+        border-collapse: separate;
+      }
+
+      .outer { margin-bottom: 0.5rem; }
+      .outer:last-child { margin-bottom: 0; }
+
+      /* check the margin and overflow */
+
+      .flexibleTable { 
+        border: 1px solid transparent;
+        border-collapse: collapse;
+      }
+
+      .flexibleTable:last-child { margin-bottom: 0; }
+
+      .flexibleTable td {
+        padding: 0.07rem 0.12rem;
+        font-size: 0.206em;
+        line-height: 1em;
+        max-width: 16%;
+      }
+
+      .flexibleTable__item--heading { font-weight: bold; }
+
+      .flexibleTable__row { background: var(--color-secondary); }
+      .flexibleTable__row:nth-child(even) { background: var(--color-tertiary); }
+
+      .tableHeadingRowVisibility--show .flexibleTable__row:first-child { background: var(--color-primary); color: #fff; }
+
+      .flexibleTable__row + .flexibleTable__row { margin-top: 0.23rem; }
+
+      .tableHeading {
+        margin-bottom: 0.4rem;
+        max-height: 0.4rem;
+        padding: 0.07rem 0.12rem;
+        font-size: 0.206em;
+        line-height: 1em;
+        font-weight: 700;
+      }
+
+      .tableHeading:last-child { margin-bottom: 0; }
+
+      .no-heading-1 { display: none; }
+
+      /* Helper class for table error handling */
+      .invalid-table {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid red;
+        border-collapse: unset;
+      }
+
+      .invalid-table::after {
+        content: 'Sum of your table columns exceeds 100%';
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 0.5em;
+        font-size: 0.2rem;
+        font-weight: bold;
+        background: lightgray;
+        color: red;
+        border: 2px solid red;
+      }
+
+      .column {
+        height: 100%;
+        flex: 1;
+      }
+
+      .column + .column { margin-left: 16px; }
+
+
     </style>
   </head>
   <body>
@@ -466,55 +549,124 @@
           <div class="text">
             <h2>{{{ highlight-copy }}}</h2>
             <div class="two-columns col-container">
-              <div class="col-1">
-                <div class="col-1__wrapper">
-                  <div class="check-overflow">
-                    <div class="front-page-text">
-                      {{#collection.front-page-left-column}}
-                      {{#block.front-page-copy}}
-                      {{#copy}}
-                      <div class="text">{{{ copy }}}</div>
-                      {{/copy}}
-                      {{/block.front-page-copy}}
-
-                      {{#block.front-page-image}}
-                      {{#image}}
-                      <div class="image">
-                        <img src="{{{image}}}" alt="" />
-                      </div>
-                      {{/image}}
-                      {{/block.front-page-image}}
-                      {{/collection.front-page-left-column}}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-2">
-                <div class="col-2__wrapper">
-                  <div class="check-overflow">
-                    <div class="front-page-text">
-                      {{#collection.front-page-right-column}}
-                      {{#block.front-page-copy}}
-                      {{#copy}}
-                      <div class="text">
-                        {{{ copy }}}
-                      </div>
-                      {{/copy}}
-                      {{/block.front-page-copy}}
-                      {{#block.front-page-image}}
-                      {{#image}}
-                      <div class="image">
-                        <img src="{{{image}}}" alt="" />
-                      </div>
-                      {{/image}}
-                      {{/block.front-page-image}}
-                      {{/collection.front-page-right-column}}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+              {{#collection.column--a4fb}}
+              <div class="column js-imageHeightSetter-container">
+                <div data-max-height="dynamic">
+                  {{#collection.content--a4f}}
+                  {{#block.flyer-copy}}
+                  {{#flyer-copy--a4f}}
+                  <div class="text">
+                    {{{flyer-copy--a4f}}}
+                  </div><!-- text -->
+                  {{/flyer-copy--a4f}}
+                  {{/block.flyer-copy}}
+                  {{#block.image}}
+                  {{#image--a3f}}
+                  <div class="picture js-imageHeightSetter-image" data-image-height="{{image-height--a3f}}">
+                    <div class="reposition-fix">{{{image--a3f}}}</div><!-- reposition-fix -->
+                  </div><!-- picture -->
+                  {{/image--a3f}}
+                  {{/block.image}}
+                  {{#block.flexible-column-table}}
+                  <div data-js-hook-set-table-heading="outer" class="outer">
+                    <div data-js-hook-set-table-heading="wrapper"
+                         style="display: flex;" 
+                         class="tableHeading__container 
+                                {{^table-heading}}no-heading-1{{/table-heading}}">
+                      {{#table-heading}}
+                      <div 
+                           class="tableHeading" 
+                           data-js-hook-set-table-heading="heading"
+                           data-max-height="css">{{{table-heading}}}</div><!-- heading -->
+                      {{/table-heading}}
+                    </div><!-- end wrapper-->
+                    <table class="flexibleTable 
+                                  js-emptyColumnsCheck-table
+                                  tableHeadingRowVisibility--{{table-heading-row-visibility}}{{^table-heading-row-visibility}}hide{{/table-heading-row-visibility}}"
+                           data-js-hook-set-table-heading="table"     
+                           data-input-order="{{#spreadsheet.flexible-column-table-data}}{{/spreadsheet.flexible-column-table-data}}"
+                           data-flexi-column-sizes="{{#spreadsheet.table-columns-size--a4f}}
+                                                    [{{column-1-size}}{{^column-1-size}}0{{/column-1-size}}, {{column-2-size}}{{^column-2-size}}0{{/column-2-size}}, {{column-3-size}}{{^column-3-size}}0{{/column-3-size}}, 
+                                                    {{column-4-size}}{{^column-4-size}}0{{/column-4-size}}, {{column-5-size}}{{^column-5-size}}0{{/column-5-size}}, {{column-6-size}}{{^column-6-size}}0{{/column-6-size}},
+                                                    {{column-7-size}}{{^column-7-size}}0{{/column-7-size}}, {{column-8-size}}{{^column-8-size}}0{{/column-8-size}}, {{column-9-size}}{{^column-9-size}}0{{/column-9-size}}, 
+                                                    {{column-10-size}}{{^column-10-size}}0{{/column-10-size}}, {{column-11-size}}{{^column-11-size}}0{{/column-11-size}}, {{column-12-size}}{{^column-12-size}}0{{/column-12-size}},
+                                                    {{column-13-size}}{{^column-13-size}}0{{/column-13-size}}, {{column-14-size}}{{^column-14-size}}0{{/column-14-size}}, {{column-15-size}}{{^column-15-size}}0{{/column-15-size}}, 
+                                                    {{column-16-size}}{{^column-16-size}}0{{/column-16-size}}, {{column-17-size}}{{^column-17-size}}0{{/column-17-size}}, {{column-18-size}}{{^column-18-size}}0{{/column-18-size}},
+                                                    {{column-19-size}}{{^column-19-size}}0{{/column-19-size}}, {{column-20-size}}{{^column-20-size}}0{{/column-20-size}}]
+                                                    {{/spreadsheet.table-columns-size--a4f}}"
+                           >
+                      {{#spreadsheet.flexible-column-table-data}}
+                      <tr class="flexibleTable__row flexibleTable__row--data">
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-1}}empty-col-1{{/column-1}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-1}}true{{/column-1}}">{{{column-1}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-2}}empty-col-2{{/column-2}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-2}}true{{/column-2}}">{{{column-2}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-3}}empty-col-3{{/column-3}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-3}}true{{/column-3}}">{{{column-3}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-4}}empty-col-4{{/column-4}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-4}}true{{/column-4}}">{{{column-4}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-5}}empty-col-5{{/column-5}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-5}}true{{/column-5}}">{{{column-5}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-6}}empty-col-6{{/column-6}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-6}}true{{/column-6}}">{{{column-6}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-7}}empty-col-7{{/column-7}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-7}}true{{/column-7}}">{{{column-7}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-8}}empty-col-8{{/column-8}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-8}}true{{/column-8}}">{{{column-8}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-9}}empty-col-9{{/column-9}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-9}}true{{/column-9}}">{{{column-9}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-10}}empty-col-10{{/column-10}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-10}}true{{/column-10}}">{{{column-10}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-11}}empty-col-11{{/column-11}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-11}}true{{/column-11}}">{{{column-11}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-12}}empty-col-12{{/column-12}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-12}}true{{/column-12}}">{{{column-12}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-13}}empty-col-13{{/column-13}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-13}}true{{/column-13}}">{{{column-13}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-14}}empty-col-14{{/column-14}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-14}}true{{/column-14}}">{{{column-14}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-15}}empty-col-15{{/column-15}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-15}}true{{/column-15}}">{{{column-15}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-16}}empty-col-16{{/column-16}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-16}}true{{/column-16}}">{{{column-16}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-17}}empty-col-17{{/column-17}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-17}}true{{/column-17}}">{{{column-17}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-18}}empty-col-18{{/column-18}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-18}}true{{/column-18}}">{{{column-18}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-19}}empty-col-19{{/column-19}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-19}}true{{/column-19}}">{{{column-19}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-20}}empty-col-20{{/column-20}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-20}}true{{/column-20}}">{{{column-20}}}</div>
+                        </td><!-- tableGrid__item -->
+                      </tr>
+                      {{/spreadsheet.flexible-column-table-data}}
+                    </table><!-- grid__container -->
+                  </div><!-- end data-js-hook-set-table-heading="outer" -->
+                  {{/block.flexible-column-table}}
+                  {{/collection.content--a4f}}
+                </div><!-- dynamic -->
+              </div><!-- column -->
+              {{/collection.column--a4fb}}
+            </div><!-- two-columns col-container -->
           </div> <!-- End Text -->
         </div><!-- End P1 Content -->
 
@@ -576,22 +728,119 @@
             {{#collection.flyer-pages-column}}
             <div class="col js-col">
               <div class="col-inner js-imageHeightSetter-container">
-                {{#collection.flyer-pages-content}}
-                {{#block.flyer-page-copy}}
-                {{#flyer-copy--a3c}}
-                <div class="text" data-columns="2">
-                  {{{ flyer-copy--a3c }}}
-                </div><!-- text -->
-                {{/flyer-copy--a3c}}
-                {{/block.flyer-page-copy}}
-                {{#block.image}}
-                {{#image--a4f}}
-                <div class="picture js-imageHeightSetter-image" data-image-height="{{image-height--a4f}}">
-                  <div class="reposition-fix">{{{image--a4f}}}</div><!-- reposition-fix -->
-                </div><!-- picture -->
-                {{/image--a4f}}
-                {{/block.image}}
-                {{/collection.flyer-pages-content}}
+                <div data-max-height="dynamic">
+                  {{#collection.flyer-pages-content}}
+                  {{#block.flyer-page-copy}}
+                  {{#flyer-copy--a3c}}
+                  <div class="text" data-columns="2">
+                    {{{ flyer-copy--a3c }}}
+                  </div><!-- text -->
+                  {{/flyer-copy--a3c}}
+                  {{/block.flyer-page-copy}}
+                  {{#block.image}}
+                  {{#image--a4f}}
+                  <div class="picture js-imageHeightSetter-image" data-image-height="{{image-height--a4f}}">
+                    <div class="reposition-fix">{{{image--a4f}}}</div><!-- reposition-fix -->
+                  </div><!-- picture -->
+                  {{/image--a4f}}
+                  {{/block.image}}
+                  {{#block.flexible-column-table}}
+                  <div data-js-hook-set-table-heading="outer" class="outer">
+                    <div data-js-hook-set-table-heading="wrapper"
+                         style="display: flex;" 
+                         class="tableHeading__container 
+                                {{^table-heading}}no-heading-1{{/table-heading}}">
+                      {{#table-heading}}
+                      <div 
+                           class="tableHeading" 
+                           data-js-hook-set-table-heading="heading"
+                           data-max-height="css">{{{table-heading}}}</div><!-- heading -->
+                      {{/table-heading}}
+                    </div><!-- end wrapper-->
+                    <table class="flexibleTable 
+                                  js-emptyColumnsCheck-table
+                                  tableHeadingRowVisibility--{{table-heading-row-visibility}}{{^table-heading-row-visibility}}hide{{/table-heading-row-visibility}}"
+                           data-js-hook-set-table-heading="table"     
+                           data-input-order="{{#spreadsheet.flexible-column-table-data}}{{/spreadsheet.flexible-column-table-data}}"
+                           data-flexi-column-sizes="{{#spreadsheet.table-columns-size--a4f}}
+                                                    [{{column-1-size}}{{^column-1-size}}0{{/column-1-size}}, {{column-2-size}}{{^column-2-size}}0{{/column-2-size}}, {{column-3-size}}{{^column-3-size}}0{{/column-3-size}}, 
+                                                    {{column-4-size}}{{^column-4-size}}0{{/column-4-size}}, {{column-5-size}}{{^column-5-size}}0{{/column-5-size}}, {{column-6-size}}{{^column-6-size}}0{{/column-6-size}},
+                                                    {{column-7-size}}{{^column-7-size}}0{{/column-7-size}}, {{column-8-size}}{{^column-8-size}}0{{/column-8-size}}, {{column-9-size}}{{^column-9-size}}0{{/column-9-size}}, 
+                                                    {{column-10-size}}{{^column-10-size}}0{{/column-10-size}}, {{column-11-size}}{{^column-11-size}}0{{/column-11-size}}, {{column-12-size}}{{^column-12-size}}0{{/column-12-size}},
+                                                    {{column-13-size}}{{^column-13-size}}0{{/column-13-size}}, {{column-14-size}}{{^column-14-size}}0{{/column-14-size}}, {{column-15-size}}{{^column-15-size}}0{{/column-15-size}}, 
+                                                    {{column-16-size}}{{^column-16-size}}0{{/column-16-size}}, {{column-17-size}}{{^column-17-size}}0{{/column-17-size}}, {{column-18-size}}{{^column-18-size}}0{{/column-18-size}},
+                                                    {{column-19-size}}{{^column-19-size}}0{{/column-19-size}}, {{column-20-size}}{{^column-20-size}}0{{/column-20-size}}]
+                                                    {{/spreadsheet.table-columns-size--a4f}}"
+                           >
+                      {{#spreadsheet.flexible-column-table-data}}
+                      <tr class="flexibleTable__row flexibleTable__row--data">
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-1}}empty-col-1{{/column-1}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-1}}true{{/column-1}}">{{{column-1}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-2}}empty-col-2{{/column-2}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-2}}true{{/column-2}}">{{{column-2}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-3}}empty-col-3{{/column-3}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-3}}true{{/column-3}}">{{{column-3}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-4}}empty-col-4{{/column-4}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-4}}true{{/column-4}}">{{{column-4}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-5}}empty-col-5{{/column-5}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-5}}true{{/column-5}}">{{{column-5}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-6}}empty-col-6{{/column-6}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-6}}true{{/column-6}}">{{{column-6}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-7}}empty-col-7{{/column-7}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-7}}true{{/column-7}}">{{{column-7}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-8}}empty-col-8{{/column-8}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-8}}true{{/column-8}}">{{{column-8}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-9}}empty-col-9{{/column-9}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-9}}true{{/column-9}}">{{{column-9}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-10}}empty-col-10{{/column-10}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-10}}true{{/column-10}}">{{{column-10}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-11}}empty-col-11{{/column-11}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-11}}true{{/column-11}}">{{{column-11}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-12}}empty-col-12{{/column-12}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-12}}true{{/column-12}}">{{{column-12}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-13}}empty-col-13{{/column-13}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-13}}true{{/column-13}}">{{{column-13}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-14}}empty-col-14{{/column-14}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-14}}true{{/column-14}}">{{{column-14}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-15}}empty-col-15{{/column-15}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-15}}true{{/column-15}}">{{{column-15}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-16}}empty-col-16{{/column-16}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-16}}true{{/column-16}}">{{{column-16}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-17}}empty-col-17{{/column-17}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-17}}true{{/column-17}}">{{{column-17}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-18}}empty-col-18{{/column-18}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-18}}true{{/column-18}}">{{{column-18}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-19}}empty-col-19{{/column-19}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-19}}true{{/column-19}}">{{{column-19}}}</div>
+                        </td><!-- tableGrid__item -->
+                        <td class="flexibleTable__item flexibleTable__item--data {{^column-20}}empty-col-20{{/column-20}}">
+                          <div class="js-customRichText-src" data-visible-column="{{#column-20}}true{{/column-20}}">{{{column-20}}}</div>
+                        </td><!-- tableGrid__item -->
+                      </tr>
+                      {{/spreadsheet.flexible-column-table-data}}
+                    </table><!-- grid__container -->
+                  </div><!-- end data-js-hook-set-table-heading="outer" -->
+                  {{/block.flexible-column-table}}
+                  {{/collection.flyer-pages-content}}
+                </div><!-- dynamic -->
               </div><!-- col-inner -->
               <div class="contact-details-wrapper" data-target="contact-details"></div>
             </div><!-- col -->
@@ -622,22 +871,119 @@
           <div class="col-container">
             {{#collection.flyer-pages-column}}
             <div class="col js-col">
-              {{#collection.flyer-pages-content}}
-              {{#block.flyer-page-copy}}
-              {{#flyer-copy--a3c}}
-              <div class="text" data-columns="2">
-                {{{ flyer-copy--a3c }}}
-              </div><!-- text -->
-              {{/flyer-copy--a3c}}
-              {{/block.flyer-page-copy}}
-              {{#block.image}}
-              {{#image--a4f}}
-              <div class="picture js-imageHeightSetter-image" data-image-height="{{image-height--a4f}}">
-                <div class="reposition-fix">{{{image--a4f}}}</div><!-- reposition-fix -->
-              </div><!-- picture -->
-              {{/image--a4f}}
-              {{/block.image}}
-              {{/collection.flyer-pages-content}}
+              <div data-max-height="dynamic">
+                {{#collection.flyer-pages-content}}
+                {{#block.flyer-page-copy}}
+                {{#flyer-copy--a3c}}
+                <div class="text" data-columns="2">
+                  {{{ flyer-copy--a3c }}}
+                </div><!-- text -->
+                {{/flyer-copy--a3c}}
+                {{/block.flyer-page-copy}}
+                {{#block.image}}
+                {{#image--a4f}}
+                <div class="picture js-imageHeightSetter-image" data-image-height="{{image-height--a4f}}">
+                  <div class="reposition-fix">{{{image--a4f}}}</div><!-- reposition-fix -->
+                </div><!-- picture -->
+                {{/image--a4f}}
+                {{/block.image}}
+                {{#block.flexible-column-table}}
+                <div data-js-hook-set-table-heading="outer" class="outer">
+                  <div data-js-hook-set-table-heading="wrapper"
+                       style="display: flex;" 
+                       class="tableHeading__container 
+                              {{^table-heading}}no-heading-1{{/table-heading}}">
+                    {{#table-heading}}
+                    <div 
+                         class="tableHeading" 
+                         data-js-hook-set-table-heading="heading"
+                         data-max-height="css">{{{table-heading}}}</div><!-- heading -->
+                    {{/table-heading}}
+                  </div><!-- end wrapper-->
+                  <table class="flexibleTable 
+                                js-emptyColumnsCheck-table
+                                tableHeadingRowVisibility--{{table-heading-row-visibility}}{{^table-heading-row-visibility}}hide{{/table-heading-row-visibility}}"
+                         data-js-hook-set-table-heading="table"     
+                         data-input-order="{{#spreadsheet.flexible-column-table-data}}{{/spreadsheet.flexible-column-table-data}}"
+                         data-flexi-column-sizes="{{#spreadsheet.table-columns-size--a4f}}
+                                                  [{{column-1-size}}{{^column-1-size}}0{{/column-1-size}}, {{column-2-size}}{{^column-2-size}}0{{/column-2-size}}, {{column-3-size}}{{^column-3-size}}0{{/column-3-size}}, 
+                                                  {{column-4-size}}{{^column-4-size}}0{{/column-4-size}}, {{column-5-size}}{{^column-5-size}}0{{/column-5-size}}, {{column-6-size}}{{^column-6-size}}0{{/column-6-size}},
+                                                  {{column-7-size}}{{^column-7-size}}0{{/column-7-size}}, {{column-8-size}}{{^column-8-size}}0{{/column-8-size}}, {{column-9-size}}{{^column-9-size}}0{{/column-9-size}}, 
+                                                  {{column-10-size}}{{^column-10-size}}0{{/column-10-size}}, {{column-11-size}}{{^column-11-size}}0{{/column-11-size}}, {{column-12-size}}{{^column-12-size}}0{{/column-12-size}},
+                                                  {{column-13-size}}{{^column-13-size}}0{{/column-13-size}}, {{column-14-size}}{{^column-14-size}}0{{/column-14-size}}, {{column-15-size}}{{^column-15-size}}0{{/column-15-size}}, 
+                                                  {{column-16-size}}{{^column-16-size}}0{{/column-16-size}}, {{column-17-size}}{{^column-17-size}}0{{/column-17-size}}, {{column-18-size}}{{^column-18-size}}0{{/column-18-size}},
+                                                  {{column-19-size}}{{^column-19-size}}0{{/column-19-size}}, {{column-20-size}}{{^column-20-size}}0{{/column-20-size}}]
+                                                  {{/spreadsheet.table-columns-size--a4f}}"
+                         >
+                    {{#spreadsheet.flexible-column-table-data}}
+                    <tr class="flexibleTable__row flexibleTable__row--data">
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-1}}empty-col-1{{/column-1}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-1}}true{{/column-1}}">{{{column-1}}}</div>
+                      </td><!-- tableGrid__item -->
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-2}}empty-col-2{{/column-2}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-2}}true{{/column-2}}">{{{column-2}}}</div>
+                      </td><!-- tableGrid__item -->
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-3}}empty-col-3{{/column-3}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-3}}true{{/column-3}}">{{{column-3}}}</div>
+                      </td><!-- tableGrid__item -->
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-4}}empty-col-4{{/column-4}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-4}}true{{/column-4}}">{{{column-4}}}</div>
+                      </td><!-- tableGrid__item -->
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-5}}empty-col-5{{/column-5}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-5}}true{{/column-5}}">{{{column-5}}}</div>
+                      </td><!-- tableGrid__item -->
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-6}}empty-col-6{{/column-6}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-6}}true{{/column-6}}">{{{column-6}}}</div>
+                      </td><!-- tableGrid__item -->
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-7}}empty-col-7{{/column-7}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-7}}true{{/column-7}}">{{{column-7}}}</div>
+                      </td><!-- tableGrid__item -->
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-8}}empty-col-8{{/column-8}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-8}}true{{/column-8}}">{{{column-8}}}</div>
+                      </td><!-- tableGrid__item -->
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-9}}empty-col-9{{/column-9}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-9}}true{{/column-9}}">{{{column-9}}}</div>
+                      </td><!-- tableGrid__item -->
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-10}}empty-col-10{{/column-10}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-10}}true{{/column-10}}">{{{column-10}}}</div>
+                      </td><!-- tableGrid__item -->
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-11}}empty-col-11{{/column-11}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-11}}true{{/column-11}}">{{{column-11}}}</div>
+                      </td><!-- tableGrid__item -->
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-12}}empty-col-12{{/column-12}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-12}}true{{/column-12}}">{{{column-12}}}</div>
+                      </td><!-- tableGrid__item -->
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-13}}empty-col-13{{/column-13}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-13}}true{{/column-13}}">{{{column-13}}}</div>
+                      </td><!-- tableGrid__item -->
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-14}}empty-col-14{{/column-14}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-14}}true{{/column-14}}">{{{column-14}}}</div>
+                      </td><!-- tableGrid__item -->
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-15}}empty-col-15{{/column-15}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-15}}true{{/column-15}}">{{{column-15}}}</div>
+                      </td><!-- tableGrid__item -->
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-16}}empty-col-16{{/column-16}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-16}}true{{/column-16}}">{{{column-16}}}</div>
+                      </td><!-- tableGrid__item -->
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-17}}empty-col-17{{/column-17}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-17}}true{{/column-17}}">{{{column-17}}}</div>
+                      </td><!-- tableGrid__item -->
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-18}}empty-col-18{{/column-18}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-18}}true{{/column-18}}">{{{column-18}}}</div>
+                      </td><!-- tableGrid__item -->
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-19}}empty-col-19{{/column-19}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-19}}true{{/column-19}}">{{{column-19}}}</div>
+                      </td><!-- tableGrid__item -->
+                      <td class="flexibleTable__item flexibleTable__item--data {{^column-20}}empty-col-20{{/column-20}}">
+                        <div class="js-customRichText-src" data-visible-column="{{#column-20}}true{{/column-20}}">{{{column-20}}}</div>
+                      </td><!-- tableGrid__item -->
+                    </tr>
+                    {{/spreadsheet.flexible-column-table-data}}
+                  </table><!-- grid__container -->
+                </div><!-- end data-js-hook-set-table-heading="outer" -->
+                {{/block.flexible-column-table}}
+                {{/collection.flyer-pages-content}}
+              </div><!-- dynamic -->
             </div><!-- col -->
             {{/collection.flyer-pages-column}}
           </div><!-- End Col-container -->
@@ -654,6 +1000,7 @@
     <script src="main.js"></script>
     <script src="prefixfree.js"></script>
     <script src="js/dynamic-inject.js"></script>
+    <script src="js/max-height-check.js"></script>
     <!-- Counts the number of spreads -->
     <script>
       var error = document.querySelectorAll(".error");      
@@ -679,6 +1026,7 @@
         checkLastPage();
         toggleError();
         injectDynamicContent();
+        maxHeightCheck();
       } 
       setInterval(loop, 1000);
 
@@ -807,7 +1155,7 @@
           });          
         })
       }
-      
+
       const images = document.querySelectorAll('img');
 
       images.forEach(image => {
@@ -827,6 +1175,71 @@
       }
 
       contactDetailsController();
+
+      function emptyColumnsCheck() {
+        const tables = document.querySelectorAll('.js-emptyColumnsCheck-table');
+
+        for (const table of tables) {
+          const totalColumns = table.querySelectorAll('tr:first-child td').length; 
+          const rowsLength = table.querySelectorAll('tr').length;
+          const colsLength = table.querySelectorAll('td').length;
+
+          for (let i = 1; i <= totalColumns; i++) {
+            const columnEmptyCells = table.querySelectorAll(`.empty-col-${i}`);
+
+            if (columnEmptyCells.length === rowsLength)
+              columnEmptyCells.forEach(columnEmptyCell => columnEmptyCell.style.display = 'none');
+          }
+        }
+      }
+
+      function flexiTableColumnSizeController() {
+        const flexiTables = document.querySelectorAll('[data-flexi-column-sizes]');
+
+        for (const flexiTable of flexiTables) {
+          const parentWidthPercent = flexiTable.parentNode.offsetWidth / 100;
+          const columnSizes = flexiTable.dataset.flexiColumnSizes === '' ? [] : JSON.parse(flexiTable.dataset.flexiColumnSizes);
+          const headingRow = flexiTable.querySelector('tr:first-child');
+          const visibleColumnsCount = headingRow.querySelectorAll('[data-visible-column="true"]').length;
+          let dynamicColumnsCount = 0;
+
+          columnSizes.forEach((columnSize, index) => {
+            const size = columnSize === 0 ? 'auto' : `${columnSize * parentWidthPercent}px`;
+            if (size !== 'auto') {
+              flexiTable.querySelector(`tr td:nth-child(${index + 1})`).style.width = size;
+              dynamicColumnsCount += 1;
+            }
+          });
+
+          const total = columnSizes.reduce((sum, size) => {
+            return parseInt(size) + sum;
+          }, 0);
+
+          // Checking if all the visible columns have the dynamic width set
+          if (dynamicColumnsCount === visibleColumnsCount) {
+            flexiTable.style.width = 'auto';
+          }
+
+          // Checking if the total sum of all column size input exceeds 100%
+          if (total > 100) flexiTable.classList.add('invalid-table')
+        }
+      }
+
+      function setTableHeading() {
+        const tableWrappers = document.querySelectorAll('[data-js-hook-set-table-heading="outer"]');
+
+        for (const wrapper of tableWrappers) {
+          const headingWrapper = wrapper.querySelector('[data-js-hook-set-table-heading="wrapper"]');
+          const table = wrapper.querySelector('[data-js-hook-set-table-heading="table"]');
+          const tableWidth = table.offsetWidth;
+
+          headingWrapper.style.width = `${tableWidth}px`;
+        }
+      }
+
+      emptyColumnsCheck();
+      flexiTableColumnSizeController();
+      maxHeightCheck();
     </script>
   </body>
 </html>
